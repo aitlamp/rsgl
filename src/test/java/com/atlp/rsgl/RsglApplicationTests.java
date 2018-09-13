@@ -11,7 +11,7 @@ public class RsglApplicationTests {
 
     @Test
     public void contextLoads() {
-        // 测试
+        // 测试。。
 
     }
 
