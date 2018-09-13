@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHeader(title)">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${title}"></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- jQuery 3.3.1 -->
+    <script th:src="@{webjars/jquery/3.3.1/jquery.js}"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <script th:src="@{webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <!-- Font Awesome 3.2.1 -->
+    <link rel="stylesheet" th:href="@{webjars/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    <!-- Ionicons 2.0.1 -->
+    <link rel="stylesheet" th:href="@{webjars/ionicons/2.0.1/css/ionicons.min.css}"/>
+    <!-- AdminLTE 2.4.3 -->
+    <!--<link rel="stylesheet" th:href="@{static/AdminLTE/2.4.3/css/AdminLTE.min.css}"/>-->
+    <!-- sb-admin-2 -->
+    <link rel="stylesheet" th:href="@{webjars/startbootstrap-sb-admin-2/3.3.7+1/css/sb-admin-2.min.css}"/>
+    <!-- bootstrap-tab -->
+    <link rel="stylesheet" th:href="@{plugins/bootstrap-tab/css/bootstrap-tab.css}"/>
+    <script th:src="@{plugins/bootstrap-tab/js/bootstrap-tab.js}"></script>
+    <!-- bootstrap-table -->
+    <link rel="stylesheet" th:href="@{webjars/bootstrap-table/1.11.1/dist/bootstrap-table.min.css}"/>
+    <script th:src="@{webjars/bootstrap-table/1.11.1/dist/bootstrap-table.min.js}"></script>
+    <script th:src="@{webjars/bootstrap-table/1.11.1/dist/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- layer -->
+    <script th:src="@{webjars/layer/3.1.1/src/layer.js}"></script>
+    <!-- bootstrapValidator -->
+    <link rel="stylesheet" th:href="@{webjars/bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css}"/>
+    <script th:src="@{webjars/bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js}"></script>
+    <script th:src="@{webjars/bootstrapvalidator/0.5.3/js/language/zh_CN.js}"></script>
+
+    <!--添加全局变量-->
+    <script th:inline="javascript">
+        var contextPath = [[${contextPath}]];
+    </script>
+</head>
+</html>

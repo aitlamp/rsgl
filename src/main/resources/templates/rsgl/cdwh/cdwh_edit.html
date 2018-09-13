@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单维护</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <form id="cdwhForm" class="form-horizontal" method="post">
+        <div class="form-group" style="padding-top: 10px;">
+            <label class="col-sm-2 control-label">菜单名称</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="cdmc" name="cdmc" th:value="${cdEntity.cdmc}">
+                <input type="hidden" id="cdid" name="cdid" th:value="${cdEntity.cdid}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">菜单类型</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="cdlx" name="cdlx">
+                    <option value="1">业务单元</option>
+                    <option value="2">业务功能</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">保存</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#cdwhForm").bootstrapValidator({
+                live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                //submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                message: '通用的验证失败消息',//好像从来没出现过
+                feedbackIcons: {//根据验证结果显示的各种图标
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    cdmc: {
+                        validators: {
+                            notEmpty: {//检测非空,radio也可用
+                                message: '菜单名称必须输入'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {//点击提交之后
+                // 阻止表单提交
+                e.preventDefault();
+                // 打开遮罩
+                var index_load = layer.load({shade: [1, '#000']});
+                // ajax提交
+                $.ajax({
+                    type: "post",
+                    url: "/cd/doSave",
+                    data: $("#cdwhForm").serialize(),
+                    success: function (result) {
+                        //关闭遮罩
+                        layer.close(index_load);
+                        if (result) {
+                            //刷新table
+                            window.parent.$("#cdwhTable").bootstrapTable('refresh');
+                            //关闭弹框
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        } else {
+                            layer.msg("保存失败，请稍后重试！");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //关闭遮罩
+                        layer.close(index_load);
+                        layer.msg("保存失败，请稍后重试！");
+                    }
+                });
+                //$.post($form.attr('action'), $form.serialize(), function (result) {
+                //});
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

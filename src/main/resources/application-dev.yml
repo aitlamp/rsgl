@@ -1,0 +1,46 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: rsgl
+
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+
+  resources:
+    static-locations: "classpath:/templates/"
+
+  devtools:
+    restart:
+      enabled: true
+      #设置重启的目录
+      additional-paths: src/main/java
+      #修改不重启的目录
+      exclude: templates/**, upload/**
+
+  jpa:
+    database: oracle
+    hibernate.ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle10gDialect
+
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    #阿里云服务器
+    #url: jdbc:oracle:thin:@47.97.173.180:1521:orcl
+    #本机虚拟机
+    url: jdbc:oracle:thin:@192.168.28.132:1521:orcl
+    username: rsgl
+    password: rsgl123
+
+#日志
+
+#自定义属性
+custom-props:
+  access-ignore: include,webjars,login,doLogin
+  tysq-path: http://47.97.173.180/tysq/tysqRestWS/callService.do
+  app-code: RSGL

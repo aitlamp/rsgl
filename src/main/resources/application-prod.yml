@@ -1,0 +1,77 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: rsgl
+
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+
+  resources:
+    static-locations: "classpath:/templates/"
+
+  devtools:
+    restart:
+      enabled: true
+      #设置重启的目录
+      additional-paths: src/main/java
+      #修改不重启的目录
+      exclude: templates/**, upload/**
+
+  jpa:
+    database: oracle
+    hibernate.ddl-auto: update
+    #show-sql: true
+
+  # jdbc_config   datasource
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@47.97.173.180:1521:orcl
+    username: zhbg
+    password: zhbg123
+
+    # Druid 配置
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#      initial-size: 8 #初始化连接大小
+#      min-idle: 5 #最小空闲连接数
+#      max-active: 10 #最大连接数
+#      query-timeout: 6000 #查询超时时间
+#      transaction-query-timeout: 6000 #事务查询超时时间
+#      remove-abandoned-timeout: 1800 #关闭空闲连接超时时间
+#      filter-class-names: stat
+#      filters: stat,config
+
+    # Hikari will use the above plus the following to setup connection pooling
+#    type: com.zaxxer.hikari.HikariDataSource
+#    hikari:
+#      minimum-idle: 5
+#      maximum-pool-size: 15
+#      auto-commit: true
+#      idle-timeout: 30000
+#      pool-name: zhbg-HikariCP
+#      max-lifetime: 1800000
+#      connection-timeout: 30000
+#      connection-test-query: SELECT 1 from dual
+
+#c3p0:
+#  jdbcUrl: jdbc:oracle:thin:@47.97.173.180:1521:orcl
+#  user: zhbg
+#  password: zhbg123
+#  driverClass: oracle.jdbc.driver.OracleDriver
+#  minPoolSize: 2
+#  maxPoolSize: 10
+#  maxIdleTime: 1800000
+#  acquireIncrement: 3
+#  maxStatements: 1000
+#  initialPoolSize: 3
+#  idleConnectionTestPeriod: 60
+#  acquireRetryAttempts: 30
+#  acquireRetryDelay: 1000
+#  breakAfterAcquireFailure: false
+#  testConnectionOnCheckout: false
+
+my-props:
+  sso-path: http://SSO-SERVICE

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:oracle:thin:@47.97.173.180:1521:orcl</property>
+    <property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+      <mapping class="com.atlp.rsgl.entity.RsglBCcjlEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBCdEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBDwEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBFjEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBGwdjEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBHjjlEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBKhjlEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBKqjlEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBPxjlEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBQypygwEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBSqxxEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBYhEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBYhGzxxEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBZdEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBZjEntity"/>
+      <mapping class="com.atlp.rsgl.entity.RsglBZwEntity"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
