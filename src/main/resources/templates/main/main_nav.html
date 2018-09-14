@@ -33,13 +33,13 @@
                 <li class="nav-li">
                     <a href="javascript:;" class="ue-clear">
                         <i class="nav-ivon"></i>
-                        <span class="nav-text" th:text="${menu.cdmc}"></span>
+                        <span class="nav-text" th:text="${menu.text}"></span>
                     </a>
-                    <ul class="subnav" th:each="child : ${menu.childs}">
-                        <li class="subnav-li" th:href="${child.page}" th:data-id="${child.cdid}">
+                    <ul class="subnav" th:each="child : ${menu.nodes}">
+                        <li class="subnav-li" th:href="${child.page}" th:data-id="${child.id}">
                             <a href="javascript:;" class="ue-clear">
                                 <i class="subnav-icon"></i>
-                                <span class="subnav-text" th:text="${child.cdmc}"></span>
+                                <span class="subnav-text" th:text="${child.text}"></span>
                             </a>
                         </li>
                     </ul>

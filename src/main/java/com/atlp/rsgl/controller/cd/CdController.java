@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 菜单 Controller
@@ -58,6 +59,15 @@ public class CdController {
     @ResponseBody
     public Page getPage(PageModel page) {
         return cdService.getPage(page);
+    }
+
+    /*
+     * 树
+     */
+    @RequestMapping("/getCdTree")
+    @ResponseBody
+    public List getCdTree() {
+        return cdService.getMenus("root");
     }
 
     /*

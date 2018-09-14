@@ -8,12 +8,37 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div id="toolbar" class="text-right">
-        <button class="btn btn-info" onclick="doAdd();">添加</button>
+    <div class="row">
+        <div class="col-md-3">
+            <div id="tree" style="padding-top: 10px;"></div>
+        </div>
+        <div class="col-md-9" style="padding-left: 0px;">
+            <div id="toolbar" class="text-right">
+                <button class="btn btn-info" onclick="doAdd();">添加</button>
+            </div>
+            <table id="cdwhTable"></table>
+        </div>
     </div>
-    <table id="cdwhTable"></table>
+
     <script type="text/javascript">
         $(function () {
+            //初始化树
+            $.ajax({
+                type: "Post",
+                url: "/cd/getCdTree",
+                dataType: "json",
+                success: function (result) {
+                    var tree = $('#tree').treeview({
+                        data: result,         // 数据源
+                        levels: 2, //默认展开的级别
+                    });
+                },
+                error: function () {
+                    alert("树形结构加载失败！")
+                }
+            });
+
+            //初始化表格
             var t = $("#cdwhTable").bootstrapTable({
                 url: '/cd/getPage',
                 method: 'get',

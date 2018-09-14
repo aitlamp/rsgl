@@ -155,6 +155,13 @@
             <artifactId>bootstrapvalidator</artifactId>
             <version>0.5.3</version>
         </dependency>
+
+        <!-- bootstrap-treeview -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap-treeview</artifactId>
+            <version>1.2.0</version>
+        </dependency>
         <!-- webjars end -->
 
         <dependency>

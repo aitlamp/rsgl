@@ -111,17 +111,17 @@ public class CdServiceImpl implements ICdService {
         List<RsglBCdEntity> pCdList = cdRepository.findByPcdid(pcdid, new Sort(Sort.Direction.DESC, "xssx"));
         for (RsglBCdEntity pCd : pCdList) {
             Map menuMap = new HashMap();
-            menuMap.put("cdid", pCd.getCdid());
-            menuMap.put("pcdid", pCd.getPcdid());
-            menuMap.put("cdmc", pCd.getCdmc());
+            menuMap.put("id", pCd.getCdid());
+            menuMap.put("pid", pCd.getPcdid());
+            menuMap.put("text", pCd.getCdmc());
             if (pCd.getCdlx().equals("1")) {
                 //单元
                 List<Map> childList = this.getMenus(pCd.getCdid());
-                menuMap.put("childs", childList);
+                menuMap.put("nodes", childList);
             } else {
                 //功能
                 menuMap.put("page", pCd.getPcpage());
-                menuMap.put("childs", null);
+                menuMap.put("nodes", null);
             }
             menuList.add(menuMap);
         }
