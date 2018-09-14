@@ -21,20 +21,22 @@
                     <span>菜单</span>
                 </a>
             </h2>
-            <ul class="nav" th:each="menu : ${cdList}">
+            <ul class="nav">
                 <li class="nav-li current">
                     <a href="javascript:;" class="ue-clear">
                         <i class="nav-ivon"></i>
                         <span class="nav-text">首页</span>
                     </a>
                 </li>
+            </ul>
+            <ul class="nav" th:each="menu : ${cdList}">
                 <li class="nav-li">
                     <a href="javascript:;" class="ue-clear">
                         <i class="nav-ivon"></i>
                         <span class="nav-text" th:text="${menu.cdmc}"></span>
                     </a>
                     <ul class="subnav" th:each="child : ${menu.childs}">
-                        <li class="subnav-li" href="${child.page}" data-id="${child.cdid}">
+                        <li class="subnav-li" th:href="${child.page}" th:data-id="${child.cdid}">
                             <a href="javascript:;" class="ue-clear">
                                 <i class="subnav-icon"></i>
                                 <span class="subnav-text" th:text="${child.cdmc}"></span>

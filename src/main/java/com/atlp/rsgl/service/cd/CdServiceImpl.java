@@ -105,7 +105,7 @@ public class CdServiceImpl implements ICdService {
     /**
      * 获取菜单数据
      */
-    public List getMenus(String pcdid) {
+    public List<Map> getMenus(String pcdid) {
         List<Map> menuList = new ArrayList<>();
         //根据上级菜单ID获取子菜单
         List<RsglBCdEntity> pCdList = cdRepository.findByPcdid(pcdid, new Sort(Sort.Direction.DESC, "xssx"));
@@ -121,6 +121,7 @@ public class CdServiceImpl implements ICdService {
             } else {
                 //功能
                 menuMap.put("page", pCd.getPcpage());
+                menuMap.put("childs", null);
             }
             menuList.add(menuMap);
         }
