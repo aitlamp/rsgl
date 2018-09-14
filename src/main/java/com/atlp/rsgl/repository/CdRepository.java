@@ -1,6 +1,8 @@
 package com.atlp.rsgl.repository;
 
 import com.atlp.rsgl.entity.RsglBCdEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +19,8 @@ public interface CdRepository extends JpaRepository<RsglBCdEntity, Long> {
     RsglBCdEntity findByCdid(String cdid);
 
     List<RsglBCdEntity> findByPcdid(String pcdid, Sort sort);
+
+    Page<RsglBCdEntity> findByPcdid(String pcdid, Pageable pageable);
 
 //    List<RsglBCdEntity> findByCdLx(String cdlx, Sort sort);
 

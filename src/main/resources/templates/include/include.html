@@ -36,6 +36,15 @@
     <link rel="stylesheet" th:href="@{webjars/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css}"/>
     <script th:src="@{webjars/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js}"></script>
 
+    <!-- 自定义全局样式 -->
+    <style type="text/css">
+        .control-label {
+            text-align: right;
+            line-height: 34px;
+            margin-bottom: 0px;
+        }
+    </style>
+
     <!--添加全局变量-->
     <script th:inline="javascript">
         var contextPath = [[${contextPath}]];

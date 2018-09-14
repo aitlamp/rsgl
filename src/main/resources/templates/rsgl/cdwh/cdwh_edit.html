@@ -10,15 +10,23 @@
 <div class="container-fluid">
     <form id="cdwhForm" class="form-horizontal" method="post">
         <div class="form-group" style="padding-top: 10px;">
-            <label class="col-sm-2 control-label">菜单名称</label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-2 control-label">上级菜单</label>
+            <div class="col-sm-10 col-xs-10">
+                <input class="form-control" id="pcdmc" name="pcdmc" th:value="${cdEntity.pcdmc}" readonly
+                       style="cursor: pointer;" placeholder="请点击选择上级菜单" onclick="selectPcd();">
+                <input type="hidden" id="pcdid" name="pcdid" th:value="${cdEntity.pcdid}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-xs-2 control-label">菜单名称</label>
+            <div class="col-sm-10 col-xs-10">
                 <input class="form-control" id="cdmc" name="cdmc" th:value="${cdEntity.cdmc}">
                 <input type="hidden" id="cdid" name="cdid" th:value="${cdEntity.cdid}">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">菜单类型</label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-2 control-label">菜单类型</label>
+            <div class="col-sm-10 col-xs-10">
                 <select class="form-control" id="cdlx" name="cdlx">
                     <option value="1">业务单元</option>
                     <option value="2">业务功能</option>
@@ -26,13 +34,32 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">保存</button>
+            <label class="col-sm-2 col-xs-2 control-label">页面地址</label>
+            <div class="col-sm-10 col-xs-10">
+                <input class="form-control" id="pcpage" name="pcpage" th:value="${cdEntity.pcpage}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-xs-2 control-label">显示图标</label>
+            <div class="col-sm-10 col-xs-10">
+                <input class="form-control" id="tb" name="tb" th:value="${cdEntity.tb}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-xs-2 control-label">显示顺序</label>
+            <div class="col-sm-10 col-xs-10">
+                <input class="form-control" id="xssx" name="xssx" th:value="${cdEntity.xssx}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary">保存</button>
             </div>
         </div>
     </form>
     <script>
         $(function () {
+            //初始化表单验证
             $("#cdwhForm").bootstrapValidator({
                 live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
                 excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
@@ -67,7 +94,8 @@
                         layer.close(index_load);
                         if (result) {
                             //刷新table
-                            window.parent.$("#cdwhTable").bootstrapTable('refresh');
+                            //window.parent.$("#cdwhTable").bootstrapTable('refresh');
+                            window.parent.location.reload();
                             //关闭弹框
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭
@@ -85,6 +113,16 @@
                 //});
             });
         });
+
+        //选择上级菜单
+        function selectPcd() {
+            parent.layer.open({
+                title: '选择上级菜单',
+                area: ['40%', '60%'],
+                type: 2,
+                content: '/cd/select'
+            });
+        }
     </script>
 </div>
 </body>

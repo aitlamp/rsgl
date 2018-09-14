@@ -15,8 +15,9 @@ public class RsglBCdEntity {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(generator = "system-uuid")
     private String cdid;
-    private String pcdid;
     private String cdmc;
+    private String pcdid;
+    private String pcdmc;
     private String cdlx;
     private String pcpage;
     private String padpage;

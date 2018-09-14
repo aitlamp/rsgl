@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单 Service 接口
@@ -14,7 +15,7 @@ import java.util.List;
  * @date 2018年8月9日 15:53:49
  */
 public interface ICdService {
-    Page<RsglBCdEntity> getPage(PageModel page);
+    Page<RsglBCdEntity> getPage(PageModel page, Map pmap);
 
     boolean doSave(RsglBCdEntity cdEntity, HttpServletRequest request);
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单维护</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div id="tree" style="padding-top: 5px;"></div>
+    <div class="text-center">
+        <button class="btn btn-primary" onclick="doSelect()">选择</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //定义变量
+    var tree;
+
+    //页面初始化方法
+    $(function () {
+        //初始化树
+        $.ajax({
+            type: "Post",
+            url: "/cd/getCdTree",
+            dataType: "json",
+            success: function (result) {
+                tree = $('#tree').treeview({
+                    data: result,         // 数据源
+                    levels: 2, //默认展开的级别
+                });
+            },
+            error: function () {
+                alert("树形结构加载失败！")
+            }
+        });
+    });
+
+    //选择
+    function doSelect() {
+        var selectedNodes = tree.treeview('getSelected');
+        if (selectedNodes.length <= 0) {
+            layer.msg("请先选择一条记录！");
+            return false;
+        }
+        var node = selectedNodes[0];
+        var addIframe = parent.$("#addPop").find('iframe')[0].contentWindow;
+        addIframe.$("#pcdid").val(node.id);
+        addIframe.$("#pcdmc").val(node.text);
+        //关闭弹框
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>

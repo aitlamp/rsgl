@@ -32,8 +32,10 @@ public class CdServiceImpl implements ICdService {
     /**
      * 获取分页数据
      */
-    public Page<RsglBCdEntity> getPage(PageModel page) {
-        return cdRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
+    public Page<RsglBCdEntity> getPage(PageModel page, Map pmap) {
+        //return cdRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
+        String pcdid = pmap.get("pcdid").toString();
+        return cdRepository.findByPcdid(pcdid, PageRequest.of(page.getPage(), page.getLimit()));
     }
 
     /**
@@ -49,7 +51,7 @@ public class CdServiceImpl implements ICdService {
                 AtlpUtil.setUserInfo(saveEntity, request);
                 saveEntity.setFirsttime(new Timestamp(new Date().getTime()));
                 saveEntity.setLasttime(new Timestamp(new Date().getTime()));
-                saveEntity.setPcdid("root");
+                //saveEntity.setPcdid("root");
                 saveEntity.setDqzt("有效");
             } else {
                 //修改

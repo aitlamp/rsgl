@@ -9,10 +9,10 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <div id="tree" style="padding-top: 10px;"></div>
+        <div class="col-md-3 col-sm-3">
+            <div id="tree" style="padding-top: 55px;"></div>
         </div>
-        <div class="col-md-9" style="padding-left: 0px;">
+        <div class="col-md-9 col-sm-9" style="padding-left: 0px;">
             <div id="toolbar" class="text-right">
                 <button class="btn btn-info" onclick="doAdd();">添加</button>
             </div>
@@ -21,6 +21,7 @@
     </div>
 
     <script type="text/javascript">
+        var tree;
         $(function () {
             //初始化树
             $.ajax({
@@ -28,9 +29,12 @@
                 url: "/cd/getCdTree",
                 dataType: "json",
                 success: function (result) {
-                    var tree = $('#tree').treeview({
+                    tree = $('#tree').treeview({
                         data: result,         // 数据源
                         levels: 2, //默认展开的级别
+                        onNodeSelected: function (event, data) {
+                            $("#cdwhTable").bootstrapTable('refresh');
+                        }
                     });
                 },
                 error: function () {
@@ -55,12 +59,17 @@
                         "total": res.totalElements  // 总共有多少条返回数据
                     }
                 },
-                /*queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
-                    return {//这里的params是table提供的
-                        cp: params.offset,//从数据库第几条记录开始
-                        ps: params.limit//找多少条
-                    };
-                },*/
+                queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
+                    var pcdid = "root";
+                    if (tree) {
+                        var selectedNodes = tree.treeview('getSelected');
+                        if (selectedNodes.length == 1) {
+                            var node = selectedNodes[0];
+                            pcdid = node.id;
+                        }
+                    }
+                    return $.extend(params, {pcdid: pcdid});
+                },
                 idField: "userId",//指定主键列
                 columns: [
                     {
@@ -103,9 +112,10 @@
 
         //添加
         function doAdd() {
-            var index = layer.open({
+            layer.open({
+                id: 'addPop',
                 title: '添加',
-                area: ['80%', '80%'],
+                area: ['60%', '80%'],
                 type: 2,
                 content: '/cd/edit/null'
             });

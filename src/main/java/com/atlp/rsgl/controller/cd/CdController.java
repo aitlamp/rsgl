@@ -11,13 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单 Controller
@@ -53,12 +51,20 @@ public class CdController {
     }
 
     /*
+     * select页面
+     */
+    @RequestMapping({"/select"})
+    public String cdwh_select() {
+        return "/rsgl/cdwh/cdwh_select";
+    }
+
+    /*
      * 分页
      */
     @RequestMapping("/getPage")
     @ResponseBody
-    public Page getPage(PageModel page) {
-        return cdService.getPage(page);
+    public Page getPage(PageModel page, @RequestParam Map pmap) {
+        return cdService.getPage(page,pmap);
     }
 
     /*
