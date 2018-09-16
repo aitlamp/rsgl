@@ -8,7 +8,8 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div id="tree" style="padding-top: 5px;"></div>
+    <div id="tree" style="padding-top: 5px; overflow: auto;"></div>
+    &nbsp;
     <div class="text-center">
         <button class="btn btn-primary" onclick="doSelect()">选择</button>
     </div>
@@ -20,15 +21,17 @@
 
     //页面初始化方法
     $(function () {
+        $('#tree').height($(window).height() - 65);
         //初始化树
         $.ajax({
             type: "Post",
             url: "/cd/getCdTree",
             dataType: "json",
             success: function (result) {
+                var data = [{id: 'root', pid: '', text: '根', nodes: result}];
                 tree = $('#tree').treeview({
-                    data: result,         // 数据源
-                    levels: 2, //默认展开的级别
+                    data: data,         // 数据源
+                    levels: 3 //默认展开的级别
                 });
             },
             error: function () {
@@ -47,7 +50,11 @@
         var node = selectedNodes[0];
         var addIframe = parent.$("#addPop").find('iframe')[0].contentWindow;
         addIframe.$("#pcdid").val(node.id);
-        addIframe.$("#pcdmc").val(node.text);
+        addIframe.$("#pcdmc").val(node.text).change();
+        //重新验证
+        addIframe.$('#cdwhForm').data('bootstrapValidator')
+            .updateStatus('pcdmc', 'NOT_VALIDATED', null)
+            .validateField('pcdmc');
         //关闭弹框
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);

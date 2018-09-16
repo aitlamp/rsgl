@@ -22,6 +22,8 @@ public interface CdRepository extends JpaRepository<RsglBCdEntity, Long> {
 
     Page<RsglBCdEntity> findByPcdid(String pcdid, Pageable pageable);
 
+    int countByPcdid(String pcdid);
+
 //    List<RsglBCdEntity> findByCdLx(String cdlx, Sort sort);
 
 //    @Query(value = "select new pers.zhuch.model.MyModel(u.userName, ui.name, ui.gender, ui.description) from UserInfo ui, User u where u.id = ui.userId")

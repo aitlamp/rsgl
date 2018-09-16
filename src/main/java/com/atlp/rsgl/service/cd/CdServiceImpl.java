@@ -35,7 +35,7 @@ public class CdServiceImpl implements ICdService {
     public Page<RsglBCdEntity> getPage(PageModel page, Map pmap) {
         //return cdRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
         String pcdid = pmap.get("pcdid").toString();
-        return cdRepository.findByPcdid(pcdid, PageRequest.of(page.getPage(), page.getLimit()));
+        return cdRepository.findByPcdid(pcdid, PageRequest.of(page.getPage(), page.getLimit(), Sort.by("xssx")));
     }
 
     /**
@@ -51,7 +51,7 @@ public class CdServiceImpl implements ICdService {
                 AtlpUtil.setUserInfo(saveEntity, request);
                 saveEntity.setFirsttime(new Timestamp(new Date().getTime()));
                 saveEntity.setLasttime(new Timestamp(new Date().getTime()));
-                //saveEntity.setPcdid("root");
+                //saveEntity.setCdlx("2");//默认功能
                 saveEntity.setDqzt("有效");
             } else {
                 //修改
@@ -59,7 +59,13 @@ public class CdServiceImpl implements ICdService {
                 BeanUtils.copyProperties(cdEntity, saveEntity, AtlpUtil.getNullPropertyNames(cdEntity));
                 saveEntity.setLasttime(new Timestamp(new Date().getTime()));
             }
+            //保存
             cdRepository.save(saveEntity);
+            //修改上级菜单类型
+            //RsglBCdEntity pEntity = cdRepository.findByCdid(saveEntity.getPcdid());
+            //pEntity.setCdlx("1");//上级菜单为单元
+            //cdRepository.save(pEntity);
+            //设置返回值
             ret = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,17 +87,15 @@ public class CdServiceImpl implements ICdService {
     public boolean doDelete(String cdid) {
         boolean ret = false;
         try {
-            cdRepository.delete(cdRepository.findByCdid(cdid));
-            //cdRepository.delete(cdRepository.findByCdid(cdid + 1));
-            if (cdid != null) {
-                //throw new RuntimeException("haha");
-                throw new Exception("haha");
+            //判断是否有子集
+            List<RsglBCdEntity> childList = cdRepository.findByPcdid(cdid, Sort.by("xssx"));
+            for (RsglBCdEntity child : childList) {
+                this.doDelete(child.getCdid());
             }
-            //ret = true;
+            cdRepository.delete(cdRepository.findByCdid(cdid));
+            ret = true;
         } catch (Exception e) {
-            //} catch (RuntimeException e) {
             e.printStackTrace();
-            //throw new RuntimeException();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚，这样上层就无需去处理异常
         }
         return ret;
@@ -110,20 +114,19 @@ public class CdServiceImpl implements ICdService {
     public List<Map> getMenus(String pcdid) {
         List<Map> menuList = new ArrayList<>();
         //根据上级菜单ID获取子菜单
-        List<RsglBCdEntity> pCdList = cdRepository.findByPcdid(pcdid, new Sort(Sort.Direction.DESC, "xssx"));
+        List<RsglBCdEntity> pCdList = cdRepository.findByPcdid(pcdid, Sort.by("xssx"));
         for (RsglBCdEntity pCd : pCdList) {
             Map menuMap = new HashMap();
             menuMap.put("id", pCd.getCdid());
             menuMap.put("pid", pCd.getPcdid());
             menuMap.put("text", pCd.getCdmc());
-            if (pCd.getCdlx().equals("1")) {
-                //单元
+            menuMap.put("page", pCd.getPcpage());
+            menuMap.put("nodes", null);
+            //判断是否有子集
+            int count = cdRepository.countByPcdid(pCd.getCdid());
+            if (count > 0) {
                 List<Map> childList = this.getMenus(pCd.getCdid());
                 menuMap.put("nodes", childList);
-            } else {
-                //功能
-                menuMap.put("page", pCd.getPcpage());
-                menuMap.put("nodes", null);
             }
             menuList.add(menuMap);
         }
