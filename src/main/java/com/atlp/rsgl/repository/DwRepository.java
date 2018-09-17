@@ -22,7 +22,7 @@ public interface DwRepository extends JpaRepository<RsglBDwEntity, Long> {
      * @return
      * @throws Exception
      */
-    public Page<RsglBDwEntity> findAllByPdwid(Pageable pageable, String pdwid) throws Exception;
+    public Page<RsglBDwEntity> findAllByPdwid(Pageable pageable, String pdwid);
 
     /**
      * 通过主键查询单位信息
@@ -30,7 +30,7 @@ public interface DwRepository extends JpaRepository<RsglBDwEntity, Long> {
      * @return
      * @throws Exception
      */
-    public RsglBDwEntity findByDwid(String dwid) throws Exception;
+    public RsglBDwEntity findByDwid(String dwid);
 
     /**
      * 通过上级单位id查询下级单位
@@ -38,7 +38,7 @@ public interface DwRepository extends JpaRepository<RsglBDwEntity, Long> {
      * @return
      * @throws Exception
      */
-    public List<RsglBDwEntity> findByPdwid(String pid, Sort sort) throws Exception;
+    public List<RsglBDwEntity> findByPdwid(String pid, Sort sort);
 
 
 

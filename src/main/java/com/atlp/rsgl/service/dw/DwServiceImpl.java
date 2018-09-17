@@ -35,7 +35,7 @@ public class DwServiceImpl implements IDwService {
     @Override
     public Page<RsglBDwEntity> getDwPage(PageModel page, String pdwid) throws Exception {
         // return dwRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
-        return dwRepository.findAllByPdwid(PageRequest.of(page.getPage(), page.getLimit()), pdwid);
+        return dwRepository.findAllByPdwid(PageRequest.of(page.getPage(), page.getLimit(), Sort.by("dwpwsx")), pdwid);
     }
 
     @Override

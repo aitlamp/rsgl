@@ -39,6 +39,7 @@ public interface IDwService {
 
     /**
      * 通过上级单位id查询下级单位
+     * 单位树
      * @param pid
      * @return
      * @throws Exception

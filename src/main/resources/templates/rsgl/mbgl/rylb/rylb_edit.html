@@ -8,32 +8,26 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form id="dwwhForm" class="form-horizontal" method="post">
-        <input type="hidden" id="pdwid" name="pdwid" th:value="${pdwid}">
-        <input type="hidden" id="dwid" name="dwid" th:value="${entity.dwid}">
+    <form id="lbwhForm" class="form-horizontal" method="post">
+        <input type="hidden" id="plbid" name="plbid" th:value="${plbid}">
+        <input type="hidden" id="lbid" name="lbid" th:value="${entity.lbid}">
 
         <div class="form-group" style="padding-top: 10px;">
-            <label class="col-sm-2 control-label">上级单位</label>
+            <label class="col-sm-2 control-label">上级类别</label>
             <div class="col-sm-9">
-                <input class="form-control" id="pdwmc" name="pdwmc" th:value="${entity.pdwmc}" readonly>
+                <input class="form-control" id="plbmc" name="plbmc" th:value="${entity.plbmc}" readonly>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">单位名称</label>
+            <label class="col-sm-2 control-label">类别名称</label>
             <div class="col-sm-9">
-                <input class="form-control" id="dwmc" name="dwmc" th:value="${entity.dwmc}" placeholder="输入单位名称">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">单位简称</label>
-            <div class="col-sm-9">
-                <input class="form-control" id="dwjc" name="dwjc" th:value="${entity.dwjc}" placeholder="输入单位简称">
+                <input class="form-control" id="lbmc" name="lbmc" th:value="${entity.lbmc}" placeholder="输入类别名称">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">排位顺序</label>
             <div class="col-sm-9">
-                <input class="form-control" id="dwpwsx" name="dwpwsx" th:value="${entity.dwpwsx}">
+                <input class="form-control" id="pwsx" name="pwsx" th:value="${entity.pwsx}">
             </div>
         </div>
         <div class="form-group">
@@ -52,7 +46,7 @@
     </form>
     <script>
         $(function () {
-            $("#dwwhForm").bootstrapValidator({
+            $("#lbwhForm").bootstrapValidator({
                 live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
                 excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
                 //submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
@@ -63,17 +57,10 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    dwmc: {
+                    lbmc: {
                         validators: {
                             notEmpty: {//检测非空,radio也可用
-                                message: '单位名称必须输入'
-                            }
-                        }
-                    },
-                    dwjc: {
-                        validators: {
-                            notEmpty: {//检测非空,radio也可用
-                                message: '单位简称必须输入'
+                                message: '类别名称必须输入'
                             }
                         }
                     }
@@ -86,16 +73,16 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/dw/doSave",
-                    data: $("#dwwhForm").serialize(),
+                    url: "/rylb/doSave",
+                    data: $("#lbwhForm").serialize(),
                     success: function (result) {
                         //关闭遮罩
                         layer.close(index_load);
                         if (result) {
                             //刷新table
-                            window.parent.$("#dwwhTable").bootstrapTable('refresh', {
+                            window.parent.$("#rylbTable").bootstrapTable('refresh', {
                                 query : {
-                                    pdwid : $("#pdwid").val()
+                                    plbid : $("#plbid").val()
                                 }
                             });
                             //关闭弹框

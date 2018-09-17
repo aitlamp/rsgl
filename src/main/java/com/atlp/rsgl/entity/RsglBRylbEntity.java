@@ -8,18 +8,17 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "RSGL_B_DW")
-public class RsglBDwEntity {
+@Table(name = "RSGL_B_RYLB")
+public class RsglBRylbEntity {
 
     @Id
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(generator = "system-uuid")
-    private String dwid;
-    private String pdwid;
-    private String dwmc;
-    private String pdwmc;
-    private String dwjc;
-    private byte dwpwsx;
+    private String lbid;
+    private String plbid;
+    private String lbmc;
+    private String plbmc;
+    private byte pwsx;
     private String sm;
     private String dqzt;
     private Timestamp firsttime;
@@ -28,5 +27,6 @@ public class RsglBDwEntity {
     private String yhxm;
     private String yhdwid;
     private String yhdwmc;
+
 
 }

@@ -10,53 +10,53 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <div id="dwTree" class="dwTree" style="padding-top: 55px;"></div>
+            <div id="lbTree" class="lbTree" style="padding-top: 55px;"></div>
         </div>
         <div class="col-md-9" style="padding-left: 0px;">
             <div id="toolbar" class="text-right">
                 <button class="btn btn-info" onclick="doAdd();">添加</button>
             </div>
-            <table id="dwwhTable"></table>
+            <table id="rylbTable"></table>
         </div>
     </div>
 
 
     <script type="text/javascript">
-        var pdwid = "root"; // 定义全局变量，上级单位id为root
+        var plbid = "root"; // 定义全局变量，上级单位id为root
 
         $(function () {
             //初始化树
-            dwTree();
+            lbTree();
 
             // 初始化table
-            dwDataPage(pdwid);
+            rylbDataPage(plbid);
         });
 
         // 单位树
-        function dwTree() {
+        function lbTree() {
             $.ajax({
-                type: "Post",
-                url: "/dw/getDwTree/root",
+                type: "post",
+                url: "/rylb/getRylbTree/" + plbid,
                 dataType: "json",
                 success: function (result) {
-                    var tree_data = [{id: 'root', pid: '', text: '单位树', nodes: result}];
-                    var tree = $('#dwTree').treeview({
-                        data: tree_data,             // 数据源
+                    var tree_data = [{id: 'root', pid: '', text: '类别树', nodes: result}];
+                    var tree = $('#lbTree').treeview({
+                        data: tree_data,           // 数据源
                         levels: 2,              //默认展开的级别
                         onNodeSelected : function (event, data) {
                             var data = {};
-                            var node = $("#dwTree").treeview("getSelected");
+                            var node = $("#lbTree").treeview("getSelected");
                             if (!node) {
                                 data = {
-                                    id : pdwid,
+                                    id : plbid,
                                 }
                             } else {
                                 data = node[0];
                             }
                             // 刷新查询单位信息
-                            $("#dwwhTable").bootstrapTable('refresh', {
+                            $("#rylbTable").bootstrapTable('refresh', {
                                 query : {
-                                    pdwid : data.id
+                                    plbid : data.id
                                 }
                             });
                         }
@@ -69,9 +69,9 @@
         }
 
         // 单位分页数据
-        function dwDataPage(pdwid) {
-            var t = $("#dwwhTable").bootstrapTable({
-                url: '/dw/getDwPage',
+        function rylbDataPage(plbid) {
+            var t = $("#rylbTable").bootstrapTable({
+                url: '/rylb/getRylbPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
@@ -90,26 +90,20 @@
                     return {//这里的params是table提供的
                         offset: params.offset,  //从数据库第几条记录开始
                         limit: params.limit, //找多少条
-                        pdwid : pdwid
+                        plbid: plbid
                     };
                 },
                 idField: "userId",//指定主键列
                 columns: [
                     {
-                        title: '单位名称',
-                        field: 'dwmc',
+                        title: '类别名称',
+                        field: 'lbmc',
                         align: 'left',
                         width: '200'
                     },
                     {
-                        title: '单位简称',
-                        field: 'dwjc',
-                        align: 'left',
-                        width: '150'
-                    },
-                    {
                         title: '排位顺序',
-                        field: 'dwpwsx',
+                        field: 'pwsx',
                         align: 'center',
                         width: '100'
                     },
@@ -126,12 +120,12 @@
                     },
                     {
                         title: '操作',
-                        field: 'dwid',
+                        field: 'lbid',
                         width: '140',
                         align: 'center',
                         formatter: function (value, row, index) {//自定义显示可以写标签哦~
-                            return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.pdwid + '\', \'' + row.dwid + '\')">修改</a> &nbsp;' +
-                                '<a href="#" mce_href="#" onclick="doDelete(\'' + row.dwid + '\')">删除</a> ';
+                            return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.plbid + '\', \'' + row.lbid + '\')">修改</a> &nbsp;' +
+                                '<a href="#" mce_href="#" onclick="doDelete(\'' + row.lbid + '\')">删除</a> ';
                         }
                     }
 
@@ -144,66 +138,63 @@
         }
 
         // 获取上级单位id
-        function getPdwid() {
+        function getPlbid() {
             var data = {};
-            var node = $("#dwTree").treeview("getSelected");
+            var node = $("#lbTree").treeview("getSelected");
             console.log("node", node);
             if (node.length == 0) {
                 data = {
-                    id : pdwid,
+                    id : plbid,
                 }
             } else {
                 data = node[0];
             }
             console.log("data", data);
 
-            pdwid = data.id;
+            plbid = data.id;
         }
 
         //添加
         function doAdd() {
-            // 上级单位id
-            getPdwid();
+            // 上级类别id
+            getPlbid();
 
             var index = layer.open({
                 title: '添加单位',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/dw/editUI/" + pdwid + "/null"
+                content: "/rylb/editUI/" + plbid + "/null"
             });
         }
 
         //修改
-        function doUpdate(p_dwid, dwid) {
-            console.log("pdwid", p_dwid);
-            console.log("dwid", dwid);
-
+        function doUpdate(p_lbid, lbid) {
             var index = layer.open({
                 title: '修改单位信息',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/dw/editUI/" + p_dwid + "/" + dwid
+                content: "/rylb/editUI/" + p_lbid + "/" + lbid
             });
         }
 
         //删除
-        function doDelete(dwid) {
-            // 上级单位id
-            getPdwid();
+        function doDelete(lbid) {
+            // 上级类别id
+            getPlbid();
 
             layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
                 // 打开遮罩
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/dw/doDelete/" + dwid,
+                    url: "/rylb/doDelete/" + lbid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {
                             layer.msg("删除成功.");
-                            $("#dwwhTable").bootstrapTable('refresh', {
+                            $("#rylbTable").bootstrapTable('refresh', {
                                 query : {
-                                    pdwid : pdwid
+                                    plbid : plbid
                                 }
                             });//刷新table
                         } else {

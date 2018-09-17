@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -50,7 +47,7 @@ public class DwController {
      * @param page
      * @return
      */
-    @RequestMapping(value = "/getDwPage")
+    @RequestMapping(value = "/getDwPage", method = RequestMethod.GET)
     @ResponseBody
     public Page getPage(PageModel page, @RequestParam String pdwid) throws Exception {
         return iDwService.getDwPage(page, pdwid);
@@ -75,6 +72,14 @@ public class DwController {
             if (!pdwid.equals(dwEntity.getPdwid())) {
                 logger.debug("单位修改传入pdwid错误,pdwid==={},查询单位信息==={}", pdwid, dwEntity.toString());
                 throw new Exception("参数错误.");
+            }
+        } else {
+            // 添加，判断plbid
+            if ("root".equals(pdwid)) {
+                dwEntity.setPdwmc("根");
+            } else {
+                RsglBDwEntity pDwEntity = iDwService.getDwInfoById(pdwid);
+                dwEntity.setPdwmc(pDwEntity.getDwmc());
             }
         }
 
