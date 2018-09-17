@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单维护</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <form id="dwwhForm" class="form-horizontal" method="post">
+        <input type="hidden" id="pdwid" name="pdwid" th:value="${pdwid}">
+        <input type="hidden" id="dwid" name="dwid" th:value="${entity.dwid}">
+
+        <div class="form-group" style="padding-top: 10px;">
+            <label class="col-sm-2 control-label">单位名称</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="dwmc" name="dwmc" th:value="${entity.dwmc}" placeholder="输入单位名称">
+            </div>
+        </div>
+        <div class="form-group" style="padding-top: 10px;">
+            <label class="col-sm-2 control-label">单位简称</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="dwjc" name="dwjc" th:value="${entity.dwjc}" placeholder="输入单位简称">
+            </div>
+        </div>
+        <div class="form-group" style="padding-top: 10px;">
+            <label class="col-sm-2 control-label">排位顺序</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="dwpwsx" name="dwpwsx" th:value="${entity.dwpwsx}">
+            </div>
+        </div>
+        <div class="form-group" style="padding-top: 10px;">
+            <label class="col-sm-2 control-label">说明</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" id="sm" name="sm" rows="2" th:text="${entity.sm}"
+                          style="resize: none" placeholder="输入文字说明"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">保存</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#dwwhForm").bootstrapValidator({
+                live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                //submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                message: '通用的验证失败消息',//好像从来没出现过
+                feedbackIcons: {//根据验证结果显示的各种图标
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    dwmc: {
+                        validators: {
+                            notEmpty: {//检测非空,radio也可用
+                                message: '单位名称必须输入'
+                            }
+                        }
+                    },
+                    dwjc: {
+                        validators: {
+                            notEmpty: {//检测非空,radio也可用
+                                message: '单位简称必须输入'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {//点击提交之后
+                // 阻止表单提交
+                e.preventDefault();
+                // 打开遮罩
+                var index_load = layer.load({shade: [1, '#000']});
+                // ajax提交
+                $.ajax({
+                    type: "post",
+                    url: "/dw/doSave",
+                    data: $("#dwwhForm").serialize(),
+                    success: function (result) {
+                        //关闭遮罩
+                        layer.close(index_load);
+                        if (result) {
+                            //刷新table
+                            window.parent.$("#dwwhTable").bootstrapTable('refresh');
+                            //关闭弹框
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                            // window.location.href = "/dw/listUI";
+                        } else {
+                            layer.msg("保存失败，请稍后重试！");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //关闭遮罩
+                        layer.close(index_load);
+                        layer.msg("保存失败，请稍后重试！");
+                    }
+                });
+                //$.post($form.attr('action'), $form.serialize(), function (result) {
+                //});
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
