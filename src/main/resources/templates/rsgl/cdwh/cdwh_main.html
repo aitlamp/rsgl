@@ -10,7 +10,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-3">
-            <div id="tree" style="padding-top: 55px;"></div>
+            <div class="panel panel-default" style="margin-top: 10px;">
+                <div class="panel-heading">菜单树</div>
+                <div id="treeBody" class="panel-body" style="overflow: auto;">
+                    <div id="tree" class="ztree"></div>
+                </div>
+            </div>
         </div>
         <div class="col-md-9 col-sm-9" style="padding-left: 0px;">
             <div id="toolbar" class="text-right">
@@ -21,30 +26,60 @@
     </div>
 
     <script type="text/javascript">
-        var tree;
+        $("#treeBody").height($(window).height() - 115);
+        var treeObj;
+        var treeParam;
+        var lastNodeId;
+        var tableObj;
         $(function () {
             //初始化树
-            $.ajax({
-                type: "Post",
-                url: "/cd/getCdTree",
-                dataType: "json",
-                success: function (result) {
-                    var data = [{id: 'root', pid: '', text: '根', nodes: result}];
-                    tree = $('#tree').treeview({
-                        data: data,         // 数据源
-                        levels: 2, //默认展开的级别
-                        onNodeSelected: function (event, data) {
-                            $("#cdwhTable").bootstrapTable('refresh');
-                        }
-                    });
+            treeObj = $.fn.zTree.init($("#tree"), {
+                async: {    //ztree异步请求数据
+                    enable: true,
+                    url: "/cd/getCdTree",//请求action方法
+                    autoparam: ["id"],
+                    otherParam: function () {
+                        return treeParam;
+                    },
                 },
-                error: function () {
-                    alert("树形结构加载失败！")
+                data: {
+                    simpleData: {
+                        enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
+                        idKey: "cdid",
+                        pIdKey: "pcdid",
+                        rootPId: ""
+                    },
+                    key: {
+                        name: "cdmc",
+                        url: ""
+                    }
+                },
+                view: {
+                    showLine: true,//显示连接线
+                    showIcon: false//显示节点图片
+                    //fontCss: {color:"red"}
+                    //fontCss: setFontCss//节点颜色
+                },
+                callback: {
+                    //beforeClick: zTreeBeforeClick,
+                    onAsyncSuccess: function () {
+                        treeObj.expandAll(true);
+                        if (lastNodeId) {
+                            var lastNode = treeObj.getNodeByParam("cdid", lastNodeId, null);
+                            treeObj.selectNode(lastNode);
+                        } else {
+                            treeObj.selectNode(treeObj.getNodes()[0]);
+                        }
+                    },
+                    onClick: function (event, treeId, treeNode) {
+                        lastNodeId = treeNode.cdid;
+                        $("#cdwhTable").bootstrapTable('refresh');
+                    }
                 }
             });
 
             //初始化表格
-            var t = $("#cdwhTable").bootstrapTable({
+            tableObj = $("#cdwhTable").bootstrapTable({
                 url: '/cd/getPage',
                 method: 'get',
                 dataType: "json",
@@ -62,11 +97,11 @@
                 },
                 queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
                     var pcdid = "root";
-                    if (tree) {
-                        var selectedNodes = tree.treeview('getSelected');
-                        if (selectedNodes.length == 1) {
-                            var node = selectedNodes[0];
-                            pcdid = node.id;
+                    if (treeObj) {
+                        var nodes = treeObj.getSelectedNodes();
+                        if (nodes.length == 1) {
+                            var node = nodes[0];
+                            pcdid = node.cdid;
                         }
                     }
                     return $.extend(params, {pcdid: pcdid});
@@ -118,8 +153,8 @@
                 ]
             });
 
-            t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
-                //console.log("load success");
+            //table加载成功后的监听函数
+            tableObj.on('load-success.bs.table', function (data) {
                 $(".pull-right").css("display", "block");
             });
 
@@ -127,22 +162,33 @@
 
         //添加
         function doAdd() {
+            //获取选择的上级菜单
+            var pcdid = "root";
+            if (treeObj) {
+                var nodes = treeObj.getSelectedNodes();
+                if (nodes.length == 1) {
+                    var node = nodes[0];
+                    pcdid = node.cdid;
+                }
+            }
+
+            //打开弹框
             layer.open({
                 id: 'addPop',
                 title: '添加',
                 area: ['60%', '80%'],
                 type: 2,
-                content: '/cd/edit/null'
+                content: '/cd/edit/null/' + pcdid
             });
         }
 
         //修改
         function doUpdate(cdid) {
-            var index = layer.open({
+            layer.open({
                 title: '修改',
                 area: ['60%', '80%'],
                 type: 2,
-                content: '/cd/edit/' + cdid
+                content: '/cd/edit/' + cdid + "/null"
             });
         }
 
@@ -158,8 +204,9 @@
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {
-                            //$("#cdwhTable").bootstrapTable('refresh');//刷新table
-                            window.location.reload();
+                            //刷新
+                            tableObj.bootstrapTable('refresh');
+                            treeObj.reAsyncChildNodes(null, "refresh");
                         } else {
                             layer.msg("删除失败，请与管理员联系！");
                         }

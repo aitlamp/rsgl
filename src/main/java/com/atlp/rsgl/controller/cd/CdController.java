@@ -40,11 +40,20 @@ public class CdController {
     /*
      * edit页面
      */
-    @RequestMapping({"/edit/{cdid}"})
-    public String edit(@PathVariable String cdid, ModelMap map) {
+    @RequestMapping({"/edit/{cdid}/{pcdid}"})
+    public String edit(@PathVariable String cdid, @PathVariable String pcdid, ModelMap map) {
         RsglBCdEntity cdEntity = new RsglBCdEntity();
         if (!AtlpUtil.isEmpty(cdid)) {
             cdEntity = cdService.findByCdid(cdid);
+        } else {
+            RsglBCdEntity pCdEntity = cdService.findByCdid(pcdid);
+            if (!AtlpUtil.isEmpty(pCdEntity)) {
+                cdEntity.setPcdid(pCdEntity.getCdid());
+                cdEntity.setPcdmc(pCdEntity.getCdmc());
+            } else {
+                cdEntity.setPcdid("root");
+                cdEntity.setPcdmc("根");
+            }
         }
         map.addAttribute("cdEntity", cdEntity);
         return "/rsgl/cdwh/cdwh_edit";
@@ -64,7 +73,7 @@ public class CdController {
     @RequestMapping("/getPage")
     @ResponseBody
     public Page getPage(PageModel page, @RequestParam Map pmap) {
-        return cdService.getPage(page,pmap);
+        return cdService.getPage(page, pmap);
     }
 
     /*
@@ -73,7 +82,8 @@ public class CdController {
     @RequestMapping("/getCdTree")
     @ResponseBody
     public List getCdTree() {
-        return cdService.getMenus("root");
+        //return cdService.getMenus("root");
+        return cdService.findAll();
     }
 
     /*

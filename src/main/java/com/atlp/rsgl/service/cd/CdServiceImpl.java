@@ -105,13 +105,19 @@ public class CdServiceImpl implements ICdService {
      * 获取数据
      */
     public List findAll() {
-        return cdRepository.findAll();
+        List list = cdRepository.findAll(Sort.by("xssx"));
+        Map map = new HashMap();
+        map.put("cdid", "root");
+        map.put("pcdid", "");
+        map.put("cdmc", "根");
+        list.add(map);
+        return list;
     }
 
     /**
      * 获取菜单数据
      */
-    public List<Map> getMenus(String pcdid) {
+    public List getMenus(String pcdid) {
         List<Map> menuList = new ArrayList<>();
         //根据上级菜单ID获取子菜单
         List<RsglBCdEntity> pCdList = cdRepository.findByPcdid(pcdid, Sort.by("xssx"));
