@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>人员属性</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="zw_toolbar" class="text-left">
+                <button class="btn btn-info" onclick="doZwAdd();">添加</button>
+            </div>
+            <table id="zwTable"></table>
+        </div>
+        <div class="col-md-4">
+            <div id="zj_toolbar" class="text-left">
+                <button class="btn btn-info" onclick="doZjAdd();">添加</button>
+            </div>
+            <table id="zjTable"></table>
+        </div>
+        <div class="col-md-4">
+            <div id="zd_toolbar" class="text-left">
+                <button class="btn btn-info" onclick="doZdAdd();">添加</button>
+            </div>
+            <table id="zdTable"></table>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-md-4">
+            <div id="gw_toolbar" class="text-left">
+                <button class="btn btn-info" onclick="doGwAdd();">添加</button>
+            </div>
+            <table id="gwTable"></table>
+        </div>
+        <div class="col-md-4">
+            <div id="gj_toolbar" class="text-left">
+                <button class="btn btn-info" onclick="doGjAdd();">添加</button>
+            </div>
+            <table id="gjTable"></table>
+        </div>
+        <div class="col-md-4">
+            <div id="gd_toolbar" class="text-left">
+                <button class="btn btn-info" onclick="doGdAdd();">添加</button>
+            </div>
+            <table id="gdTable"></table>
+        </div>
+    </div>-->
+
+    <script type="text/javascript" src="/rsgl/mbgl/rysx/js/zw.js"></script>
+    <script type="text/javascript" src="/rsgl/mbgl/rysx/js/zj.js"></script>
+    <script type="text/javascript" src="/rsgl/mbgl/rysx/js/zd.js"></script>
+    <script type="text/javascript" src="/rsgl/mbgl/rysx/js/gw.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // 职务table
+            zwDataPage();
+
+            // 职级table
+            zjDataPage();
+        });
+    </script>
+</div>
+</body>
+</html>

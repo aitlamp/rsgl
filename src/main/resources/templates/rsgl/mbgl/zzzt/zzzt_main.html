@@ -103,23 +103,23 @@
         }
 
         //修改
-        function doUpdate(lbid) {
+        function doUpdate(ztid) {
             var index = layer.open({
                 title: '修改状态信息',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/zzzt/editUI/" + lbid
+                content: "/zzzt/editUI/" + ztid
             });
         }
 
         //删除
-        function doDelete(lbid) {
+        function doDelete(ztid) {
             layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
                 // 打开遮罩
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/zzzt/doDelete/" + lbid,
+                    url: "/zzzt/doDelete/" + ztid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {
