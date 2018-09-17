@@ -2,9 +2,9 @@ $(function () {
 
 })
 
-// 职务分页数据
+// 岗位分页数据
 function gwDataPage() {
-    var t = $("#zwTable").bootstrapTable({
+    var t = $("#gwTable").bootstrapTable({
         url: '/gw/getGwPage',
         method: 'get',
         dataType: "json",
@@ -29,8 +29,8 @@ function gwDataPage() {
         idField: "userId",//指定主键列
         columns: [
             {
-                title: '职务名称',
-                field: 'zwmc',
+                title: '全员聘用岗位名称',
+                field: 'qypygwmc',
                 align: 'left'
             },
             {
@@ -51,8 +51,8 @@ function gwDataPage() {
                 width: '120',
                 align: 'center',
                 formatter: function (value, row, index) {//自定义显示可以写标签哦~
-                    return '<a href="#" mce_href="#" onclick="doGwUpdate(\'' + row.zwid + '\')">修改</a> &nbsp;' +
-                        '<a href="#" mce_href="#" onclick="doGwDelete(\'' + row.zwid + '\')">删除</a> ';
+                    return '<a href="#" mce_href="#" onclick="doGwUpdate(\'' + row.qypygwid + '\')">修改</a> &nbsp;' +
+                        '<a href="#" mce_href="#" onclick="doGwDelete(\'' + row.qypygwid + '\')">删除</a> ';
                 }
             }
         ]
@@ -64,17 +64,17 @@ function gwDataPage() {
 }
 
 //添加
-function doZwAdd() {
+function doGwAdd() {
     var index = layer.open({
         title: '添加职务',
         area: ['80%', '80%'],
         type: 2,
-        content: "/zw/editUI/null"
+        content: "/gw/editUI/null"
     });
 }
 
 //修改
-function doZwUpdate(gwid) {
+function doGwUpdate(gwid) {
     var index = layer.open({
         title: '修改职务信息',
         area: ['80%', '80%'],
@@ -84,7 +84,7 @@ function doZwUpdate(gwid) {
 }
 
 //删除
-function doZwDelete(gwid) {
+function doGwDelete(gwid) {
     layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
         // 打开遮罩
         var index_load = layer.load({shade: [1, '#000']});
