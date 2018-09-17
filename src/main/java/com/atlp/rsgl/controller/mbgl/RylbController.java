@@ -101,7 +101,6 @@ public class RylbController {
     @RequestMapping(value = "/doSave")
     @ResponseBody
     public boolean doSave(RsglBRylbEntity rylbEntity, HttpServletRequest request) throws Exception {
-        System.out.println("进入增加方法.");
         if (null == rylbEntity) {
             logger.debug("参数异常,传入人员类别为空.人员类别信息==={}", rylbEntity.toString());
             // throw new Exception("参数异常,传入人员类别为空.");

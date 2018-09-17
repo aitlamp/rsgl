@@ -2,76 +2,32 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>人员类别</title>
+    <title>在职状态</title>
     <!-- 引入公共页面 -->
     <link rel="import" href="/include"/>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <div id="lbTree" class="lbTree" style="padding-top: 55px;"></div>
-        </div>
-        <div class="col-md-9" style="padding-left: 0px;">
+        <div class="col-md-12">
             <div id="toolbar" class="text-right">
                 <button class="btn btn-info" onclick="doAdd();">添加</button>
             </div>
-            <table id="rylbTable"></table>
+            <table id="zzztTable"></table>
         </div>
     </div>
 
 
     <script type="text/javascript">
-        var plbid = "root"; // 定义全局变量，上级单位id为root
-
         $(function () {
-            //初始化树
-            lbTree();
-
             // 初始化table
-            rylbDataPage(plbid);
+            zzztDataPage();
         });
 
-        // 单位树
-        function lbTree() {
-            $.ajax({
-                type: "post",
-                url: "/rylb/getRylbTree/" + plbid,
-                dataType: "json",
-                success: function (result) {
-                    var tree_data = [{id: 'root', pid: '', text: '类别树', nodes: result}];
-                    var tree = $('#lbTree').treeview({
-                        data: tree_data,           // 数据源
-                        levels: 2,              //默认展开的级别
-                        onNodeSelected : function (event, data) {
-                            var data = {};
-                            var node = $("#lbTree").treeview("getSelected");
-                            if (!node) {
-                                data = {
-                                    id : plbid,
-                                }
-                            } else {
-                                data = node[0];
-                            }
-                            // 刷新查询单位信息
-                            $("#rylbTable").bootstrapTable('refresh', {
-                                query : {
-                                    plbid : data.id
-                                }
-                            });
-                        }
-                    });
-                },
-                error: function () {
-                    alert("树形结构加载失败！")
-                }
-            });
-        }
-
         // 单位分页数据
-        function rylbDataPage(plbid) {
-            var t = $("#rylbTable").bootstrapTable({
-                url: '/rylb/getRylbPage',
+        function zzztDataPage() {
+            var t = $("#zzztTable").bootstrapTable({
+                url: '/zzzt/getZzztPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
@@ -90,20 +46,19 @@
                     return {//这里的params是table提供的
                         offset: params.offset,  //从数据库第几条记录开始
                         limit: params.limit, //找多少条
-                        plbid: plbid
                     };
                 },
                 idField: "userId",//指定主键列
                 columns: [
                     {
-                        title: '类别名称',
-                        field: 'lbmc',
+                        title: '状态名称',
+                        field: 'ztmc',
                         align: 'left',
                         width: '200'
                     },
                     {
-                        title: '排位顺序',
-                        field: 'pwsx',
+                        title: '显示顺序',
+                        field: 'xssx',
                         align: 'center',
                         width: '100'
                     },
@@ -124,8 +79,8 @@
                         width: '140',
                         align: 'center',
                         formatter: function (value, row, index) {//自定义显示可以写标签哦~
-                            return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.plbid + '\', \'' + row.lbid + '\')">修改</a> &nbsp;' +
-                                '<a href="#" mce_href="#" onclick="doDelete(\'' + row.lbid + '\')">删除</a> ';
+                            return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.ztid + '\')">修改</a> &nbsp;' +
+                                '<a href="#" mce_href="#" onclick="doDelete(\'' + row.ztid + '\')">删除</a> ';
                         }
                     }
 
@@ -137,66 +92,39 @@
             });
         }
 
-        // 获取上级单位id
-        function getPlbid() {
-            var data = {};
-            var node = $("#lbTree").treeview("getSelected");
-            console.log("node", node);
-            if (node.length == 0) {
-                data = {
-                    id : plbid,
-                }
-            } else {
-                data = node[0];
-            }
-            console.log("data", data);
-
-            plbid = data.id;
-        }
-
         //添加
         function doAdd() {
-            // 上级类别id
-            getPlbid();
-
             var index = layer.open({
-                title: '添加单位',
+                title: '添加在职状态',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/rylb/editUI/" + plbid + "/null"
+                content: "/zzzt/editUI/null"
             });
         }
 
         //修改
-        function doUpdate(p_lbid, lbid) {
+        function doUpdate(lbid) {
             var index = layer.open({
-                title: '修改单位信息',
+                title: '修改状态信息',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/rylb/editUI/" + p_lbid + "/" + lbid
+                content: "/zzzt/editUI/" + lbid
             });
         }
 
         //删除
         function doDelete(lbid) {
-            // 上级类别id
-            getPlbid();
-
             layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
                 // 打开遮罩
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/rylb/doDelete/" + lbid,
+                    url: "/zzzt/doDelete/" + lbid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {
                             layer.msg("删除成功.");
-                            $("#rylbTable").bootstrapTable('refresh', {
-                                query : {
-                                    plbid : plbid
-                                }
-                            });//刷新table
+                            $("#zzztTable").bootstrapTable('refresh');//刷新table
                         } else {
                             layer.msg("删除失败，请与管理员联系！");
                         }
