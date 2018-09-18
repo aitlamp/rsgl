@@ -57,11 +57,8 @@ Menu.prototype._show = function ($this) {
 
     }
 
-
     this.content.find('iframe').addClass('outwindow');
     this.content.find('iframe[data-id="' + id + '"]').removeClass();
-
-
 }
 
 /*关闭tab*/
@@ -95,12 +92,19 @@ Menu.prototype._bindEvent = function () {
     var self = this;
 
     this.nav.on('click', 'li', function () {
-
         if ($(this).hasClass('current') || $(this).hasClass('subnav-li')) {
             return false;
         }
-        $(this).addClass('current').siblings().removeClass("current").find(".subnav").hide().end().end().find(".subnav").show();
+        //$(this).addClass('current').siblings().removeClass("current").find(".subnav").hide().end().end().find(".subnav").show();
+        $(this).parent().parent().find('li').removeClass('current');
+        $(this).addClass('current');
+        $(this).siblings().removeClass("current");
+        $(this).siblings().find(".subnav").hide();
+        $(this).end().find(".subnav").show();
 
+        if ($(this).attr('data-id') == "1") {
+            self._select(self.defaultSelect);
+        }
     });
 
 
@@ -207,12 +211,10 @@ Menu.prototype._closeAll = function () {
     $.each($('.tab').find('li'), function () {
         if ($(this).attr('data-default') !== 'default') {
             self._close($(this));
-
         } else {
             self._select($(this))
         }
     });
-
 
 }
 

@@ -10,9 +10,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-3">
-            <div class="panel panel-default" style="margin-top: 10px;">
+            <div class="panel panel-default" style="margin: 10px 0px 0px 0px;">
                 <div class="panel-heading">菜单树</div>
-                <div id="treeBody" class="panel-body" style="overflow: auto;">
+                <div id="treeBody" class="panel-body" style="padding: 5px; overflow: auto;">
                     <div id="tree" class="ztree"></div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
     </div>
 
     <script type="text/javascript">
-        $("#treeBody").height($(window).height() - 115);
+        $("#treeBody").height($(window).height() - 96);
         var treeObj;
         var treeParam;
         var lastNodeId;
