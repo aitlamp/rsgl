@@ -8,13 +8,13 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form id="zjForm" class="form-horizontal" method="post">
-        <input type="hidden" id="zjid" name="zjid" th:value="${entity.zjid}">
+    <form id="gjForm" class="form-horizontal" method="post">
+        <input type="hidden" id="gwdjid" name="gwdjid" th:value="${entity.gwdjid}">
 
         <div class="form-group" style="padding-top: 10px;">
-            <label class="col-sm-2 control-label">职级名称</label>
+            <label class="col-sm-2 control-label">岗位等级名称</label>
             <div class="col-sm-9">
-                <input class="form-control" id="zjmc" name="zjmc" th:value="${entity.zjmc}" placeholder="输入职级名称">
+                <input class="form-control" id="gwdjmc" name="gwdjmc" th:value="${entity.gwdjmc}" placeholder="输入岗位等级名称">
             </div>
         </div>
         <div class="form-group">
@@ -39,7 +39,7 @@
     </form>
     <script>
         $(function () {
-            $("#zjForm").bootstrapValidator({
+            $("#gjForm").bootstrapValidator({
                 live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
                 excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
                 //submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
@@ -50,10 +50,10 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    zjmc: {
+                    gwdjmc: {
                         validators: {
                             notEmpty: {//检测非空,radio也可用
-                                message: '职级名称必须输入'
+                                message: '岗位等级名称必须输入'
                             }
                         }
                     }
@@ -66,14 +66,14 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/zj/doSave",
-                    data: $("#zjForm").serialize(),
+                    url: "/gj/doSave",
+                    data: $("#gjForm").serialize(),
                     success: function (result) {
                         //关闭遮罩
                         layer.close(index_load);
                         if (result) {
                             //刷新table
-                            window.parent.$("#zjTable").bootstrapTable('refresh');
+                            window.parent.$("#gjTable").bootstrapTable('refresh');
                             //关闭弹框
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭

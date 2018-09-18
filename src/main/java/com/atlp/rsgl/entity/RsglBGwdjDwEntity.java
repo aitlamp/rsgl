@@ -11,12 +11,14 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "RSGL_B_GWDJ")
-public class RsglBGwdjEntity {
+@Table(name = "RSGL_B_GWDJ_DW")
+public class RsglBGwdjDwEntity {
 
     @Id
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(generator = "system-uuid")
+    private String dwid;
+    private String dwmc;
     private String gwdjid;
     private String gwdjmc;
     private long pwsx;
