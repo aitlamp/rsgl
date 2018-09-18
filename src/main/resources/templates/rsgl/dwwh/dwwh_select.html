@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>单位选择</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div id="treeBody" class="panel-body" style="overflow: auto;">
+        <div id="dwTree" class="ztree"></div>
+    </div>
+    &nbsp;
+    <div class="text-center">
+        <button class="btn btn-primary" onclick="doSelect()">选择</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //定义变量
+    $("#treeBody").height($(window).height() - 115);
+    var treeObj;
+    var treeParam;
+    var lastNodeId;
+    var tableObj;
+
+    //页面初始化方法
+    $(function () {
+        //初始化树
+        treeObj = $.fn.zTree.init($("#dwTree"), {
+            async: {    //ztree异步请求数据
+                enable: true,
+                url: "/dw/getDwTree", //请求action方法
+                autoparam: ["id"],
+                otherParam: function () {
+                    return treeParam;
+                },
+            },
+            data: {
+                simpleData: {
+                    enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
+                    idKey: "dwid",
+                    pIdKey: "pdwid",
+                    rootPId: ""
+                },
+                key: {
+                    name: "dwmc",
+                    url: ""
+                }
+            },
+            view: {
+                showLine: true,//显示连接线
+                showIcon: false//显示节点图片
+                //fontCss: {color:"red"}
+                //fontCss: setFontCss//节点颜色
+            },
+            callback: {
+                //beforeClick: zTreeBeforeClick,
+                onAsyncSuccess: function () {
+                    treeObj.expandAll(true);
+                    if (lastNodeId) {
+                        var lastNode = treeObj.getNodeByParam("dwid", lastNodeId, null);
+                        treeObj.selectNode(lastNode);
+                    } else {
+                        treeObj.selectNode(treeObj.getNodes()[0]);
+                    }
+                },
+                onClick: function (event, treeId, treeNode) {
+                    lastNodeId = treeNode.cdid;
+                    // $("#cdwhTable").bootstrapTable('refresh');
+                }
+            }
+        });
+    });
+
+    //选择
+    function doSelect() {
+        var nodes = treeObj.getSelectedNodes();
+        if (nodes.length <= 0) {
+            layer.msg("请先选择一条记录！");
+            return false;
+        }
+        var node = nodes[0];
+        var addIframe = parent.$("#addPop").find('iframe')[0].contentWindow;
+        addIframe.$("#dwid").val(node.dwid);
+        addIframe.$("#dwmc").val(node.dwmc).change();
+        addIframe.$("#dwjc").val(node.dwjc);
+        //重新验证
+        addIframe.$('#rywhForm').data('bootstrapValidator')
+            .updateStatus('dwmc', 'NOT_VALIDATED', null)
+            .validateField('dwmc');
+        //关闭弹框
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: zhangchq
@@ -123,5 +124,16 @@ public class GdController {
         }
 
         return iGdService.doDeleteGd(gdEntity);
+    }
+
+    /**
+     * 查询所有档位列表
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getGdList/{gjid}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<RsglBGwdjDwEntity> getGdList(@PathVariable(name = "gjid") String gjid) throws Exception {
+        return iGdService.getGdListByGjid(gjid);
     }
 }

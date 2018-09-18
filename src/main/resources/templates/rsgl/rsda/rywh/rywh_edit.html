@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>r人员维护编辑</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <form id="rywhForm" class="form-horizontal" method="post">
+        <input type="hidden" id="yhid" name="yhid" th:value="${entity.yhid}">
+
+        <div class="form-group" style="padding-top: 10px;">
+            <label class="col-sm-2 control-label">单位选择</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="dwmc" name="dwmc" th:value="${entity.dwmc}" readonly
+                       style="cursor: pointer;" placeholder="请点击选择单位" onclick="selectDw();">
+                <input type="hidden" id="dwid" name="dwid" th:value="${entity.dwid}">
+                <input type="hidden" id="dwjc" name="dwjc" th:value="${entity.dwjc}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="yhxm" name="yhxm" th:value="${entity.yhxm}" placeholder="输入姓名">
+            </div>
+            <label class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="xb" name="xb" th:value="${entity.xb}" placeholder="输入性别">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">身份证号</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="sfzh" name="sfzh" th:value="${entity.sfzh}" placeholder="输入身份证号">
+            </div>
+            <label class="col-sm-2 control-label">出生日期</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="csrq" name="csrq" th:value="${entity.csrq}" placeholder="输入出生日期">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">民族</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="mz" name="mz" th:value="${entity.mz}" placeholder="输入民族">
+            </div>
+            <label class="col-sm-2 control-label">籍贯</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="jg" name="jg" th:value="${entity.jg}" placeholder="输入籍贯">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">政治面貌</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="zzmm" name="zzmm" th:value="${entity.zzmm}" placeholder="输入政治面貌">
+            </div>
+            <label class="col-sm-2 control-label">学历</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="xl" name="xl" th:value="${entity.xl}" placeholder="输入学历">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">手机号</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="sjh" name="sjh" th:value="${entity.sjh}" placeholder="输入手机号">
+            </div>
+            <label class="col-sm-2 control-label">座机号</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="zjh" name="zjh" th:value="${entity.zjh}" placeholder="输入座机号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">QQ</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="qq" name="qq" th:value="${entity.qq}" placeholder="输入QQ号">
+            </div>
+            <label class="col-sm-2 control-label">微信</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="wx" name="wx" th:value="${entity.wx}" placeholder="输入微信号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="email" name="email" th:value="${entity.email}" placeholder="输入邮箱">
+            </div>
+        </div>
+        <div class="form-group">
+            <labe class="col-sm-2 control-label">显示顺序</labe>
+            <div class="col-sm-8">
+                <input class="form-control" id="yhpwsx" name="yhpwsx" th:value="${entity.yhpwsx}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">照片</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="zpfjid" name="zpfjid" th:value="${entity.zpfjid}" placeholder="输入照片">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">说明</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" id="sm" name="sm" rows="2" th:text="${entity.sm}"
+                          style="resize: none" placeholder="输入文字说明"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">人员类别</label>
+            <div class="col-sm-4 col-xs-4">
+                <select class="form-control" id="llbmc" name="llbmc"></select>
+                <!--<input class="form-control" id="lbmc" name="lbmc" th:value="${entity.lbmc}" readonly
+                       style="cursor: pointer;" placeholder="请点击选择类别" onclick="selectRylb();">-->
+                <input type="hidden" id="llbid" name="llbid" th:value="${entity.llbid}">
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <select class="form-control" id="slbmc" name="slbmc"></select>
+                <input type="hidden" id="slbid" name="slbid" th:value="${entity.slbid}">
+            </div>
+        </div>
+        <div class="form-group" id="zwSelect">
+            <label class="col-sm-2 control-label">职务</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="zwmc" name="zwmc"></select>
+                <input type="hidden" id="zwid" name="zwid" >
+            </div>
+        </div>
+        <div class="form-group" id="zjSelect">
+            <label class="col-sm-2 control-label">职级</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="zjmc" name="zjmc"></select>
+                <input type="hidden" id="zjid" name="zjid" >
+            </div>
+        </div>
+        <div class="form-group" id="gwSelect">
+            <label class="col-sm-2 control-label">全员聘用岗位</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="gwmc" name="gwmc"></select>
+                <input type="hidden" id="gwid" name="gwid" >
+            </div>
+        </div>
+        <div class="form-group" id="gjSelect">
+            <label class="col-sm-2 control-label">岗位等级</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="gjmc" name="gjmc"></select>
+                <input type="hidden" id="gjid" name="gjid" >
+            </div>
+            <div class="col-sm-4">
+                <select class="form-control" id="gdmc" name="gdmc"></select>
+                <input type="hidden" id="gdid" name="gdid" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">在职状态</label>
+            <div class="col-sm-3">
+                <select class="form-control" id="zzzt" name="zzzt">
+                    <option value="">请选择</option>
+                    <option value="zz">在职</option>
+                    <option value="lz">离职</option>
+                    <option value="tx">退休</option>
+                </select>
+            </div>
+            <label class="col-sm-2 control-label">任职时间</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="rzsj" name="rzsj" placeholder="输入任职时间">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-12  text-center">
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            // 大类别
+            selectLRylb("root");
+            // 小类别
+            $("#llbmc").change(function() {
+                var lbid = $(this).val();
+                // llbid赋值
+                $("#llbid").val(lbid);
+                // 加载小类别
+                selectLRylb(lbid);
+            });
+            $("#slbmc").change(function() {
+                $("#slbid").val($(this).val());
+            });
+
+            // 职务
+            selectZw();
+            selectZj();
+            selectGw();
+            selectGj();
+            $("#gjmc").change(function () {
+                var gjid = $(this).val();
+                console.log("llb", gjid);
+                // llbid赋值
+                $("#gjid").val(gjid);
+                // 加载小类别
+                selectGd(gjid);
+            });
+
+
+
+            $("#rywhForm").bootstrapValidator({
+                live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                //submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                message: '通用的验证失败消息',//好像从来没出现过
+                feedbackIcons: {//根据验证结果显示的各种图标
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    yhxm: {
+                        validators: {
+                            notEmpty: {//检测非空,radio也可用
+                                message: '姓名必须输入.'
+                            }
+                        }
+                    },
+                    dwmc: {
+                            validators: {
+                                notEmpty: {//检测非空,radio也可用
+                                    message: '单位必须选择.'
+                                }
+                            }
+                    },
+                    lbmc: {
+                            validators: {
+                                notEmpty: {//检测非空,radio也可用
+                                    message: '人员类别必须选择.'
+                                }
+                            }
+                    }
+                }
+            }).on('success.form.bv', function (e) {//点击提交之后
+                // 阻止表单提交
+                e.preventDefault();
+
+                // 接收表单信息
+                var yhxx = {}, gzxx = {};
+                yhxx.yhid = $("#yhid").val();
+                yhxx.dwid = $("#dwid").val();
+                yhxx.dwmc = $("#dwmc").val();
+                yhxx.dwjc = $("#dwjc").val();
+                yhxx.llbid = $("#llbmc").val();
+                yhxx.llbmc = $("#llbmc").find("option:selected").text();
+                yhxx.slbid = $("#slbmc").val();
+                yhxx.slbmc = $("#slbmc").find("option:selected").text();
+                yhxx.yhxm = $("#yhxm").val();
+                yhxx.xb = $("#xb").val();
+                yhxx.sfzh = $("#sfzh").val();
+                yhxx.csrq = $("#csrq").val();
+                yhxx.mz = $("#mz").val();
+                yhxx.jg = $("#jg").val();
+                yhxx.zzmm = $("#zzmm").val();
+                yhxx.xl = $("#xl").val();
+                yhxx.sjh = $("#sjh").val();
+                yhxx.zjh = $("#zjh").val();
+                yhxx.qq = $("#qq").val();
+                yhxx.wx = $("#wx").val();
+                yhxx.email = $("#email").val();
+                yhxx.yhpwsx = $("#yhpwsx").val();
+                yhxx.zpfjid = $("#zpfjid").val();
+                yhxx.sm = $("#sm").val();
+
+                gzxx.zwid = $("#zwmc").val();
+                gzxx.zwmc = $("#zwmc").find("option:selected").text();
+                gzxx.zjid = $("#zjmc").val();
+                gzxx.zjmc = $("#zjmc").find("option:selected").text();
+                gzxx.qypygwid = $("#gwmc").val();
+                gzxx.qypygwmc = $("#gwmc").find("option:selected").text();
+                gzxx.gwdjid = $("#gjid").val();
+                gzxx.gwdjmc = $("#gjmc").val();
+                gzxx.ztid = $("#zzzt").val();
+                gzxx.ztmc = $("#zzzt").find("option:selected").text();
+
+                // 打开遮罩
+                var index_load = layer.load({shade: [1, '#000']});
+                // ajax提交
+                $.ajax({
+                    type: "post",
+                    url: "/rywh/doSave",
+                    data: {
+                        "yhxx" : JSON.stringify(yhxx),
+                        "gzxx" : JSON.stringify(gzxx)
+                    },
+                    success: function (result) {
+                        //关闭遮罩
+                        layer.close(index_load);
+                        if (result) {
+                            //刷新table
+                            window.parent.$("#rywhTable").bootstrapTable('refresh');
+                            //关闭弹框
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                            // window.location.href = "/dw/listUI";
+                        } else {
+                            layer.msg("保存失败，请稍后重试！");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //关闭遮罩
+                        layer.close(index_load);
+                        layer.msg("保存失败，请稍后重试！");
+                    }
+                });
+                //$.post($form.attr('action'), $form.serialize(), function (result) {
+                //});
+            });
+        });
+
+        //选择单位
+        function selectDw() {
+            parent.layer.open({
+                title: '选择单位',
+                area: ['20%', '60%'],
+                type: 2,
+                content: '/dw/selectUI'
+            });
+        }
+
+        //选择类别
+        function selectRylb() {
+            parent.layer.open({
+                title: '选择类别',
+                area: ['20%', '60%'],
+                type: 2,
+                content: '/rylb/selectUI'
+            });
+        }
+
+        // 人员类别Select
+        function selectLRylb(plbid) {
+            if (null == plbid || "" == plbid || undefined == plbid) {
+                plbid = "root0abc";
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/rylb/getRylbListByPid/" + plbid,
+                success: function (result) {
+                    if (result.length != 0) {
+                        var opt = "<option value=''>请选择</option>";
+                        $.each(result, function(i) {
+                            opt += "<option value='"+result[i].lbid+"'>"+result[i].lbmc+"</option>"
+                        });
+
+                        if ("root" == plbid) $("#llbmc").html(opt);
+                        else $("#slbmc").html(opt);
+                    } else {
+                        var opt = "<option value=''>请选择</option>";
+                        $("#slbmc").html(opt);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.msg("保存失败，请稍后重试！");
+                }
+            });
+        }
+
+        // 职务Select
+        function selectZw() {
+            $.ajax({
+                type: "post",
+                url: "/zw/getZwList" ,
+                success: function (result) {
+                    if (result.length != 0) {
+                        var opt = "<option value=''>请选择</option>";
+                        $.each(result, function(i) {
+                            opt += "<option value='"+result[i].zwid+"'>"+result[i].zwmc+"</option>"
+                        });
+                        $("#zwmc").html(opt);
+                    } else {
+                        var opt = "<option value=''>请选择</option>";
+                        $("#zwmc").html(opt);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.msg("保存失败，请稍后重试！");
+                }
+            });
+        }
+
+        // 职级Select
+        function selectZj() {
+            $.ajax({
+                type: "post",
+                url: "/zj/getZjList" ,
+                success: function (result) {
+                    if (result.length != 0) {
+                        var opt = "<option value=''>请选择</option>";
+                        $.each(result, function(i) {
+                            opt += "<option value='"+result[i].zjid+"'>"+result[i].zjmc+"</option>"
+                        });
+                        $("#zjmc").html(opt);
+                    } else {
+                        var opt = "<option value=''>请选择</option>";
+                        $("#zjmc").html(opt);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.msg("保存失败，请稍后重试！");
+                }
+            });
+        }
+
+        // 岗位Select
+        function selectGw() {
+            $.ajax({
+                type: "post",
+                url: "/gw/getGwList" ,
+                success: function (result) {
+                    if (result.length != 0) {
+                        var opt = "<option value=''>请选择</option>";
+                        $.each(result, function(i) {
+                            opt += "<option value='"+result[i].qypygwid+"'>"+result[i].qypygwmc+"</option>"
+                        });
+                        $("#gwmc").html(opt);
+                    } else {
+                        var opt = "<option value=''>请选择</option>";
+                        $("#gwmc").html(opt);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.msg("保存失败，请稍后重试！");
+                }
+            });
+        }
+
+        // 职级Select
+        function selectGj() {
+            $.ajax({
+                type: "post",
+                url: "/gj/getGjList" ,
+                success: function (result) {
+                    if (result.length != 0) {
+                        var opt = "<option value=''>请选择</option>";
+                        $.each(result, function(i) {
+                            opt += "<option value='"+result[i].gwdjid+"'>"+result[i].gwdjmc+"</option>"
+                        });
+                        $("#gjmc").html(opt);
+                    } else {
+                        var opt = "<option value=''>请选择</option>";
+                        $("#gjmc").html(opt);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.msg("保存失败，请稍后重试！");
+                }
+            });
+        }
+
+        // 岗位Select
+        function selectGd(zjid) {
+            if (null == zjid || "" == zjid || undefined == zjid) {
+                zjid = "root0abc";
+            }
+
+
+            $.ajax({
+                type: "post",
+                url: "/gd/getGdList/" + zjid ,
+                success: function (result) {
+                    if (result.length != 0) {
+                        var opt = "<option value=''>请选择</option>";
+                        $.each(result, function(i) {
+                            opt += "<option value='"+result[i].dwid+"'>"+result[i].dwmc+"</option>"
+                        });
+                        $("#gdmc").html(opt);
+                    } else {
+                        var opt = "<option value=''>请选择</option>";
+                        $("#gdmc").html(opt);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.msg("保存失败，请稍后重试！");
+                }
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * @Author: zhangchq
  * @CreateTime: 2018-09-17 14:49
@@ -19,6 +21,13 @@ public interface GdRepository extends JpaRepository<RsglBGwdjDwEntity, Long> {
      * @return
      */
     public Page<RsglBGwdjDwEntity> findAllByGwdjid(Pageable pageable, String gwdjid);
+
+    /**
+     * 查询岗位等级下的所有档位
+     * @param gwdjid
+     * @return
+     */
+    public List<RsglBGwdjDwEntity> findAllByGwdjid(String gwdjid);
 
     /**
      * 主键查询职务信息

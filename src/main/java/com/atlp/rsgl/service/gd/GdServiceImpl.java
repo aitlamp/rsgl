@@ -48,6 +48,11 @@ public class GdServiceImpl implements IGdService {
     }
 
     @Override
+    public List<RsglBGwdjDwEntity> getGdListByGjid(String gjid) throws Exception {
+        return gdRepository.findAllByGwdjid(gjid);
+    }
+
+    @Override
     public boolean doSaveGd(RsglBGwdjDwEntity entity) throws Exception {
         try {
             RsglBGwdjDwEntity gd = gdRepository.save(entity);

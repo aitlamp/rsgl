@@ -141,13 +141,33 @@ public class DwController {
     }
 
     /**
-     * 查询单位树
+     * 查询单位树----废弃
      * @return
      */
     @RequestMapping("/getDwTree/{pdwid}")
     @ResponseBody
-    public List<Map<String, Object>> getDwTree(@PathVariable(value = "pdwid", required = true) String pdwid) throws Exception {
+    public List<Map<String, Object>> getDwTree(@PathVariable(value = "pdwid", required = true) String pdwid)
+            throws Exception {
         return iDwService.getDwMapListByPid(pdwid);
+    }
+
+    /**
+     * 查询单位树
+     * @return
+     */
+    @RequestMapping("/getDwTree")
+    @ResponseBody
+    public List<RsglBDwEntity> getDwTree() throws Exception {
+        return iDwService.getDwList();
+    }
+
+    /**
+     * 选择单位UI
+     * @return
+     */
+    @RequestMapping(value = "/selectUI")
+    public String selectDw() {
+        return "/rsgl/dwwh/dwwh_select";
     }
 
 }

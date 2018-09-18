@@ -145,7 +145,18 @@ public class RylbController {
     }
 
     /**
-     * 查询单位树
+     * 父级id查询人员类别
+     * @return
+     */
+    @RequestMapping(value = "/getRylbListByPid/{plbid}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<RsglBRylbEntity> getRylbListByPid(@PathVariable(value = "plbid", required = true) String plbid)
+        throws Exception {
+        return iRylbService.getRylbListByPid(plbid);
+    }
+
+    /**
+     * 查询人员类别树
      * @return
      */
     @RequestMapping(value = "/getRylbTree/{plbid}", method = RequestMethod.POST)
@@ -153,5 +164,24 @@ public class RylbController {
     public List<Map<String, Object>> getRylbTree(@PathVariable(value = "plbid", required = true) String plbid)
             throws Exception {
         return iRylbService.getRylbMapListByPid(plbid);
+    }
+
+    /**
+     * 查询人员类别树
+     * @return
+     */
+    @RequestMapping("/getRylbTree")
+    @ResponseBody
+    public List<RsglBRylbEntity> getRylbTree() throws Exception {
+        return iRylbService.getRylbList();
+    }
+
+    /**
+     * 选择单位UI
+     * @return
+     */
+    @RequestMapping(value = "/selectUI")
+    public String selectRylb() {
+        return "/rsgl/mbgl/rylb/rylb_select";
     }
 }

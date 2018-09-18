@@ -37,6 +37,13 @@ public interface IGdService {
     public List<RsglBGwdjDwEntity> getGdList() throws Exception;
 
     /**
+     * 查询所有职务list
+     * @return
+     * @throws Exception
+     */
+    public List<RsglBGwdjDwEntity> getGdListByGjid(String gjid) throws Exception;
+
+    /**
      * 添加职务
      * @param entity
      * @return

@@ -48,6 +48,7 @@ public interface IDwService {
 
     /**
      * 查询所有的单位信息
+     * 单位树
      * @return
      * @throws Exception
      */

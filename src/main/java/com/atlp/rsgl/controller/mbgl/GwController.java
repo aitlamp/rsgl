@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: zhangchq
@@ -116,5 +117,16 @@ public class GwController {
         }
 
         return iGwService.doDeleteGw(gwEntity);
+    }
+
+    /**
+     * 查询所有职务列表
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getGwList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<RsglBQypygwEntity> getGwList() throws Exception {
+        return iGwService.getGwList();
     }
 }
