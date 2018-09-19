@@ -59,7 +59,10 @@
                         title: '请假时间',
                         field: 'qjsj',
                         align: 'left',
-                        width: '200'
+                        width: '200',
+                        formatter: function (value, row, index) {
+                            return $.formatDateTime('yy-mm-dd g:ii', new Date(value));
+                        }
                     },
                     {
                         title: '请假原因',
