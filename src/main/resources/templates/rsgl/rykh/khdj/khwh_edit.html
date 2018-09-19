@@ -8,47 +8,41 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form id="pxwhForm" class="form-horizontal" method="post">
-        <input type="hidden" id="pxjlid" name="pxjlid" th:value="${entity.pxjlid}">
+    <form id="khwhForm" class="form-horizontal" method="post">
+        <input type="hidden" id="khjlid" name="khjlid" th:value="${entity.khjlid}">
 
         <div class="form-group" style="padding-top: 10px;">
-            <label class="col-sm-2 control-label">培训人员</label>
+            <label class="col-sm-2 control-label">考核人员</label>
             <div class="col-sm-9">
-                <input class="form-control" id="pxyhmc" name="pxyhmc" th:value="${entity.pxyhid}" readonly
-                       style="cursor: pointer;" placeholder="请点击选择培训人员" onclick="selectYh();">
-                <input type="hidden" id="pxyhid" name="pxyhid" th:value="${entity.pxyhid}">
+                <input class="form-control" id="khyhmc" name="khyhmc" th:value="${entity.khyhid}" readonly
+                       style="cursor: pointer;" placeholder="请点击选择考核人员" onclick="selectYh();">
+                <input type="hidden" id="khyhid" name="khyhid" th:value="${entity.khyhid}">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">培训名称</label>
-            <div class="col-sm-9">
-                <input class="form-control" id="pxmc" name="pxmc" th:value="${entity.pxmc}" placeholder="输入培训名称">
+            <label class="col-sm-2 control-label">请假时间</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="khnd" name="khnd">
+                    <option value="">请选择</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                </select>
+            </div>
+            <div class="col-sm-1">——</div>
+            <div class="col-sm-4">
+                <select class="form-control" id="khjd" name="khjd">
+                    <option value="">请选择</option>
+                    <option value="1">第一季度</option>
+                    <option value="2">第二季度</option>
+                    <option value="3">第三季度</option>
+                    <option value="4">第四季度</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">培训时间</label>
+            <label class="col-sm-2 control-label">考核情况</label>
             <div class="col-sm-9">
-                <input class="form-control" id="pxsj" name="pxsj" th:value="${entity.pxsj}" placeholder="输入培训时间"
-                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
-                <label for="pxsj" class="riLi"></label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">承办机构</label>
-            <div class="col-sm-9">
-                <input class="form-control" id="cbjg" name="cbjg" th:value="${entity.cbjg}" placeholder="输入承办机构">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">培训地点</label>
-            <div class="col-sm-9">
-                <input class="form-control" id="pxdd" name="pxdd" th:value="${entity.pxdd}" placeholder="输入培训地点">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">学时</label>
-            <div class="col-sm-9">
-                <input class="form-control" id="xs" name="xs" th:value="${entity.xs}" placeholder="输入学时">
+                <input class="form-control" id="khqk" name="khqk" th:value="${entity.khqk}" placeholder="输入情况">
             </div>
         </div>
         <div class="form-group">
@@ -69,7 +63,7 @@
     <script type="text/javascript" src="/plugins/My97DatePicker/WdatePicker.js"></script>
     <script>
         $(function () {
-            $("#pxwhForm").bootstrapValidator({
+            $("#khwhForm").bootstrapValidator({
                 live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
                 excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
                 //submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
@@ -80,45 +74,31 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    pxyhmc: {
+                    khyhmc: {
                         validators: {
                             notEmpty: {//检测非空,radio也可用
                                 message: '考勤人员必须选择'
                             }
                         }
                     },
-                    pxmc: {
+                    khnd: {
                         validators: {
                             notEmpty: {//检测非空,radio也可用
-                                message: '培训名称必须填写'
+                                message: '考核年度必须选择'
                             }
                         }
                     },
-                    pxsj: {
+                    khjd: {
                         validators: {
                             notEmpty: {//检测非空,radio也可用
-                                message: '培训时间必须选择'
+                                message: '考核季度必须选择'
                             }
                         }
                     },
-                    cbjg: {
+                    khqk: {
                         validators: {
                             notEmpty: {//检测非空,radio也可用
-                                message: '培训机构必须填写'
-                            }
-                        }
-                    },
-                    pxdd: {
-                        validators: {
-                            notEmpty: {//检测非空,radio也可用
-                                message: '培训地点必须填写'
-                            }
-                        }
-                    },
-                    xs: {
-                        validators: {
-                            notEmpty: {//检测非空,radio也可用
-                                message: '学时必须填写'
+                                message: '考核情况必须输入'
                             }
                         }
                     }
@@ -131,14 +111,14 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/pxwh/doSave",
-                    data: $("#pxwhForm").serialize(),
+                    url: "/khwh/doSave",
+                    data: $("#khwhForm").serialize(),
                     success: function (result) {
                         //关闭遮罩
                         layer.close(index_load);
                         if (result) {
                             //刷新table
-                            window.parent.$("#pxTable").bootstrapTable('refresh');
+                            window.parent.$("#khTable").bootstrapTable('refresh');
                             //关闭弹框
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭
@@ -170,12 +150,12 @@
 
         // 选择用户赋值
         function selectedYhInfo(node) {
-            $("#pxyhid").val(node.yhid);
-            $("#pxyhmc").val(node.yhxm).change();
+            $("#khyhid").val(node.yhid);
+            $("#khyhmc").val(node.yhxm).change();
             //重新验证
-            $('#pxwhForm').data('bootstrapValidator')
-                .updateStatus('pxyhmc', 'NOT_VALIDATED', null)
-                .validateField('pxyhmc');
+            $('#khwhForm').data('bootstrapValidator')
+                .updateStatus('khyhmc', 'NOT_VALIDATED', null)
+                .validateField('khyhmc');
         }
     </script>
 </div>
