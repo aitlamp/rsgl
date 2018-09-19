@@ -98,6 +98,8 @@
                                     pdwid : $("#pdwid").val()
                                 }
                             });
+                            // 刷新tree
+                            window.parent.treeObj.reAsyncChildNodes(null, "refresh");
                             //关闭弹框
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭

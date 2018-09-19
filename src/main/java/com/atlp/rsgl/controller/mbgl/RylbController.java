@@ -156,7 +156,7 @@ public class RylbController {
     }
 
     /**
-     * 查询人员类别树
+     * 查询人员类别树--已作废
      * @return
      */
     @RequestMapping(value = "/getRylbTree/{plbid}", method = RequestMethod.POST)

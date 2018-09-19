@@ -9,8 +9,13 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <div id="lbTree" class="lbTree" style="padding-top: 55px;"></div>
+        <div class="col-md-3 col-sm-3">
+            <div class="panel panel-default" style="margin: 10px 0px 0px 0px;">
+                <div class="panel-heading">人员类别树</div>
+                <div id="treeBody" class="panel-body" style="padding: 5px; overflow: auto;">
+                    <div id="lbTree" class="ztree"></div>
+                </div>
+            </div>
         </div>
         <div class="col-md-9" style="padding-left: 0px;">
             <div id="toolbar" class="text-right">
@@ -24,6 +29,12 @@
     <script type="text/javascript">
         var plbid = "root"; // 定义全局变量，上级单位id为root
 
+        $("#treeBody").height($(window).height() - 76);
+        var treeObj;
+        var treeParam;
+        var lastNodeId;
+        var tableObj;
+
         $(function () {
             //初始化树
             lbTree();
@@ -34,36 +45,53 @@
 
         // 单位树
         function lbTree() {
-            $.ajax({
-                type: "post",
-                url: "/rylb/getRylbTree/" + plbid,
-                dataType: "json",
-                success: function (result) {
-                    var tree_data = [{id: 'root', pid: '', text: '类别树', nodes: result}];
-                    var tree = $('#lbTree').treeview({
-                        data: tree_data,           // 数据源
-                        levels: 2,              //默认展开的级别
-                        onNodeSelected : function (event, data) {
-                            var data = {};
-                            var node = $("#lbTree").treeview("getSelected");
-                            if (!node) {
-                                data = {
-                                    id : plbid,
-                                }
-                            } else {
-                                data = node[0];
-                            }
-                            // 刷新查询单位信息
-                            $("#rylbTable").bootstrapTable('refresh', {
-                                query : {
-                                    plbid : data.id
-                                }
-                            });
-                        }
-                    });
+            //初始化树
+            treeObj = $.fn.zTree.init($("#lbTree"), {
+                async: {    //ztree异步请求数据
+                    enable: true,
+                    url: "/rylb/getRylbTree",//请求action方法
+                    autoparam: ["id"],
+                    otherParam: function () {
+                        return treeParam;
+                    },
                 },
-                error: function () {
-                    alert("树形结构加载失败！")
+                data: {
+                    simpleData: {
+                        enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
+                        idKey: "lbid",
+                        pIdKey: "plbid",
+                        rootPId: ""
+                    },
+                    key: {
+                        name: "lbmc",
+                        url: ""
+                    }
+                },
+                view: {
+                    showLine: true,//显示连接线
+                    showIcon: false//显示节点图片
+                    //fontCss: {color:"red"}
+                    //fontCss: setFontCss//节点颜色
+                },
+                callback: {
+                    //beforeClick: zTreeBeforeClick,
+                    onAsyncSuccess: function () {
+                        treeObj.expandAll(true);
+                        if (lastNodeId) {
+                            var lastNode = treeObj.getNodeByParam("lbid", lastNodeId, null);
+                            treeObj.selectNode(lastNode);
+                        } else {
+                            treeObj.selectNode(treeObj.getNodes()[0]);
+                        }
+                    },
+                    onClick: function (event, treeId, treeNode) {
+                        lastNodeId = treeNode.lbid;
+                        $("#rylbTable").bootstrapTable('refresh', {
+                            query : {
+                                plbid : lastNodeId
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -87,11 +115,9 @@
                     }
                 },
                 queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
-                    return {//这里的params是table提供的
-                        offset: params.offset,  //从数据库第几条记录开始
-                        limit: params.limit, //找多少条
-                        plbid: plbid
-                    };
+                    // 上级类别id
+                    getPlbid();
+                    return $.extend(params, {plbid: plbid});
                 },
                 idField: "userId",//指定主键列
                 columns: [
@@ -139,19 +165,13 @@
 
         // 获取上级单位id
         function getPlbid() {
-            var data = {};
-            var node = $("#lbTree").treeview("getSelected");
-            console.log("node", node);
-            if (node.length == 0) {
-                data = {
-                    id : plbid,
+            if (treeObj) {
+                var nodes = treeObj.getSelectedNodes();
+                if (nodes.length == 1) {
+                    var node = nodes[0];
+                    plbid = node.lbid;
                 }
-            } else {
-                data = node[0];
             }
-            console.log("data", data);
-
-            plbid = data.id;
         }
 
         //添加
@@ -192,11 +212,13 @@
                         layer.close(index_load);//关闭遮罩
                         if (result) {
                             layer.msg("删除成功.");
+                            //刷新table
                             $("#rylbTable").bootstrapTable('refresh', {
                                 query : {
                                     plbid : plbid
                                 }
-                            });//刷新table
+                            });
+                            treeObj.reAsyncChildNodes(null, "refresh");
                         } else {
                             layer.msg("删除失败，请与管理员联系！");
                         }

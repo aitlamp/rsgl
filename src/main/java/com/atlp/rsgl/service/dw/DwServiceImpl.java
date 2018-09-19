@@ -78,7 +78,7 @@ public class DwServiceImpl implements IDwService {
     }
 
     @Override
-    public List getDwList() throws Exception {
+    public List<RsglBDwEntity> getDwList() throws Exception {
         List dwList = dwRepository.findAll(Sort.by("dwpwsx"));
 
         Map<String, Object> map = new HashMap<>();

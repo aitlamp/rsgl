@@ -79,7 +79,15 @@ public class RylbServiceImpl implements IRylbService {
 
     @Override
     public List<RsglBRylbEntity> getRylbList() throws Exception {
-        return rylbRepository.findAll();
+        List<RsglBRylbEntity> rylbList = rylbRepository.findAll(Sort.by("pwsx"));
+
+        RsglBRylbEntity rylb = new RsglBRylbEntity();
+        rylb.setLbid("root");
+        rylb.setPlbid("");
+        rylb.setLbmc("人员类别树");
+        rylbList.add(rylb);
+
+        return rylbList;
     }
 
     @Override
