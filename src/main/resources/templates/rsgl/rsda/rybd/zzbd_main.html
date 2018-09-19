@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>在职变动</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="rywhTable"></table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            // 初始化table
+            rywhDataPage();
+        });
+
+        // 单位分页数据
+        function rywhDataPage() {
+            var t = $("#rywhTable").bootstrapTable({
+                url: '/zzbd/getYhPage',
+                method: 'get',
+                dataType: "json",
+                striped: true,//设置为 true 会有隔行变色效果
+                pagination: true, //分页
+                pageSize: 10,//如果设置了分页，页面数据条数
+                search: true, //显示搜索框
+                // toolbar: '#toolbar',
+                sidePagination: "server", //服务端处理分页
+                responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
+                    return {
+                        "rows": res.content, // 具体每一个bean的列表
+                        "total": res.totalElements  // 总共有多少条返回数据
+                    }
+                },
+                queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
+                    return {//这里的params是table提供的
+                        offset: params.offset,  //从数据库第几条记录开始
+                        limit: params.limit, //找多少条
+                    };
+                },
+                idField: "userId",//指定主键列
+                columns: [
+                    {
+                        title: '姓名',
+                        field: 'yhxm',
+                        align: 'left',
+                        width: '200'
+                    },
+                    {
+                        title: '单位',
+                        field: 'dwjc',
+                        align: 'left',
+                        width: '200'
+                    },
+                    {
+                        title: '显示顺序',
+                        field: 'yhpwsx',
+                        align: 'center',
+                        width: '100'
+                    },
+                    {
+                        title: '在职状态',
+                        field: 'zzzt',
+                        align: 'center',
+                        width: '100'
+                    },
+                    {
+                        title: '操作',
+                        field: 'lbid',
+                        width: '140',
+                        align: 'center',
+                        formatter: function (value, row, index) {//自定义显示可以写标签哦~
+                            // 在职状态select
+                            var li_html = selectZzzt();
+                            console.log("li", li_html);
+                            return '<div class="btn-group">' +
+                                        '<button type="button" class="btn btn-xs btn-primary">选择在职状态</button>' +
+                                        '<button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                                            '<span class="caret"></span>' +
+                                            '<span class="sr-only">Toggle Dropdown</span>' +
+                                        '</button>' +
+                                        '<ul class="dropdown-menu">' +
+                                            li_html +
+                                        '</ul>' +
+                                    '</div>';
+                        }
+                    }
+                ]
+            });
+            t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+                //console.log("load success");
+                $(".pull-right").css("display", "block");
+            });
+        }
+
+        //添加
+        function doAdd() {
+            //window.location.href = "/rywh/editUI/null";
+            var index = layer.open({
+                id: 'addPop',
+                title: '添加在职状态',
+                area: ['80%', '80%'],
+                type: 2,
+                content: "/rywh/editUI/null"
+            });
+        }
+
+        //修改
+        function doUpdate(yhid) {
+            var index = layer.open({
+                id: 'addPop',
+                title: '修改状态信息',
+                area: ['80%', '80%'],
+                type: 2,
+                content: "/rywh/editUI/" + yhid
+            });
+        }
+
+        //删除
+        function doDelete(yhid) {
+            layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
+                // 打开遮罩
+                var index_load = layer.load({shade: [1, '#000']});
+                $.ajax({
+                    type: "post",
+                    url: "/rywh/doDelete/" + yhid,
+                    success: function (result) {
+                        layer.close(index_load);//关闭遮罩
+                        if (result) {
+                            layer.msg("删除成功.");
+                            $("#rywhTable").bootstrapTable('refresh');//刷新table
+                        } else {
+                            layer.msg("删除失败，请与管理员联系！");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        layer.close(index_load);//关闭遮罩
+                        layer.msg("保存失败，请稍后重试！");
+                    }
+                });
+                layer.close(index_confirm);
+            });
+        }
+
+        // 查询所有的在职状态
+        function selectZzzt() {
+            $.ajax({
+                type: "post",
+                url: "/zzzt/zzztSelect",
+                async: false,
+                success: function (result) {
+                    var li = "<li><a href=\"javascript:void(0);\">选择在职状态</a></li>";
+                    if (null == result || result.length == 0) {
+
+                    } else {
+                        $.each(result, function (i) {
+                            li += "<li><a href='javascript:void(0);' data-id='"+result[i].ztid+"'>"+result[i].ztmc+"</a></li>";
+                        })
+                    }
+                    return li;
+                },
+                error: function (xhr, status, error) {
+                    return "<li><a href=\"javascript:void(0);\">选择在职状态</a></li>";
+                }
+            });
+        }
+    </script>
+</div>
+</body>
+</html>
