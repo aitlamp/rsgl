@@ -110,12 +110,17 @@
         }
         var node = yhinfo[0];
         var addIframe = parent.$("#addPop").find('iframe')[0].contentWindow;
-        addIframe.$("#kqyhid").val(node.yhid);
+
+        /*addIframe.$("#kqyhid").val(node.yhid);
         addIframe.$("#kqyhmc").val(node.yhxm).change();
         //重新验证
         addIframe.$('#kqwhForm').data('bootstrapValidator')
             .updateStatus('kqyhmc', 'NOT_VALIDATED', null)
-            .validateField('kqyhmc');
+            .validateField('kqyhmc');*/
+
+        // 上级页面select
+        addIframe.selectedYhInfo(node);
+
         //关闭弹框
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
