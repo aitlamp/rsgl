@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>单位选择</title>
+    <!-- 引入公共页面 -->
+    <link rel="import" href="/include"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="col-md-12">
+        <table id="rywhTable"></table>
+    </div>
+    &nbsp;
+    <div class="text-center">
+        <button class="btn btn-primary" onclick="doSelect()">选择</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //页面初始化方法
+    $(function () {
+        var t = $("#rywhTable").bootstrapTable({
+            url: '/rywh/getYhPage',
+            method: 'get',
+            dataType: "json",
+            striped: true,//设置为 true 会有隔行变色效果
+            pagination: true, //分页
+            pageSize: 10,//如果设置了分页，页面数据条数
+            search: false, //显示搜索框
+            clickToSelect: true,
+            singleSelect: true,
+            toolbar: '#toolbar',
+            sidePagination: "server", //服务端处理分页
+            responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
+                return {
+                    "rows": res.content, // 具体每一个bean的列表
+                    "total": res.totalElements  // 总共有多少条返回数据
+                }
+            },
+            queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
+                return {//这里的params是table提供的
+                    offset: params.offset,  //从数据库第几条记录开始
+                    limit: params.limit, //找多少条
+                };
+            },
+            idField: "userId",//指定主键列
+            columns: [
+                {
+                    field : 'checked',
+                    checkbox : true,
+                    formatter : function stateFormatter(value, row, index) {
+                        return value;
+                    }
+                },
+                {
+                    title: '姓名',
+                    field: 'yhxm',
+                    align: 'left',
+                    width: '200'
+                },
+                {
+                    title: '单位',
+                    field: 'dwjc',
+                    align: 'left',
+                    width: '200'
+                },
+                {
+                    title: '显示顺序',
+                    field: 'yhpwsx',
+                    align: 'center',
+                    width: '100'
+                },
+                {
+                    title: '说明',
+                    field: 'sm',
+                    align: 'left'
+                },
+                {
+                    title: '状态',
+                    field: 'dqzt',
+                    align: 'center',
+                    width: '100'
+                },
+                {
+                    title: '操作',
+                    field: 'lbid',
+                    width: '140',
+                    align: 'center',
+                    formatter: function (value, row, index) {//自定义显示可以写标签哦~
+                        return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.yhid + '\')">修改</a> &nbsp;' +
+                            '<a href="#" mce_href="#" onclick="doDelete(\'' + row.yhid + '\')">删除</a> ';
+                    }
+                }
+
+            ]
+        });
+        t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+            //console.log("load success");
+            $(".pull-right").css("display", "block");
+        });
+    });
+
+    //选择
+    function doSelect() {
+        var yhinfo = $("#rywhTable").bootstrapTable("getSelections");
+        if (yhinfo.length <= 0) {
+            layer.msg("请先选择一条记录！");
+            return false;
+        }
+        var node = yhinfo[0];
+        var addIframe = parent.$("#addPop").find('iframe')[0].contentWindow;
+        addIframe.$("#kqyhid").val(node.yhid);
+        addIframe.$("#kqyhmc").val(node.yhxm).change();
+        //重新验证
+        addIframe.$('#kqwhForm').data('bootstrapValidator')
+            .updateStatus('kqyhmc', 'NOT_VALIDATED', null)
+            .validateField('kqyhmc');
+        //关闭弹框
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>

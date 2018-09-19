@@ -154,4 +154,13 @@ public class RywhController {
 
         return iYhService.doDeleteYh(yhEntity);
     }
+
+    /**
+     * 用户选择UI
+     * @return
+     */
+    @RequestMapping(value = "/selectUI")
+    public String rywhSelectUI() {
+        return "/rsgl/rsda/rywh/rywh_select";
+    }
 }
