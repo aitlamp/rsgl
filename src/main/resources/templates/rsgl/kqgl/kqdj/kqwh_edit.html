@@ -14,7 +14,7 @@
         <div class="form-group" style="padding-top: 10px;">
             <label class="col-sm-2 control-label">考勤人员</label>
             <div class="col-sm-9">
-                <input class="form-control" id="kqyhmc" name="kqyhmc" readonly
+                <input class="form-control" id="kqyhmc" name="kqyhmc" th:value="${entity.kqyhid}" readonly
                        style="cursor: pointer;" placeholder="请点击选择考勤人员" onclick="selectYh();">
                 <input type="hidden" id="kqyhid" name="kqyhid" th:value="${entity.kqyhid}">
             </div>
@@ -112,7 +112,7 @@
                         layer.close(index_load);
                         if (result) {
                             //刷新table
-                            window.parent.$("#dwwhTable").bootstrapTable('refresh');
+                            window.parent.$("#kqTable").bootstrapTable('refresh');
                             //关闭弹框
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭

@@ -99,4 +99,23 @@ public class KqwhController extends BaseController {
 
         return true;
     }
+
+    /**
+     * 删除考勤记录
+     * @param kqid
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/doDelete/{kqid}", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean doDelete(@PathVariable(name = "kqid") String kqid) throws Exception {
+        // 查询该记录是否存在
+        RsglBKqjlEntity kqjlEntity = iKqjlService.getKqInfoById(kqid);
+        if (null == kqjlEntity) {
+            logger.debug("查询考勤记录失败,考勤id==={}", kqid);
+            return false;
+        }
+
+        return iKqjlService.doDeleteKqjl(kqjlEntity);
+    }
 }
