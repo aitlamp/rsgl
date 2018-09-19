@@ -162,6 +162,13 @@
             <artifactId>ztree</artifactId>
             <version>3.5.0</version>
         </dependency>
+
+        <!-- formatDateTime -->
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>github-com-agschwender-jquery-formatDateTime</artifactId>
+            <version>1.1.6</version>
+        </dependency>
         <!-- webjars end -->
 
         <dependency>
