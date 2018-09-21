@@ -2,6 +2,7 @@ package com.atlp.rsgl.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,5 +33,8 @@ public class RsglBPxjlEntity {
     private String yhxm;
     private String yhdwid;
     private String yhdwmc;
+
+    @Transient
+    private String pxyhxm;
 
 }

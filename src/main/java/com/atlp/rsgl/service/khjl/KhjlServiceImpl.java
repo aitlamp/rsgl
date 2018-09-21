@@ -3,7 +3,9 @@ package com.atlp.rsgl.service.khjl;
 import com.atlp.rsgl.common.data.PageModel;
 import com.atlp.rsgl.common.utils.AtlpUtil;
 import com.atlp.rsgl.entity.RsglBKhjlEntity;
+import com.atlp.rsgl.entity.RsglBYhEntity;
 import com.atlp.rsgl.repository.KhjlRepository;
+import com.atlp.rsgl.repository.YhRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.util.CollectionUtils;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -31,10 +34,22 @@ public class KhjlServiceImpl implements IKhjlService {
 
     @Autowired
     private KhjlRepository khjlRepository;
+    @Autowired
+    private YhRepository yhRepository;
 
     @Override
     public Page<RsglBKhjlEntity> getKhPage(PageModel page) throws Exception {
-        return khjlRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
+        Page<RsglBKhjlEntity> khjlEntityPage = khjlRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
+
+        List<RsglBKhjlEntity> khjlEntityList = khjlEntityPage.getContent();
+        if (!CollectionUtils.isEmpty(khjlEntityList)) {
+            for (RsglBKhjlEntity khjlEntity : khjlEntityList) {
+                RsglBYhEntity yhEntity = yhRepository.findByYhid(khjlEntity.getKhyhid());
+                khjlEntity.setKhyhxm(yhEntity.getYhxm());
+            }
+        }
+
+        return khjlEntityPage;
     }
 
     @Override

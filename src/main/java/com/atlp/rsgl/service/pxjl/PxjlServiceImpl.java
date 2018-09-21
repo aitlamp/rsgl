@@ -3,7 +3,9 @@ package com.atlp.rsgl.service.pxjl;
 import com.atlp.rsgl.common.data.PageModel;
 import com.atlp.rsgl.common.utils.AtlpUtil;
 import com.atlp.rsgl.entity.RsglBPxjlEntity;
+import com.atlp.rsgl.entity.RsglBYhEntity;
 import com.atlp.rsgl.repository.PxjlRepository;
+import com.atlp.rsgl.repository.YhRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.util.CollectionUtils;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -32,11 +35,23 @@ public class PxjlServiceImpl implements IPxjlService {
 
     @Autowired
     private PxjlRepository pxjlRepository;
+    @Autowired
+    private YhRepository yhRepository;
 
     @Override
     public Page<RsglBPxjlEntity> getPxPage(PageModel page) throws Exception {
-        return pxjlRepository.findAll(PageRequest.of(page.getPage(), page.getLimit(),
+        Page<RsglBPxjlEntity> pxjlEntityPage = pxjlRepository.findAll(PageRequest.of(page.getPage(), page.getLimit(),
                 new Sort(Sort.Direction.DESC, "firsttime")));
+
+        List<RsglBPxjlEntity> pxjlEntityList = pxjlEntityPage.getContent();
+        if (!CollectionUtils.isEmpty(pxjlEntityList)) {
+            for (RsglBPxjlEntity pxjlEntity : pxjlEntityList) {
+                RsglBYhEntity yhEntity = yhRepository.findByYhid(pxjlEntity.getPxyhid());
+                pxjlEntity.setPxyhxm(yhEntity.getYhxm());
+            }
+        }
+
+        return pxjlEntityPage;
     }
 
     @Override
