@@ -18,6 +18,17 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-2 control-label">事业编专用</label>
+            <div class="col-sm-9">
+                <label class="radio-inline">
+                    <input type="radio" name="sybzybs" id="inlineRadio1" value="Y" th:checked="${entity.sybzybs eq 'Y' }"> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="sybzybs" id="inlineRadio2" value="N" th:checked="${entity.sybzybs eq 'N' }"> 否
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-2 control-label">显示顺序</label>
             <div class="col-sm-9">
                 <input class="form-control" id="pwsx" name="pwsx" th:value="${entity.pwsx}">
