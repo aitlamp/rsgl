@@ -1,6 +1,8 @@
 package com.atlp.rsgl.repository;
 
 import com.atlp.rsgl.entity.RsglBYhEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -24,4 +26,11 @@ public interface YhRepository extends JpaRepository<RsglBYhEntity, Long> {
      * @return
      */
     public RsglBYhEntity findByYhid(String yhid);
+
+    /**
+     * 分页查询单位用户
+     * @param dwid
+     * @return
+     */
+    public Page<RsglBYhEntity> findAllByDwid(Pageable pageable, String dwid);
 }

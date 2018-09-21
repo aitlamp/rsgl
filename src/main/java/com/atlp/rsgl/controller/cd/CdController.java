@@ -6,12 +6,12 @@ import com.atlp.rsgl.entity.RsglBCdEntity;
 import com.atlp.rsgl.service.cd.ICdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -62,8 +62,9 @@ public class CdController {
     /*
      * select页面
      */
-    @RequestMapping({"/select"})
-    public String cdwh_select() {
+    @RequestMapping({"/select/{type}"})
+    public String cdwh_select(ModelMap map, @PathVariable(name = "type", required = true) String type) {
+        map.put("type", type);
         return "/rsgl/cdwh/cdwh_select";
     }
 

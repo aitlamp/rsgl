@@ -44,6 +44,12 @@ public class YhServiceImpl implements IYhService {
     }
 
     @Override
+    public Page<RsglBYhEntity> getYhPageByDwid(PageModel page, String dwid) throws Exception {
+        return yhRepository.findAllByDwid(PageRequest.of(page.getPage(), page.getLimit(),
+                new Sort(Sort.Direction.ASC, "yhpwsx")), dwid);
+    }
+
+    @Override
     public RsglBYhEntity getYhInfoById(String key) throws Exception {
         return yhRepository.findByYhid(key);
     }
