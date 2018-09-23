@@ -23,6 +23,14 @@ public interface IYhService {
     public Page<RsglBYhEntity> getYhPage(PageModel page) throws Exception;
 
     /**
+     * 分页查询用户信息
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    public Page<RsglBYhEntity> getYhPageByDwid(PageModel page, String dwid) throws Exception;
+
+    /**
      * 主键查询用户信息
      * @param key
      * @return

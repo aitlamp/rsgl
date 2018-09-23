@@ -10,6 +10,7 @@
 <div class="container" style="padding: 0px;">
     <div id="tree" class="ztree" style="padding-top: 5px; overflow: auto;"></div>
     <div class="text-center" style="padding: 10px;">
+        <input type="hidden" id="type" name="type" th:value="${type}" >
         <button class="btn btn-primary" onclick="doSelect()">选择</button>
     </div>
 </div>
@@ -63,16 +64,31 @@
             return false;
         }
         var node = nodes[0];
-        var addIframe = parent.$("#addPop").find('iframe')[0].contentWindow;
-        addIframe.$("#pcdid").val(node.cdid);
+
+        // 取得type值
+        var type = $("#type").val();
+        if (type == "cd") {
+            var addIframe = parent.$("#addPop").find('iframe')[0].contentWindow;
+            // 上级页面选择菜单赋值
+            addIframe.selectedDwInfo(node);
+            //关闭弹框
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        } else if (type == "sq") {
+            // 上级页面选择菜单赋值
+            parent.selectedDwInfo(node);
+            //关闭弹框
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+
+        /*addIframe.$("#pcdid").val(node.cdid);
         addIframe.$("#pcdmc").val(node.cdmc).change();
         //重新验证
         addIframe.$('#cdwhForm').data('bootstrapValidator')
             .updateStatus('pcdmc', 'NOT_VALIDATED', null)
-            .validateField('pcdmc');
-        //关闭弹框
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
+            .validateField('pcdmc');*/
+
     }
 </script>
 </body>

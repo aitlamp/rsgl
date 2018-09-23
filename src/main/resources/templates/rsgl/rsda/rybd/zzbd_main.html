@@ -2,109 +2,35 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>人员维护</title>
+    <title>在职变动</title>
     <!-- 引入公共页面 -->
     <link rel="import" href="/include"/>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 col-sm-3">
-            <div class="panel panel-default" style="margin: 55px 0px 0px 0px;">
-                <div class="panel-heading">单位树</div>
-                <div id="treeBody" class="panel-body" style="padding: 5px; overflow: auto;">
-                    <div id="dwTree" class="ztree"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div id="toolbar" class="text-right">
-                <button class="btn btn-info" onclick="doAdd();">添加</button>
-            </div>
+        <div class="col-md-12">
             <table id="rywhTable"></table>
         </div>
     </div>
 
     <script type="text/javascript">
-        var dwid = "root"; // 定义全局变量，单位id为root
-
-        $("#treeBody").height($(window).height() - 120);
-        var treeObj;
-        var treeParam;
-        var lastNodeId;
-        var tableObj;
-
         $(function () {
-            //初始化树
-            dwTree();
             // 初始化table
-            rywhDataPage(dwid);
+            rywhDataPage();
         });
 
-        // 单位树
-        function dwTree() {
-            //初始化树
-            treeObj = $.fn.zTree.init($("#dwTree"), {
-                async: {    //ztree异步请求数据
-                    enable: true,
-                    url: "/dw/getDwTree",//请求action方法
-                    autoparam: ["id"],
-                    otherParam: function () {
-                        return treeParam;
-                    },
-                },
-                data: {
-                    simpleData: {
-                        enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
-                        idKey: "dwid",
-                        pIdKey: "pdwid",
-                        rootPId: ""
-                    },
-                    key: {
-                        name: "dwmc",
-                        url: ""
-                    }
-                },
-                view: {
-                    showLine: true,//显示连接线
-                    showIcon: false//显示节点图片
-                    //fontCss: {color:"red"}
-                    //fontCss: setFontCss//节点颜色
-                },
-                callback: {
-                    //beforeClick: zTreeBeforeClick,
-                    onAsyncSuccess: function () {
-                        treeObj.expandAll(true);
-                        if (lastNodeId) {
-                            var lastNode = treeObj.getNodeByParam("dwid", lastNodeId, null);
-                            treeObj.selectNode(lastNode);
-                        } else {
-                            treeObj.selectNode(treeObj.getNodes()[0]);
-                        }
-                    },
-                    onClick: function (event, treeId, treeNode) {
-                        lastNodeId = treeNode.dwid;
-                        $("#rywhTable").bootstrapTable('refresh', {
-                            query : {
-                                dwid : lastNodeId
-                            }
-                        });
-                    }
-                }
-            });
-        }
-
         // 单位分页数据
-        function rywhDataPage(dwid) {
+        function rywhDataPage() {
             var t = $("#rywhTable").bootstrapTable({
-                url: '/rywh/getDwYhPage',
+                url: '/zzbd/getYhPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
                 pagination: true, //分页
                 pageSize: 10,//如果设置了分页，页面数据条数
                 search: true, //显示搜索框
-                toolbar: '#toolbar',
+                // toolbar: '#toolbar',
                 sidePagination: "server", //服务端处理分页
                 responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
                     return {
@@ -113,9 +39,10 @@
                     }
                 },
                 queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
-                    // 上级单位id
-                    getDwid();
-                    return $.extend(params, {dwid: dwid});
+                    return {//这里的params是table提供的
+                        offset: params.offset,  //从数据库第几条记录开始
+                        limit: params.limit, //找多少条
+                    };
                 },
                 idField: "userId",//指定主键列
                 columns: [
@@ -138,13 +65,8 @@
                         width: '100'
                     },
                     {
-                        title: '说明',
-                        field: 'sm',
-                        align: 'left'
-                    },
-                    {
-                        title: '状态',
-                        field: 'dqzt',
+                        title: '在职状态',
+                        field: 'zzzt',
                         align: 'center',
                         width: '100'
                     },
@@ -154,11 +76,21 @@
                         width: '140',
                         align: 'center',
                         formatter: function (value, row, index) {//自定义显示可以写标签哦~
-                            return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.yhid + '\')">修改</a> &nbsp;' +
-                                '<a href="#" mce_href="#" onclick="doDelete(\'' + row.yhid + '\')">删除</a> ';
+                            // 在职状态select
+                            var li_html = selectZzzt();
+                            console.log("li", li_html);
+                            return '<div class="btn-group">' +
+                                        '<button type="button" class="btn btn-xs btn-primary">选择在职状态</button>' +
+                                        '<button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                                            '<span class="caret"></span>' +
+                                            '<span class="sr-only">Toggle Dropdown</span>' +
+                                        '</button>' +
+                                        '<ul class="dropdown-menu">' +
+                                            li_html +
+                                        '</ul>' +
+                                    '</div>';
                         }
                     }
-
                 ]
             });
             t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
@@ -167,23 +99,12 @@
             });
         }
 
-        // 获取上级单位id
-        function getDwid() {
-            if (treeObj) {
-                var nodes = treeObj.getSelectedNodes();
-                if (nodes.length == 1) {
-                    var node = nodes[0];
-                    dwid = node.dwid;
-                }
-            }
-        }
-
         //添加
         function doAdd() {
             //window.location.href = "/rywh/editUI/null";
             var index = layer.open({
                 id: 'addPop',
-                title: '人员维护',
+                title: '添加在职状态',
                 area: ['80%', '80%'],
                 type: 2,
                 content: "/rywh/editUI/null"
@@ -194,7 +115,7 @@
         function doUpdate(yhid) {
             var index = layer.open({
                 id: 'addPop',
-                title: '人员维护',
+                title: '修改状态信息',
                 area: ['80%', '80%'],
                 type: 2,
                 content: "/rywh/editUI/" + yhid
@@ -224,6 +145,29 @@
                     }
                 });
                 layer.close(index_confirm);
+            });
+        }
+
+        // 查询所有的在职状态
+        function selectZzzt() {
+            $.ajax({
+                type: "post",
+                url: "/zzzt/zzztSelect",
+                async: false,
+                success: function (result) {
+                    var li = "<li><a href=\"javascript:void(0);\">选择在职状态</a></li>";
+                    if (null == result || result.length == 0) {
+
+                    } else {
+                        $.each(result, function (i) {
+                            li += "<li><a href='javascript:void(0);' data-id='"+result[i].ztid+"'>"+result[i].ztmc+"</a></li>";
+                        })
+                    }
+                    return li;
+                },
+                error: function (xhr, status, error) {
+                    return "<li><a href=\"javascript:void(0);\">选择在职状态</a></li>";
+                }
             });
         }
     </script>

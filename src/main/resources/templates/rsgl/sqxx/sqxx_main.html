@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>单位维护</title>
+    <title>授权信息</title>
     <!-- 引入公共页面 -->
     <link rel="import" href="/include"/>
 </head>
@@ -10,26 +10,29 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-3">
-            <div class="panel panel-default" style="margin: 10px 0px 0px 0px;">
+            <div class="panel panel-default" style="margin: 65px 0px 0px 0px;">
                 <div class="panel-heading">单位树</div>
                 <div id="treeBody" class="panel-body" style="padding: 5px; overflow: auto;">
                     <div id="dwTree" class="ztree"></div>
                 </div>
             </div>
         </div>
-        <div class="col-md-9" style="padding-left: 0px;">
-            <div id="toolbar" class="text-right">
+        <div class="col-md-5" style="padding-left: 0px; margin: 65px 0px 0px 0px;">
+            <table id="yhTable"></table>
+        </div>
+        <div class="col-md-4" style="padding-left: 0px; margin: 10px 0px 0px 0px;">
+            <div id="toolbar" class="text-left">
                 <button class="btn btn-info" onclick="doAdd();">添加</button>
             </div>
-            <table id="dwwhTable"></table>
+            <table id="sqxxTable"></table>
         </div>
     </div>
 
 
     <script type="text/javascript">
-        var pdwid = "root"; // 定义全局变量，上级单位id为root
+        var dwid = "root", yhid = "root0abc"; // 定义全局变量，单位id为root，用户id
 
-        $("#treeBody").height($(window).height() - 76);
+        $("#treeBody").height($(window).height() - 140);
         var treeObj;
         var treeParam;
         var lastNodeId;
@@ -40,7 +43,8 @@
             dwTree();
 
             // 初始化table
-            dwDataPage(pdwid);
+            yhDataPage(dwid);
+            sqDataPage(yhid);
         });
 
         // 单位树
@@ -86,9 +90,9 @@
                     },
                     onClick: function (event, treeId, treeNode) {
                         lastNodeId = treeNode.dwid;
-                        $("#dwwhTable").bootstrapTable('refresh', {
+                        $("#yhTable").bootstrapTable('refresh', {
                             query : {
-                                pdwid : lastNodeId
+                                dwid : lastNodeId
                             }
                         });
                     }
@@ -97,16 +101,18 @@
         }
 
         // 单位分页数据
-        function dwDataPage(pdwid) {
-            var t = $("#dwwhTable").bootstrapTable({
-                url: '/dw/getDwPage',
+        function yhDataPage(dwid) {
+            var t = $("#yhTable").bootstrapTable({
+                url: '/rywh/getDwYhPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
                 pagination: true, //分页
                 pageSize: 10,//如果设置了分页，页面数据条数
-                search: true, //显示搜索框
-                toolbar: '#toolbar',
+                // search: true, //显示搜索框
+                // toolbar: '#toolbar',
+                clickToSelect: true,
+                singleSelect: true,
                 sidePagination: "server", //服务端处理分页
                 responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
                     return {
@@ -116,20 +122,27 @@
                 },
                 queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
                     // 上级单位id
-                    getPdwid();
-                    return $.extend(params, {pdwid: pdwid});
+                    getDwid();
+                    return $.extend(params, {dwid: dwid});
                 },
                 idField: "userId",//指定主键列
                 columns: [
                     {
-                        title: '单位名称',
-                        field: 'dwmc',
+                        field : 'checked',
+                        checkbox : true,
+                        formatter : function stateFormatter(value, row, index) {
+                            return value;
+                        }
+                    },
+                    {
+                        title: '用户姓名',
+                        field: 'yhxm',
                         align: 'left',
                         width: '200'
                     },
                     {
-                        title: '单位简称',
-                        field: 'dwjc',
+                        title: '用户编码',
+                        field: 'dlid',
                         align: 'left',
                         width: '150'
                     },
@@ -138,76 +151,140 @@
                         field: 'dwpwsx',
                         align: 'center',
                         width: '100'
-                    },
+                    }
+                ],
+                onClickRow: function(row) {
+                    $("#sqxxTable").bootstrapTable('refresh', {
+                        query : {
+                            yhid : row.yhid
+                        }
+                    });
+                }
+            });
+            t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+                $(".pull-right").css("display", "block");
+            });
+        }
+
+        // 授权信息分页数据
+        function sqDataPage(yhid) {
+            var t = $("#sqxxTable").bootstrapTable({
+                url: '/sqxx/getSqxxPage',
+                method: 'get',
+                dataType: "json",
+                striped: true,//设置为 true 会有隔行变色效果
+                pagination: true, //分页
+                pageSize: 10,//如果设置了分页，页面数据条数
+                // search: true, //显示搜索框
+                toolbar: '#toolbar',
+                sidePagination: "server", //服务端处理分页
+                responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
+                    return {
+                        "rows": res.content, // 具体每一个bean的列表
+                        "total": res.totalElements  // 总共有多少条返回数据
+                    }
+                },
+                queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
+                    return $.extend(params, {yhid: yhid});
+                },
+                idField: "userId",//指定主键列
+                columns: [
                     {
-                        title: '说明',
-                        field: 'sm',
-                        align: 'left'
-                    },
-                    {
-                        title: '状态',
-                        field: 'dqzt',
-                        align: 'center',
-                        width: '100'
+                        title: '菜单名称',
+                        field: 'cdmc',
+                        align: 'left',
+                        width: '200'
                     },
                     {
                         title: '操作',
-                        field: 'dwid',
-                        width: '140',
+                        field: 'lbid',
+                        width: '100',
                         align: 'center',
                         formatter: function (value, row, index) {//自定义显示可以写标签哦~
-                            return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.pdwid + '\', \'' + row.dwid + '\')">修改</a> &nbsp;' +
-                                '<a href="#" mce_href="#" onclick="doDelete(\'' + row.dwid + '\')">删除</a> ';
+                            return '<a href="#" mce_href="#" onclick="doDelete(\'' + row.sqid + '\')">删除</a> ';
                         }
                     }
-
                 ]
             });
             t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
-                //console.log("load success");
                 $(".pull-right").css("display", "block");
             });
         }
 
         // 获取上级单位id
-        function getPdwid() {
+        function getDwid() {
             if (treeObj) {
                 var nodes = treeObj.getSelectedNodes();
                 if (nodes.length == 1) {
                     var node = nodes[0];
-                    pdwid = node.dwid;
+                    dwid = node.dwid;
                 }
             }
         }
 
         //添加
         function doAdd() {
-            // 上级单位id
-            getPdwid();
+            // 用户id
+            var yhinfo = $("#yhTable").bootstrapTable("getSelections");
+            // console.log("yhinfo", yhinfo);
+            if (yhinfo.length == 1) {
+                yhid = yhinfo[0].yhid;
+            } else {
+                layer.msg("选择用户!");
+                return false;
+            }
 
-            var index = layer.open({
-                title: '添加单位',
-                area: ['80%', '80%'],
+            layer.open({
+                title: '授权',
+                area: ['20%', '60%'],
                 type: 2,
-                content: "/dw/editUI/" + pdwid + "/null"
+                content: '/cd/select/sq'
             });
         }
 
-        //修改
-        function doUpdate(p_dwid, dwid) {
-            console.log("pdwid", p_dwid);
-            console.log("dwid", dwid);
+        // 授权方法
+        function selectedDwInfo(cdinfo) {
+            console.log("cd", cdinfo);
+            // 用户id
+            var yhinfo = $("#yhTable").bootstrapTable("getSelections");
+            // console.log("yh", yhinfo);
+            // 打开遮罩
+            var index_load = layer.load({shade: [1, '#000']});
 
-            var index = layer.open({
-                title: '修改单位信息',
-                area: ['80%', '80%'],
-                type: 2,
-                content: "/dw/editUI/" + p_dwid + "/" + dwid
+            if (null == cdinfo || undefined == cdinfo) {
+                layer.msg("参数异常,增加授权失败!");
+                return false;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/sqxx/doSave",
+                data: {
+                    "sqyhid": yhinfo[0].yhid, "sqyhxm": yhinfo[0].yhxm,
+                    "cdid": cdinfo.cdid, "cdmc": cdinfo.cdmc
+                },
+                success: function (result) {
+                    layer.close(index_load);//关闭遮罩
+                    if (result) {
+                        //刷新table
+                        $("#sqxxTable").bootstrapTable('refresh', {
+                            query : {
+                                yhid : yhinfo.yhid
+                            }
+                        });
+                    } else {
+                        layer.msg("参数异常，授权失败！");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.close(index_load);//关闭遮罩
+                    layer.msg("保存失败，请稍后重试！");
+                }
             });
         }
 
         //删除
-        function doDelete(dwid) {
+        function doDelete(sqid) {
             // 上级单位id
             getPdwid();
 
@@ -216,15 +293,15 @@
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/dw/doDelete/" + dwid,
+                    url: "/sqxx/doDelete/" + sqid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {
                             layer.msg("删除成功.");
                             //刷新table
-                            $("#dwwhTable").bootstrapTable('refresh', {
+                            $("#sqxxTable").bootstrapTable('refresh', {
                                 query : {
-                                    pdwid : pdwid
+                                    sqyhid : yhid
                                 }
                             });
                             treeObj.reAsyncChildNodes(null, "refresh");

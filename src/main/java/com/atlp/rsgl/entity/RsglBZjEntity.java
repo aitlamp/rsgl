@@ -19,6 +19,7 @@ public class RsglBZjEntity {
     @GeneratedValue(generator = "system-uuid")
     private String zjid;
     private String zjmc;
+    private String sybzybs;
     private long pwsx;
     private String sm;
     private String dqzt;

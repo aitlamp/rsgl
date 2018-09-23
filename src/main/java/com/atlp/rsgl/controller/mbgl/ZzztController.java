@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: zhangchq
@@ -122,5 +123,16 @@ public class ZzztController {
         }
 
         return iZzztService.doDeleteZzzt(zzztEntity);
+    }
+
+    /**
+     * 在职状态选择select
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/zzztSelect")
+    @ResponseBody
+    public List<RsglBZzztEntity> getZzztList() throws Exception {
+        return iZzztService.getZzztList();
     }
 }

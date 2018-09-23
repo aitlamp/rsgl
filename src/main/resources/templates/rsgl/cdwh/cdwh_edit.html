@@ -128,8 +128,18 @@
                 title: '选择上级菜单',
                 area: ['20%', '60%'],
                 type: 2,
-                content: '/cd/select'
+                content: '/cd/select/cd'
             });
+        }
+
+        // 选择单位赋值
+        function selectedDwInfo(node) {
+            $("#pcdid").val(node.cdid);
+            $("#pcdmc").val(node.cdmc).change();
+            //重新验证
+            $('#cdwhForm').data('bootstrapValidator')
+                .updateStatus('pcdmc', 'NOT_VALIDATED', null)
+                .validateField('pcdmc');
         }
     </script>
 </div>
