@@ -1,8 +1,8 @@
 package com.atlp.rsgl.controller.rykh;
 
+import com.atlp.rsgl.common.base.BaseController;
 import com.atlp.rsgl.common.data.PageModel;
 import com.atlp.rsgl.common.utils.AtlpUtil;
-import com.atlp.rsgl.controller.main.BaseController;
 import com.atlp.rsgl.entity.RsglBKhjlEntity;
 import com.atlp.rsgl.service.khjl.IKhjlService;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +33,7 @@ public class KhwhController extends BaseController {
 
     /**
      * 考核tableUI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
@@ -42,6 +43,7 @@ public class KhwhController extends BaseController {
 
     /**
      * 考核记录page
+     *
      * @param page
      * @return
      * @throws Exception
@@ -54,6 +56,7 @@ public class KhwhController extends BaseController {
 
     /**
      * 考核编辑ui
+     *
      * @param map
      * @param khid
      * @return
@@ -74,6 +77,7 @@ public class KhwhController extends BaseController {
     /**
      * form保存方法
      * 添加或修改考核记录
+     *
      * @param khjlEntity
      * @param request
      * @return
@@ -107,6 +111,7 @@ public class KhwhController extends BaseController {
 
     /**
      * 删除考核记录
+     *
      * @param khid
      * @return
      * @throws Exception

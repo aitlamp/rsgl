@@ -1,8 +1,8 @@
 package com.atlp.rsgl.controller.pxgl;
 
+import com.atlp.rsgl.common.base.BaseController;
 import com.atlp.rsgl.common.data.PageModel;
 import com.atlp.rsgl.common.utils.AtlpUtil;
-import com.atlp.rsgl.controller.main.BaseController;
 import com.atlp.rsgl.entity.RsglBPxjlEntity;
 import com.atlp.rsgl.service.pxjl.IPxjlService;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +33,7 @@ public class PxwhController extends BaseController {
 
     /**
      * 培训记录UI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
@@ -42,6 +43,7 @@ public class PxwhController extends BaseController {
 
     /**
      * 分页查询培训记录
+     *
      * @param page
      * @return
      * @throws Exception
@@ -54,6 +56,7 @@ public class PxwhController extends BaseController {
 
     /**
      * 培训记录编辑UI
+     *
      * @param map
      * @param pxid
      * @return
@@ -75,6 +78,7 @@ public class PxwhController extends BaseController {
     /**
      * form保存
      * 添加或修改
+     *
      * @param pxjlEntity
      * @return
      * @throws Exception
@@ -107,6 +111,7 @@ public class PxwhController extends BaseController {
 
     /**
      * 删除培训记录
+     *
      * @param pxid
      * @return
      * @throws Exception

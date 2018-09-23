@@ -1,8 +1,8 @@
 package com.atlp.rsgl.controller.sqxx;
 
+import com.atlp.rsgl.common.base.BaseController;
 import com.atlp.rsgl.common.data.PageModel;
 import com.atlp.rsgl.common.utils.AtlpUtil;
-import com.atlp.rsgl.controller.main.BaseController;
 import com.atlp.rsgl.entity.RsglBSqxxEntity;
 import com.atlp.rsgl.service.sqxx.ISqxxService;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +29,7 @@ public class SqxxController extends BaseController {
 
     /**
      * 授权UI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
@@ -38,6 +39,7 @@ public class SqxxController extends BaseController {
 
     /**
      * 授权table
+     *
      * @param page
      * @param yhid
      * @return
@@ -51,6 +53,7 @@ public class SqxxController extends BaseController {
 
     /**
      * 授权
+     *
      * @param sqxxEntity
      * @param request
      * @return
@@ -76,6 +79,7 @@ public class SqxxController extends BaseController {
 
     /**
      * 删除授权
+     *
      * @param sqid
      * @return
      * @throws Exception

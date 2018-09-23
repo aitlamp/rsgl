@@ -31,9 +31,7 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     #阿里云服务器180
-    #url: jdbc:oracle:thin:@47.97.173.180:1521:orcl
-    #阿里云服务器126
-    url: jdbc:oracle:thin:@47.99.139.126:1521:orcl
+    url: jdbc:oracle:thin:@47.97.173.180:1521:orcl
     #本机虚拟机
     #url: jdbc:oracle:thin:@192.168.28.132:1521:orcl
     username: rsgl

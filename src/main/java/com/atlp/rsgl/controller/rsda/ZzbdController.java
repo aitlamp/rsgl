@@ -1,7 +1,7 @@
 package com.atlp.rsgl.controller.rsda;
 
+import com.atlp.rsgl.common.base.BaseController;
 import com.atlp.rsgl.common.data.PageModel;
-import com.atlp.rsgl.controller.main.BaseController;
 import com.atlp.rsgl.entity.RsglBYhEntity;
 import com.atlp.rsgl.entity.RsglBYhGzxxEntity;
 import com.atlp.rsgl.service.gzxx.IGzxxService;
@@ -31,6 +31,7 @@ public class ZzbdController extends BaseController {
 
     /**
      * 在职变动page
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
@@ -40,6 +41,7 @@ public class ZzbdController extends BaseController {
 
     /**
      * 用户pagelist
+     *
      * @param page
      * @return
      * @throws Exception
@@ -52,6 +54,7 @@ public class ZzbdController extends BaseController {
 
     /**
      * 在职变动编辑ui
+     *
      * @param map
      * @param yhid
      * @return
@@ -64,6 +67,7 @@ public class ZzbdController extends BaseController {
 
     /**
      * 更在在职变动
+     *
      * @param gzxxEntity
      * @return
      * @throws Exception

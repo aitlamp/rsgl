@@ -1,6 +1,6 @@
 package com.atlp.rsgl.controller.rsda;
 
-import com.atlp.rsgl.controller.main.BaseController;
+import com.atlp.rsgl.common.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +16,7 @@ public class RybdController extends BaseController {
 
     /**
      * 人员变动page
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
