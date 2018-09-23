@@ -11,10 +11,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 公共工具类
@@ -178,5 +175,23 @@ public class AtlpUtil {
         } catch (IllegalAccessException e) {
             System.out.println("对象赋值出错:" + e.getMessage());
         }
+    }
+
+    /**
+     * MapKey大小写转换
+     */
+    public static Map mapKeyCaseConvert(Map map) {
+        Map tMap = new HashMap();
+        try {
+            // 循环源Map
+            for (Object key : map.keySet()) {
+                Object value = map.get(key);
+                String lowKey = key.toString().toLowerCase();
+                tMap.put(lowKey, value);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tMap;
     }
 }

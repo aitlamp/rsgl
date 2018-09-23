@@ -1,4 +1,4 @@
-package com.atlp.rsgl.controller.main;
+package com.atlp.rsgl.common.base;
 
 import com.atlp.rsgl.common.utils.DateTimeUtil;
 import org.apache.commons.text.StringEscapeUtils;

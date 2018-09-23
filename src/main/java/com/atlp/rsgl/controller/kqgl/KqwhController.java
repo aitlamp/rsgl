@@ -2,7 +2,7 @@ package com.atlp.rsgl.controller.kqgl;
 
 import com.atlp.rsgl.common.data.PageModel;
 import com.atlp.rsgl.common.utils.AtlpUtil;
-import com.atlp.rsgl.controller.main.BaseController;
+import com.atlp.rsgl.common.base.BaseController;
 import com.atlp.rsgl.entity.RsglBKqjlEntity;
 import com.atlp.rsgl.service.kqjl.IKqjlService;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +33,7 @@ public class KqwhController extends BaseController {
 
     /**
      * 考勤记录ListUI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
@@ -42,18 +43,20 @@ public class KqwhController extends BaseController {
 
     /**
      * 分页查询考勤信息
+     *
      * @param page
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/getKqPage", method = RequestMethod.GET)
     @ResponseBody
-    public Page<RsglBKqjlEntity> getKqPage(PageModel page) throws Exception {
+    public Page getKqPage(PageModel page) throws Exception {
         return iKqjlService.getKqPage(page);
     }
 
     /**
      * 考勤记录编辑UI
+     *
      * @return
      */
     @RequestMapping(value = "/editUI/{kqid}")
@@ -71,6 +74,7 @@ public class KqwhController extends BaseController {
     /**
      * form保存
      * 添加或修改考勤记录
+     *
      * @param kqjlEntity
      * @return
      * @throws Exception
@@ -102,6 +106,7 @@ public class KqwhController extends BaseController {
 
     /**
      * 删除考勤记录
+     *
      * @param kqid
      * @return
      * @throws Exception

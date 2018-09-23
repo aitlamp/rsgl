@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -17,6 +19,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: zhangchq
@@ -33,8 +36,10 @@ public class KqjlServicceImpl implements IKqjlService {
     private KqjlRepository kqjlRepository;
 
     @Override
-    public Page<RsglBKqjlEntity> getKqPage(PageModel page) throws Exception {
-        return kqjlRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
+    public Page getKqPage(PageModel page) throws Exception {
+        //return kqjlRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
+        String sql = "SELECT kqjl.*, yh.yhxm kqryxm FROM Rsgl_B_Kqjl kqjl, Rsgl_B_Yh yh WHERE kqjl.yhid=yh.yhid ";
+        return kqjlRepository.findPageBySql(sql, PageRequest.of(page.getPage(), page.getLimit()));
     }
 
     @Override
