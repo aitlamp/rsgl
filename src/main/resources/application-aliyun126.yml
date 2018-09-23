@@ -38,6 +38,6 @@ spring:
 
 #自定义属性
 custom-props:
-  access-ignore: include,webjars,login,doLogin
+  access-ignore: include,webjars,login,doLogin,main/
   tysq-path: http://47.99.139.126/tysq/tysqRestWS/callService.do
   app-code: RSGL
