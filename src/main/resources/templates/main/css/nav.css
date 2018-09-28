@@ -22,7 +22,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background: url(/main/img/skin_/leftbg.png) repeat-y right;
+    background: url(../img/skin_/leftbg.png) repeat-y right;
     z-index: 2;
 }
 
@@ -32,7 +32,7 @@
     right: 0;
     width: 19px;
     height: 26px;
-    background: url(/main/img/skin_/toleft.png);
+    background: url(../img/skin_/toleft.png);
     cursor: pointer;
     z-index: 1;
 }
@@ -40,7 +40,7 @@
 .sidebar h2 {
     height: 40px;
     line-height: 40px;
-    background: url(/main/img/skin_/leftmenubg.png) repeat-x;
+    background: url(../img/skin_/leftmenubg.png) repeat-x;
 }
 
 .sidebar h2 a {
@@ -52,11 +52,11 @@
     margin: 15px 0 0 10px;
     width: 12px;
     height: 12px;
-    background: url(/main/img/skin_/lefticon.png);
+    background: url(../img/skin_/lefticon.png);
 }
 
 .sidebar h2 a:hover .h2-icon {
-    background: url(/main/img/skin_/left_tree.png);
+    background: url(../img/skin_/left_tree.png);
 }
 
 .sidebar h2 a span {
@@ -68,7 +68,7 @@
 .sidebar .nav {
     padding-bottom: 2px;
     *padding-bottom: 0;
-    background: url(/main/img/skin_/leftyy.png) repeat-x bottom;
+    background: url(../img/skin_/leftyy.png) repeat-x bottom;
 }
 
 .sidebar .nav .nav-li {
@@ -81,11 +81,11 @@
     *margin-bottom: -4px;
     height: 36px;
     line-height: 36px;
-    background: url(/main/img/skin_/leftmenubg1.png) repeat-x;
+    background: url(../img/skin_/leftmenubg1.png) repeat-x;
 }
 
 .sidebar .nav .last-nav-li + a {
-    background: url(/main/img/skin_/lastnavbg.png) repeat-x;
+    background: url(../img/skin_/lastnavbg.png) repeat-x;
 }
 
 .sidebar .nav .nav-li.current {
@@ -94,7 +94,7 @@
 }
 
 .sidebar .nav .nav-li.current > a {
-    background: url(/main/img/skin_/mbbg.png) repeat-x;
+    background: url(../img/skin_/mbbg.png) repeat-x;
 }
 
 .sidebar .nav .nav-li > a .nav-ivon {
@@ -102,11 +102,11 @@
     margin: 13px 0 0 12px;
     width: 9px;
     height: 9px;
-    background: url(/main/img/skin_/leftmenu.png) no-repeat center center;
+    background: url(../img/skin_/leftmenu.png) no-repeat center center;
 }
 
 .sidebar .nav .nav-li.current > a .nav-ivon {
-    background: url(/main/img/skin_/leftmenu1.png) no-repeat center center;
+    background: url(../img/skin_/leftmenu1.png) no-repeat center center;
 }
 
 .sidebar .nav .nav-li > a .nav-text {
@@ -123,7 +123,7 @@
 
 .sidebar .nav .nav-li .subnav {
     padding: 9px 0 12px 0;
-    background: url(/main/img/skin_/leftyy.png) repeat-x top;
+    background: url(../img/skin_/leftyy.png) repeat-x top;
     display: none;
 }
 
@@ -154,7 +154,7 @@
     margin: 7px 8px 0 31px;
     width: 12px;
     height: 15px;
-    background: url(/main/img/skin_/leftlist.png);
+    background: url(../img/skin_/leftlist.png);
 }
 
 .sidebar .nav .nav-li .subnav li a:hover {
@@ -203,19 +203,19 @@
     margin: 8px 0 0 5px;
     width: 15px;
     height: 14px;
-    background: url(/main/img/skin_/switch-system/tabright.png);
+    background: url(../img/skin_/switch-system/tabright.png);
     cursor: pointer;
 }
 
 .main .title .tab-more:hover, .main .tab-more.active {
-    background: url(/main/img/skin_/switch-system/tabrighthover.png);
+    background: url(../img/skin_/switch-system/tabrighthover.png);
 }
 
 .main .title .sidebar-show {
     float: left;
     width: 15px;
     height: 25px;
-    background: url(/main/img/skin_/toright.png);
+    background: url(../img/skin_/toright.png);
     display: none;
     cursor: pointer;
 }
@@ -224,13 +224,13 @@
     float: right;
     width: 17px;
     height: 17px;
-    background: url(/main/img/skin_/close2.png);
+    background: url(../img/skin_/close2.png);
     cursor: pointer;
     margin: 4px 14px 0 0;
 }
 
 .tab-close:hover {
-    background: url(/main/img/skin_/close2.png) -17px 0;
+    background: url(../img/skin_/close2.png) -17px 0;
 }
 
 .main .tab {
@@ -247,7 +247,7 @@
     display: block;
     border-left: 1px solid #d7d7d7;
     border-right: 1px solid #d7d7d7;
-    background: url(/main/img/skin_/tab1.png) repeat-x;
+    background: url(../img/skin_/tab1.png) repeat-x;
     border-radius: 3px 3px 0 0;
 }
 
@@ -256,7 +256,7 @@
 }
 
 .main .tab li.current a {
-    background: url(/main/img/skin_/tab2.png) repeat-x;
+    background: url(../img/skin_/tab2.png) repeat-x;
 }
 
 .main .tab li a span {
@@ -277,7 +277,7 @@
     float: left;
     width: 12px;
     height: 12px;
-    background: url(/main/img/skin_/close.png);
+    background: url(../img/skin_/close.png);
     margin: 9px 3px 0 6px;
 }
 
@@ -286,7 +286,7 @@
 
 /*关闭hover状态*/
 .main .tab li a .close-tab:hover {
-    background: url(/main/img/skin_/hoverclose.png);
+    background: url(../img/skin_/hoverclose.png);
 }
 
 /*更多tab样式*/
@@ -314,7 +314,7 @@
     height: 6px;
     top: 12px;
     right: 10px;
-    background: url(/main/img/skin_/switch-system/closed.png);
+    background: url(../img/skin_/switch-system/closed.png);
 }
 
 .more-bab-list ul li span {
@@ -343,7 +343,7 @@
     bottom: 5px;
     left: -6px;
     width: 6px;
-    background: url(/main/img/skin_/switch-system/sleft.png);
+    background: url(../img/skin_/switch-system/sleft.png);
 }
 
 .more-bab-list .opt-panel-mr {
@@ -352,7 +352,7 @@
     bottom: 5px;
     right: -6px;
     width: 6px;
-    background: url(/main/img/skin_/switch-system/sright.png);
+    background: url(../img/skin_/switch-system/sright.png);
 }
 
 .more-bab-list .opt-panel-bc {
@@ -361,7 +361,7 @@
     bottom: -9px;
     right: 5px;
     height: 9px;
-    background: url(/main/img/skin_/switch-system/sdown.png);
+    background: url(../img/skin_/switch-system/sdown.png);
 }
 
 .more-bab-list .opt-panel-br {
@@ -370,7 +370,7 @@
     right: -6px;
     width: 11px;
     height: 14px;
-    background: url(/main/img/skin_/switch-system/yj.png);
+    background: url(../img/skin_/switch-system/yj.png);
 }
 
 .more-bab-list .opt-panel-bl {
@@ -379,7 +379,7 @@
     left: -6px;
     width: 11px;
     height: 14px;
-    background: url(/main/img/skin_/switch-system/yjl.png);
+    background: url(../img/skin_/switch-system/yjl.png);
 }
 
 a.level0 {

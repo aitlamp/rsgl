@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>人员维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -47,7 +47,7 @@
             treeObj = $.fn.zTree.init($("#dwTree"), {
                 async: {    //ztree异步请求数据
                     enable: true,
-                    url: "/dw/getDwTree",//请求action方法
+                    url: ctxPath + "dw/getDwTree",//请求action方法
                     autoparam: ["id"],
                     otherParam: function () {
                         return treeParam;
@@ -85,8 +85,8 @@
                     onClick: function (event, treeId, treeNode) {
                         lastNodeId = treeNode.dwid;
                         $("#rywhTable").bootstrapTable('refresh', {
-                            query : {
-                                dwid : lastNodeId
+                            query: {
+                                dwid: lastNodeId
                             }
                         });
                     }
@@ -97,7 +97,7 @@
         // 单位分页数据
         function rywhDataPage(dwid) {
             var t = $("#rywhTable").bootstrapTable({
-                url: '/rywh/getDwYhPage',
+                url: ctxPath + 'rywh/getDwYhPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果

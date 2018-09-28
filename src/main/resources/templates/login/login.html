@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>成都高新基社局-人事管理系统</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" href="./include"/>
     <!-- md5 -->
-    <script th:src="@{webjars/md5/0.3.0/build/md5.min.js}"></script>
+    <script th:src="@{/webjars/md5/0.3.0/build/md5.min.js}"></script>
     <!-- 自定义样式、脚本 -->
-    <link href="/login/css/login.css" rel="stylesheet"/>
+    <link th:href="@{/login/css/login.css}" href="/login/css/login.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -40,5 +40,5 @@
     </div>
 </div>
 </body>
-<script src="/login/js/login.js" type="text/javascript"></script>
+<script th:src="@{/login/js/login.js}" src="/login/js/login.js" type="text/javascript"></script>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>菜单维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -14,7 +14,8 @@
         <div class="form-group" style="padding-top: 10px;">
             <label class="col-sm-2 control-label">岗位等级名称</label>
             <div class="col-sm-9">
-                <input class="form-control" id="gwdjmc" name="gwdjmc" th:value="${entity.gwdjmc}" placeholder="输入岗位等级名称">
+                <input class="form-control" id="gwdjmc" name="gwdjmc" th:value="${entity.gwdjmc}"
+                       placeholder="输入岗位等级名称">
             </div>
         </div>
         <div class="form-group">

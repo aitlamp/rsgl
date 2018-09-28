@@ -5,9 +5,10 @@
     <title>成都高新基社局-人事管理系统</title>
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" href="/main/css/style.css"/>
-    <link rel="stylesheet" href="/main/css/zTreeStyle/zTreeStyle.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="/main/css/nav.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/style.css}" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/zTreeStyle/zTreeStyle.css}"
+          href="../css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/main/css/nav.css}" href="../css/nav.css"/>
 </head>
 <body>
 <div id="container" style="overflow: hidden">
@@ -22,7 +23,7 @@
                 </a>
             </h2>
             <ul class="nav">
-                <li class="nav-li current" href="/main/content" data-id="1">
+                <li class="nav-li current" th:href="@{/main/content}" href="/main/content" data-id="1">
                     <a href="javascript:;" class="ue-clear">
                         <i class="nav-ivon"></i>
                         <span class="nav-text">首页</span>
@@ -36,7 +37,7 @@
                         <span class="nav-text" th:text="${menu.text}"></span>
                     </a>
                     <ul class="subnav" th:each="child : ${menu.nodes}">
-                        <li class="subnav-li" th:href="${child.page}" th:data-id="${child.id}">
+                        <li class="subnav-li" th:href="@{${child.page}}" th:data-id="${child.id}">
                             <a href="javascript:;" class="ue-clear">
                                 <i class="subnav-icon"></i>
                                 <span class="subnav-text" th:text="${child.text}"></span>
@@ -71,11 +72,12 @@
 </div>
 </body>
 
-<script type="text/javascript" src="/main/js/jquery.js"></script>
-<script type="text/javascript" src="/main/js/global.js"></script>
-<script type="text/javascript" src="/main/js/nav.js"></script>
-<script type="text/javascript" src="/main/js/Menu.js"></script>
-<script type="text/javascript" src="/main/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery.js}" src="/main/js/jquery.js"></script>
+<script type="text/javascript" th:src="@{/main/js/global.js}" src="/main/js/global.js"></script>
+<script type="text/javascript" th:src="@{/main/js/nav.js}" src="/main/js/nav.js"></script>
+<script type="text/javascript" th:src="@{/main/js/Menu.js}" src="/main/js/Menu.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery.ztree.core-3.5.js}"
+        src="/main/js/jquery.ztree.core-3.5.js"></script>
 <script type="text/javascript">
     var menu = new Menu({
         defaultSelect: $('.nav').find('li[data-id="1"]')

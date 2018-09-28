@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>单位维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -24,223 +24,219 @@
             <table id="dwwhTable"></table>
         </div>
     </div>
-
-
-    <script type="text/javascript">
-        var pdwid = "root"; // 定义全局变量，上级单位id为root
-
-        $("#treeBody").height($(window).height() - 76);
-        var treeObj;
-        var treeParam;
-        var lastNodeId;
-        var tableObj;
-
-        $(function () {
-            //初始化树
-            dwTree();
-
-            // 初始化table
-            dwDataPage(pdwid);
-        });
-
-        // 单位树
-        function dwTree() {
-            //初始化树
-            treeObj = $.fn.zTree.init($("#dwTree"), {
-                async: {    //ztree异步请求数据
-                    enable: true,
-                    url: "/dw/getDwTree",//请求action方法
-                    autoparam: ["id"],
-                    otherParam: function () {
-                        return treeParam;
-                    },
-                },
-                data: {
-                    simpleData: {
-                        enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
-                        idKey: "dwid",
-                        pIdKey: "pdwid",
-                        rootPId: ""
-                    },
-                    key: {
-                        name: "dwmc",
-                        url: ""
-                    }
-                },
-                view: {
-                    showLine: true,//显示连接线
-                    showIcon: false//显示节点图片
-                    //fontCss: {color:"red"}
-                    //fontCss: setFontCss//节点颜色
-                },
-                callback: {
-                    //beforeClick: zTreeBeforeClick,
-                    onAsyncSuccess: function () {
-                        treeObj.expandAll(true);
-                        if (lastNodeId) {
-                            var lastNode = treeObj.getNodeByParam("dwid", lastNodeId, null);
-                            treeObj.selectNode(lastNode);
-                        } else {
-                            treeObj.selectNode(treeObj.getNodes()[0]);
-                        }
-                    },
-                    onClick: function (event, treeId, treeNode) {
-                        lastNodeId = treeNode.dwid;
-                        $("#dwwhTable").bootstrapTable('refresh', {
-                            query : {
-                                pdwid : lastNodeId
-                            }
-                        });
-                    }
-                }
-            });
-        }
-
-        // 单位分页数据
-        function dwDataPage(pdwid) {
-            var t = $("#dwwhTable").bootstrapTable({
-                url: '/dw/getDwPage',
-                method: 'get',
-                dataType: "json",
-                striped: true,//设置为 true 会有隔行变色效果
-                pagination: true, //分页
-                pageSize: 10,//如果设置了分页，页面数据条数
-                search: true, //显示搜索框
-                toolbar: '#toolbar',
-                sidePagination: "server", //服务端处理分页
-                responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
-                    return {
-                        "rows": res.content, // 具体每一个bean的列表
-                        "total": res.totalElements  // 总共有多少条返回数据
-                    }
-                },
-                queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
-                    // 上级单位id
-                    getPdwid();
-                    return $.extend(params, {pdwid: pdwid});
-                },
-                idField: "userId",//指定主键列
-                columns: [
-                    {
-                        title: '单位名称',
-                        field: 'dwmc',
-                        align: 'left',
-                        width: '200'
-                    },
-                    {
-                        title: '单位简称',
-                        field: 'dwjc',
-                        align: 'left',
-                        width: '150'
-                    },
-                    {
-                        title: '排位顺序',
-                        field: 'dwpwsx',
-                        align: 'center',
-                        width: '100'
-                    },
-                    {
-                        title: '说明',
-                        field: 'sm',
-                        align: 'left'
-                    },
-                    {
-                        title: '状态',
-                        field: 'dqzt',
-                        align: 'center',
-                        width: '100'
-                    },
-                    {
-                        title: '操作',
-                        field: 'dwid',
-                        width: '140',
-                        align: 'center',
-                        formatter: function (value, row, index) {//自定义显示可以写标签哦~
-                            return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.pdwid + '\', \'' + row.dwid + '\')">修改</a> &nbsp;' +
-                                '<a href="#" mce_href="#" onclick="doDelete(\'' + row.dwid + '\')">删除</a> ';
-                        }
-                    }
-
-                ]
-            });
-            t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
-                //console.log("load success");
-                $(".pull-right").css("display", "block");
-            });
-        }
-
-        // 获取上级单位id
-        function getPdwid() {
-            if (treeObj) {
-                var nodes = treeObj.getSelectedNodes();
-                if (nodes.length == 1) {
-                    var node = nodes[0];
-                    pdwid = node.dwid;
-                }
-            }
-        }
-
-        //添加
-        function doAdd() {
-            // 上级单位id
-            getPdwid();
-
-            var index = layer.open({
-                title: '添加单位',
-                area: ['80%', '80%'],
-                type: 2,
-                content: "/dw/editUI/" + pdwid + "/null"
-            });
-        }
-
-        //修改
-        function doUpdate(p_dwid, dwid) {
-            console.log("pdwid", p_dwid);
-            console.log("dwid", dwid);
-
-            var index = layer.open({
-                title: '修改单位信息',
-                area: ['80%', '80%'],
-                type: 2,
-                content: "/dw/editUI/" + p_dwid + "/" + dwid
-            });
-        }
-
-        //删除
-        function doDelete(dwid) {
-            // 上级单位id
-            getPdwid();
-
-            layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
-                // 打开遮罩
-                var index_load = layer.load({shade: [1, '#000']});
-                $.ajax({
-                    type: "post",
-                    url: "/dw/doDelete/" + dwid,
-                    success: function (result) {
-                        layer.close(index_load);//关闭遮罩
-                        if (result) {
-                            layer.msg("删除成功.");
-                            //刷新table
-                            $("#dwwhTable").bootstrapTable('refresh', {
-                                query : {
-                                    pdwid : pdwid
-                                }
-                            });
-                            treeObj.reAsyncChildNodes(null, "refresh");
-                        } else {
-                            layer.msg("删除失败，请与管理员联系！");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        layer.close(index_load);//关闭遮罩
-                        layer.msg("保存失败，请稍后重试！");
-                    }
-                });
-                layer.close(index_confirm);
-            });
-        }
-    </script>
 </div>
 </body>
+
+<script type="text/javascript">
+    var pdwid = "root"; // 定义全局变量，上级单位id为root
+
+    $("#treeBody").height($(window).height() - 76);
+    var treeObj;
+    var treeParam;
+    var lastNodeId;
+    var tableObj;
+
+    $(function () {
+        //初始化树
+        dwTree();
+
+        // 初始化table
+        dwDataPage(pdwid);
+    });
+
+    // 单位树
+    function dwTree() {
+        //初始化树
+        treeObj = $.fn.zTree.init($("#dwTree"), {
+            async: {    //ztree异步请求数据
+                enable: true,
+                url: ctxPath + "dw/getDwTree",//请求action方法
+                autoparam: ["id"],
+                otherParam: function () {
+                    return treeParam;
+                },
+            },
+            data: {
+                simpleData: {
+                    enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
+                    idKey: "dwid",
+                    pIdKey: "pdwid",
+                    rootPId: ""
+                },
+                key: {
+                    name: "dwmc",
+                    url: ""
+                }
+            },
+            view: {
+                showLine: true,//显示连接线
+                showIcon: false//显示节点图片
+                //fontCss: {color:"red"}
+                //fontCss: setFontCss//节点颜色
+            },
+            callback: {
+                //beforeClick: zTreeBeforeClick,
+                onAsyncSuccess: function () {
+                    treeObj.expandAll(true);
+                    if (lastNodeId) {
+                        var lastNode = treeObj.getNodeByParam("dwid", lastNodeId, null);
+                        treeObj.selectNode(lastNode);
+                    } else {
+                        treeObj.selectNode(treeObj.getNodes()[0]);
+                    }
+                },
+                onClick: function (event, treeId, treeNode) {
+                    lastNodeId = treeNode.dwid;
+                    $("#dwwhTable").bootstrapTable('refresh', {
+                        query: {
+                            pdwid: lastNodeId
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    // 单位分页数据
+    function dwDataPage(pdwid) {
+        var t = $("#dwwhTable").bootstrapTable({
+            url: ctxPath + 'dw/getDwPage',
+            method: 'get',
+            dataType: "json",
+            striped: true,//设置为 true 会有隔行变色效果
+            pagination: true, //分页
+            pageSize: 10,//如果设置了分页，页面数据条数
+            search: true, //显示搜索框
+            toolbar: '#toolbar',
+            sidePagination: "server", //服务端处理分页
+            responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
+                return {
+                    "rows": res.content, // 具体每一个bean的列表
+                    "total": res.totalElements  // 总共有多少条返回数据
+                }
+            },
+            queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
+                // 上级单位id
+                getPdwid();
+                return $.extend(params, {pdwid: pdwid});
+            },
+            idField: "userId",//指定主键列
+            columns: [
+                {
+                    title: '单位名称',
+                    field: 'dwmc',
+                    align: 'left',
+                    width: '200'
+                },
+                {
+                    title: '单位简称',
+                    field: 'dwjc',
+                    align: 'left',
+                    width: '150'
+                },
+                {
+                    title: '排位顺序',
+                    field: 'dwpwsx',
+                    align: 'center',
+                    width: '100'
+                },
+                {
+                    title: '说明',
+                    field: 'sm',
+                    align: 'left'
+                },
+                {
+                    title: '状态',
+                    field: 'dqzt',
+                    align: 'center',
+                    width: '100'
+                },
+                {
+                    title: '操作',
+                    field: 'dwid',
+                    width: '140',
+                    align: 'center',
+                    formatter: function (value, row, index) {//自定义显示可以写标签哦~
+                        return '<a href="#" mce_href="#" onclick="doUpdate(\'' + row.pdwid + '\', \'' + row.dwid + '\')">修改</a> &nbsp;' +
+                            '<a href="#" mce_href="#" onclick="doDelete(\'' + row.dwid + '\')">删除</a> ';
+                    }
+                }
+
+            ]
+        });
+        t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+            //console.log("load success");
+            $(".pull-right").css("display", "block");
+        });
+    }
+
+    // 获取上级单位id
+    function getPdwid() {
+        if (treeObj) {
+            var nodes = treeObj.getSelectedNodes();
+            if (nodes.length == 1) {
+                var node = nodes[0];
+                pdwid = node.dwid;
+            }
+        }
+    }
+
+    //添加
+    function doAdd() {
+        // 上级单位id
+        getPdwid();
+
+        var index = layer.open({
+            title: '添加单位',
+            area: ['80%', '80%'],
+            type: 2,
+            content: ctxPath + "dw/editUI/" + pdwid + "/null"
+        });
+    }
+
+    //修改
+    function doUpdate(p_dwid, dwid) {
+        var index = layer.open({
+            title: '修改单位信息',
+            area: ['80%', '80%'],
+            type: 2,
+            content: ctxPath + "dw/editUI/" + p_dwid + "/" + dwid
+        });
+    }
+
+    //删除
+    function doDelete(dwid) {
+        // 上级单位id
+        getPdwid();
+
+        layer.confirm('确定删除?', {icon: 3, title: '提示', offset: '20%'}, function (index_confirm) {
+            // 打开遮罩
+            var index_load = layer.load({shade: [1, '#000']});
+            $.ajax({
+                type: "post",
+                url: ctxPath + "dw/doDelete/" + dwid,
+                success: function (result) {
+                    layer.close(index_load);//关闭遮罩
+                    if (result) {
+                        layer.msg("删除成功.");
+                        //刷新table
+                        $("#dwwhTable").bootstrapTable('refresh', {
+                            query: {
+                                pdwid: pdwid
+                            }
+                        });
+                        treeObj.reAsyncChildNodes(null, "refresh");
+                    } else {
+                        layer.msg("删除失败，请与管理员联系！");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    layer.close(index_load);//关闭遮罩
+                    layer.msg("删除失败，请稍后重试！");
+                }
+            });
+            layer.close(index_confirm);
+        });
+    }
+</script>
 </html>

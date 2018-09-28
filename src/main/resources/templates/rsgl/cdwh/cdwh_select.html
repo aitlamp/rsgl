@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>菜单维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container" style="padding: 0px;">
     <div id="tree" class="ztree" style="padding-top: 5px; overflow: auto;"></div>
     <div class="text-center" style="padding: 10px;">
-        <input type="hidden" id="type" name="type" th:value="${type}" >
+        <input type="hidden" id="type" name="type" th:value="${type}">
         <button class="btn btn-primary" onclick="doSelect()">选择</button>
     </div>
 </div>

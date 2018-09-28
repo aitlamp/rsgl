@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>菜单维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -137,7 +137,7 @@
                 //});
             });
         });
-        
+
         // 选择用户
         function selectYh() {
             parent.layer.open({

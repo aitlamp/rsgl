@@ -32,10 +32,7 @@ spring:
 
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    #阿里云服务器180
-    url: jdbc:oracle:thin:@47.97.173.180:1521:orcl
-    #本机虚拟机
-    #url: jdbc:oracle:thin:@192.168.28.132:1521:orcl
+    url: jdbc:oracle:thin:@192.168.0.202:1521:orcl
     username: rsgl
     password: rsgl123
 
@@ -43,6 +40,6 @@ spring:
 
 #自定义属性
 custom-props:
-  access-ignore: include,webjars,login,doLogin
-  tysq-path: http://47.97.173.180/tysq/tysqRestWS/callService.do
+  access-ignore: include,webjars,login,doLogin,main/
+  tysq-path: http://192.168.0.201/tysq/tysqRestWS/callService.do
   app-code: RSGL

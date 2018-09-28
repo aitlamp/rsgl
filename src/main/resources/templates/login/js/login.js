@@ -38,7 +38,7 @@ $(function () {
         // ajax提交
         $.ajax({
             type: "post",
-            url: "/doLogin",
+            url: ctxPath + "doLogin",
             data: {
                 userName: $("#userName").val(),
                 userPwd: md5($("#userPwd").val())
@@ -48,7 +48,7 @@ $(function () {
                 layer.close(index_load);
                 if (result.code == "00") {
                     //登录成功，跳转页面
-                    window.location.replace("/main");
+                    window.location.replace(ctxPath + "main");
                 } else {
                     layer.msg(result.msg);
                 }

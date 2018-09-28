@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>r人员维护编辑</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -125,32 +125,32 @@
             <label class="col-sm-2 control-label">职务</label>
             <div class="col-sm-8">
                 <select class="form-control" id="zwmc" name="zwmc"></select>
-                <input type="hidden" id="zwid" name="zwid" >
+                <input type="hidden" id="zwid" name="zwid">
             </div>
         </div>
         <div class="form-group" id="zjSelect">
             <label class="col-sm-2 control-label">职级</label>
             <div class="col-sm-8">
                 <select class="form-control" id="zjmc" name="zjmc"></select>
-                <input type="hidden" id="zjid" name="zjid" >
+                <input type="hidden" id="zjid" name="zjid">
             </div>
         </div>
         <div class="form-group" id="gwSelect">
             <label class="col-sm-2 control-label">全员聘用岗位</label>
             <div class="col-sm-8">
                 <select class="form-control" id="gwmc" name="gwmc"></select>
-                <input type="hidden" id="gwid" name="gwid" >
+                <input type="hidden" id="gwid" name="gwid">
             </div>
         </div>
         <div class="form-group" id="gjSelect">
             <label class="col-sm-2 control-label">岗位等级</label>
             <div class="col-sm-4">
                 <select class="form-control" id="gjmc" name="gjmc"></select>
-                <input type="hidden" id="gjid" name="gjid" >
+                <input type="hidden" id="gjid" name="gjid">
             </div>
             <div class="col-sm-4">
                 <select class="form-control" id="gdmc" name="gdmc"></select>
-                <input type="hidden" id="gdid" name="gdid" >
+                <input type="hidden" id="gdid" name="gdid">
             </div>
         </div>
         <div class="form-group">
@@ -181,14 +181,14 @@
             // 大类别
             selectLRylb("root");
             // 小类别
-            $("#llbmc").change(function() {
+            $("#llbmc").change(function () {
                 var lbid = $(this).val();
                 // llbid赋值
                 $("#llbid").val(lbid);
                 // 加载小类别
                 selectLRylb(lbid);
             });
-            $("#slbmc").change(function() {
+            $("#slbmc").change(function () {
                 $("#slbid").val($(this).val());
             });
 
@@ -205,7 +205,6 @@
                 // 加载小类别
                 selectGd(gjid);
             });
-
 
 
             $("#rywhForm").bootstrapValidator({
@@ -227,18 +226,18 @@
                         }
                     },
                     dwmc: {
-                            validators: {
-                                notEmpty: {//检测非空,radio也可用
-                                    message: '单位必须选择.'
-                                }
+                        validators: {
+                            notEmpty: {//检测非空,radio也可用
+                                message: '单位必须选择.'
                             }
+                        }
                     },
                     lbmc: {
-                            validators: {
-                                notEmpty: {//检测非空,radio也可用
-                                    message: '人员类别必须选择.'
-                                }
+                        validators: {
+                            notEmpty: {//检测非空,radio也可用
+                                message: '人员类别必须选择.'
                             }
+                        }
                     }
                 }
             }).on('success.form.bv', function (e) {//点击提交之后
@@ -290,8 +289,8 @@
                     type: "post",
                     url: "/rywh/doSave",
                     data: {
-                        "yhxx" : JSON.stringify(yhxx),
-                        "gzxx" : JSON.stringify(gzxx)
+                        "yhxx": JSON.stringify(yhxx),
+                        "gzxx": JSON.stringify(gzxx)
                     },
                     success: function (result) {
                         //关闭遮罩
@@ -299,8 +298,8 @@
                         if (result) {
                             //刷新table
                             window.parent.$("#rywhTable").bootstrapTable('refresh', {
-                                query : {
-                                    dwid : $("#dwid").val()
+                                query: {
+                                    dwid: $("#dwid").val()
                                 }
                             });
                             //关闭弹框
@@ -354,8 +353,8 @@
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
-                        $.each(result, function(i) {
-                            opt += "<option value='"+result[i].lbid+"'>"+result[i].lbmc+"</option>"
+                        $.each(result, function (i) {
+                            opt += "<option value='" + result[i].lbid + "'>" + result[i].lbmc + "</option>"
                         });
 
                         if ("root" == plbid) $("#llbmc").html(opt);
@@ -375,12 +374,12 @@
         function selectZw() {
             $.ajax({
                 type: "post",
-                url: "/zw/getZwList" ,
+                url: "/zw/getZwList",
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
-                        $.each(result, function(i) {
-                            opt += "<option value='"+result[i].zwid+"'>"+result[i].zwmc+"</option>"
+                        $.each(result, function (i) {
+                            opt += "<option value='" + result[i].zwid + "'>" + result[i].zwmc + "</option>"
                         });
                         $("#zwmc").html(opt);
                     } else {
@@ -398,12 +397,12 @@
         function selectZj() {
             $.ajax({
                 type: "post",
-                url: "/zj/getZjList" ,
+                url: "/zj/getZjList",
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
-                        $.each(result, function(i) {
-                            opt += "<option value='"+result[i].zjid+"'>"+result[i].zjmc+"</option>"
+                        $.each(result, function (i) {
+                            opt += "<option value='" + result[i].zjid + "'>" + result[i].zjmc + "</option>"
                         });
                         $("#zjmc").html(opt);
                     } else {
@@ -421,12 +420,12 @@
         function selectGw() {
             $.ajax({
                 type: "post",
-                url: "/gw/getGwList" ,
+                url: "/gw/getGwList",
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
-                        $.each(result, function(i) {
-                            opt += "<option value='"+result[i].qypygwid+"'>"+result[i].qypygwmc+"</option>"
+                        $.each(result, function (i) {
+                            opt += "<option value='" + result[i].qypygwid + "'>" + result[i].qypygwmc + "</option>"
                         });
                         $("#gwmc").html(opt);
                     } else {
@@ -444,12 +443,12 @@
         function selectGj() {
             $.ajax({
                 type: "post",
-                url: "/gj/getGjList" ,
+                url: "/gj/getGjList",
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
-                        $.each(result, function(i) {
-                            opt += "<option value='"+result[i].gwdjid+"'>"+result[i].gwdjmc+"</option>"
+                        $.each(result, function (i) {
+                            opt += "<option value='" + result[i].gwdjid + "'>" + result[i].gwdjmc + "</option>"
                         });
                         $("#gjmc").html(opt);
                     } else {
@@ -472,12 +471,12 @@
 
             $.ajax({
                 type: "post",
-                url: "/gd/getGdList/" + zjid ,
+                url: "/gd/getGdList/" + zjid,
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
-                        $.each(result, function(i) {
-                            opt += "<option value='"+result[i].dwid+"'>"+result[i].dwmc+"</option>"
+                        $.each(result, function (i) {
+                            opt += "<option value='" + result[i].dwid + "'>" + result[i].dwmc + "</option>"
                         });
                         $("#gdmc").html(opt);
                     } else {

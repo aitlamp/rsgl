@@ -213,7 +213,7 @@ textarea {
     display: inline-block;
     width: 135px;
     height: 35px;
-    background: url(/main/img/skin_/formbtnbg.png);
+    background: url(../img/skin_/formbtnbg.png);
     border: none;
     border-radius: 3px;
     color: #fff;
@@ -223,14 +223,14 @@ textarea {
 }
 
 .button:active {
-    background: url(/main/img/skin_/formbtnbg.png);
+    background: url(../img/skin_/formbtnbg.png);
     border: none;
 }
 
 .button.normal {
     width: 133px;
     height: 33px;
-    background: url(/main/img/skin_/dialogbtn.png);
+    background: url(../img/skin_/dialogbtn.png);
     color: #000;
     border: 1px solid #c0c0c0;
 }
@@ -287,7 +287,7 @@ textarea {
     border-bottom-color: #e0e0e0;
     *line-height: 26px;
     outline: none;
-    background: url(/main/img/skin_/inputbg.png);
+    background: url(../img/skin_/inputbg.png);
     padding: 0 10px;
 }
 
@@ -345,11 +345,11 @@ textarea {
     border-top-color: #c5c5c5;
     border-right-color: #e0e0e0;
     border-bottom-color: #e0e0e0;
-    background: url(/main/img/skin_/select_normal.png) no-repeat right center #fff;
+    background: url(../img/skin_/select_normal.png) no-repeat right center #fff;
 }
 
 .iselect-wrapper:hover {
-    background: url(/main/img/skin_/select_hover.png) no-repeat right center #fff;
+    background: url(../img/skin_/select_hover.png) no-repeat right center #fff;
 }
 
 .iselect-wrapper .iselect {
@@ -452,7 +452,7 @@ textarea {
     margin: 0 auto;
     width: 16px;
     height: 16px;
-    background: url(/main/img/skin_/radio.png);
+    background: url(../img/skin_/radio.png);
 }
 
 .checkboxouter input[type="radio"] {
@@ -478,11 +478,11 @@ textarea {
 }
 
 .checkboxouter input[type="radio"]:checked ~ .radio {
-    background: url(/main/img/skin_/radiochecked.png)
+    background: url(../img/skin_/radiochecked.png)
 }
 
 .checkboxouter input[type="radio"].checked ~ .radio {
-    background: url(/main/img/skin_/radiochecked.png)
+    background: url(../img/skin_/radiochecked.png)
 }
 
 /*千里之外*/
@@ -497,7 +497,7 @@ textarea {
     float: left;
     width: 16px;
     height: 16px;
-    background: url(/main/img/skin_/date.png);
+    background: url(../img/skin_/date.png);
 }
 
 /*下拉面板样式*/
@@ -517,7 +517,7 @@ textarea {
     top: 0;
     width: 10px;
     height: 10px;
-    background: url(/main/img/skin_/opt/tleft.png);
+    background: url(../img/skin_/opt/tleft.png);
 }
 
 .opt-panel .opt-panel-tc {
@@ -526,7 +526,7 @@ textarea {
     right: 10px;
     top: 0;
     height: 10px;
-    background: url(/main/img/skin_/opt/tcenter.png);
+    background: url(../img/skin_/opt/tcenter.png);
 }
 
 .opt-panel .opt-panel-tr {
@@ -535,7 +535,7 @@ textarea {
     top: 0;
     width: 10px;
     height: 10px;
-    background: url(/main/img/skin_/opt/tright.png);
+    background: url(../img/skin_/opt/tright.png);
 }
 
 .opt-panel .opt-panel-ml {
@@ -544,7 +544,7 @@ textarea {
     top: 10px;
     bottom: 15px;
     width: 10px;
-    background: url(/main/img/skin_/opt/cleft.png);
+    background: url(../img/skin_/opt/cleft.png);
 }
 
 .opt-panel .opt-panel-mr {
@@ -553,7 +553,7 @@ textarea {
     top: 10px;
     bottom: 15px;
     width: 10px;
-    background: url(/main/img/skin_/opt/cright.png);
+    background: url(../img/skin_/opt/cright.png);
 }
 
 .opt-panel .opt-panel-bl {
@@ -562,7 +562,7 @@ textarea {
     bottom: 0;
     width: 10px;
     height: 15px;
-    background: url(/main/img/skin_/opt/dleft.png)
+    background: url(../img/skin_/opt/dleft.png)
 }
 
 .opt-panel .opt-panel-bc {
@@ -571,7 +571,7 @@ textarea {
     right: 10px;
     bottom: 0;
     height: 15px;
-    background: url(/main/img/skin_/opt/dcenter.png);
+    background: url(../img/skin_/opt/dcenter.png);
 }
 
 .opt-panel .opt-panel-br {
@@ -580,7 +580,7 @@ textarea {
     bottom: 0;
     width: 10px;
     height: 15px;
-    background: url(/main/img/skin_/opt/dright.png);
+    background: url(../img/skin_/opt/dright.png);
 }
 
 .opt-panel .opt-panel-arrow {
@@ -589,5 +589,5 @@ textarea {
     height: 7px;
     top: -5px;
     left: 30px;
-    background: url(/main/img/skin_/opt/xljt.png);
+    background: url(../img/skin_/opt/xljt.png);
 }

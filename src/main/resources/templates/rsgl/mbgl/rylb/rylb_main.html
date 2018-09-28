@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>人员类别</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -87,8 +87,8 @@
                     onClick: function (event, treeId, treeNode) {
                         lastNodeId = treeNode.lbid;
                         $("#rylbTable").bootstrapTable('refresh', {
-                            query : {
-                                plbid : lastNodeId
+                            query: {
+                                plbid: lastNodeId
                             }
                         });
                     }
@@ -214,8 +214,8 @@
                             layer.msg("删除成功.");
                             //刷新table
                             $("#rylbTable").bootstrapTable('refresh', {
-                                query : {
-                                    plbid : plbid
+                                query: {
+                                    plbid: plbid
                                 }
                             });
                             treeObj.reAsyncChildNodes(null, "refresh");

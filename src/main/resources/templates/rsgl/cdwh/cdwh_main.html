@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>菜单维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -36,7 +36,7 @@
             treeObj = $.fn.zTree.init($("#tree"), {
                 async: {    //ztree异步请求数据
                     enable: true,
-                    url: "/cd/getCdTree",//请求action方法
+                    url: ctxPath + "cd/getCdTree",//请求action方法
                     autoparam: ["id"],
                     otherParam: function () {
                         return treeParam;
@@ -80,7 +80,7 @@
 
             //初始化表格
             tableObj = $("#cdwhTable").bootstrapTable({
-                url: '/cd/getPage',
+                url: ctxPath + 'cd/getPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
@@ -178,7 +178,7 @@
                 title: '添加',
                 area: ['60%', '80%'],
                 type: 2,
-                content: '/cd/edit/null/' + pcdid
+                content: ctxPath + 'cd/edit/null/' + pcdid
             });
         }
 
@@ -188,7 +188,7 @@
                 title: '修改',
                 area: ['60%', '80%'],
                 type: 2,
-                content: '/cd/edit/' + cdid + "/null"
+                content: ctxPath + 'cd/edit/' + cdid + "/null"
             });
         }
 
@@ -199,7 +199,7 @@
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/cd/doDelete",
+                    url: ctxPath + "cd/doDelete",
                     data: {cdid: cdid},
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩

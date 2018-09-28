@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>菜单维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -94,7 +94,7 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/cd/doSave",
+                    url: ctxPath + "cd/doSave",
                     data: $("#cdwhForm").serialize(),
                     success: function (result) {
                         //关闭遮罩
@@ -128,7 +128,7 @@
                 title: '选择上级菜单',
                 area: ['20%', '60%'],
                 type: 2,
-                content: '/cd/select/cd'
+                content: ctxPath + 'cd/select/cd'
             });
         }
 

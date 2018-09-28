@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>菜单维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -86,7 +86,7 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/dw/doSave",
+                    url: ctxPath + "dw/doSave",
                     data: $("#dwwhForm").serialize(),
                     success: function (result) {
                         //关闭遮罩
@@ -94,8 +94,8 @@
                         if (result) {
                             //刷新table
                             window.parent.$("#dwwhTable").bootstrapTable('refresh', {
-                                query : {
-                                    pdwid : $("#pdwid").val()
+                                query: {
+                                    pdwid: $("#pdwid").val()
                                 }
                             });
                             // 刷新tree

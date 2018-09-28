@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>菜单维护</title>
     <!-- 引入公共页面 -->
-    <link rel="import" href="/include"/>
+    <link rel="import" th:href="@{/include}"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -81,8 +81,8 @@
                         if (result) {
                             //刷新table
                             window.parent.$("#gdTable").bootstrapTable('refresh', {
-                                query : {
-                                    gwdjid : $("#gwdjid").val()
+                                query: {
+                                    gwdjid: $("#gwdjid").val()
                                 }
                             });
                             //关闭弹框

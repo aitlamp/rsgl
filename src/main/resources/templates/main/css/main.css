@@ -11,7 +11,7 @@ html {
     position: relative;
     width: 100%;
     height: 58px;
-    background: url(/main/img/skin_/topbg.png) repeat-x;
+    background: url(../img/skin_/topbg.png) repeat-x;
     z-index: 2;
 }
 
@@ -27,7 +27,7 @@ html {
     margin: 0 0 0 20px;
     width: 212px;
     height: 49px;
-    background: url(/main/img/skin_/systemlogo.png) no-repeat;
+    background: url(../img/skin_/systemlogo.png) no-repeat;
 }
 
 .hd-top .logo .logo-icon {
@@ -36,11 +36,11 @@ html {
     top: 18px;
     width: 16px;
     height: 15px;
-    background: url(/main/img/skin_/topxl.png);
+    background: url(../img/skin_/topxl.png);
 }
 
 .hd-top .logo .logo-icon:hover, .hd-top .logo .logo-icon.active {
-    background: url(/main/img/skin_/switch-system/h.png);
+    background: url(../img/skin_/switch-system/h.png);
 }
 
 /*用户登录信息*/
@@ -58,7 +58,7 @@ html {
     margin-top: 6px;
     width: 40px;
     height: 40px;
-    background: url(/main/img/skin_/userfacebg.png);
+    background: url(../img/skin_/userfacebg.png);
 }
 
 .hd-top .user-info .user-avatar span {
@@ -67,7 +67,7 @@ html {
     left: 2px;
     width: 34px;
     height: 34px;
-    background: url(/main/img/skin_/userface.png);
+    background: url(../img/skin_/userface.png);
 }
 
 .hd-top .user-info .user-avatar span .info-num {
@@ -78,7 +78,7 @@ html {
     height: 16px;
     line-height: 16px;
     text-align: center;
-    background: url(/main/img/skin_/msg.png);
+    background: url(../img/skin_/msg.png);
     color: #fff;
     font-style: normal;
 }
@@ -94,13 +94,13 @@ html {
     margin: 19px 0 0 10px;
     width: 16px;
     height: 15px;
-    background: url(/main/img/skin_/userxl.png) center center no-repeat;
+    background: url(../img/skin_/userxl.png) center center no-repeat;
 }
 
 .hd-top .user-info .more-info.active, .hd-top .user-info .more-info:hover {
     width: 16px;
     height: 15px;
-    background: url(/main/img/skin_/topxl.png);
+    background: url(../img/skin_/topxl.png);
 }
 
 /*顶部设置部分*/
@@ -140,7 +140,7 @@ html {
     top: 9px;
     width: 11px;
     height: 10px;
-    background: url(/main/img/skin_/skinicon.png);
+    background: url(../img/skin_/skinicon.png);
 }
 
 .hd-top .setting .setting-skin i.arrow-icon {
@@ -148,7 +148,7 @@ html {
     top: 12px;
     width: 7px;
     height: 4px;
-    background: url(/main/img/skin_/skinxl.png);
+    background: url(../img/skin_/skinxl.png);
 }
 
 .hd-top .setting .setting-skin:hover i.arrow-icon {
@@ -158,7 +158,7 @@ html {
 .hd-top .setting .setting-skin .switch-bar {
     width: 82px;
     height: 29px;
-    background: url(/main/img/skin_/skin-bg.png);
+    background: url(../img/skin_/skin-bg.png);
 }
 
 .hd-top .setting .setting-main {
@@ -186,7 +186,7 @@ html {
     margin: 16px 0 0 11px;
     width: 14px;
     height: 14px;
-    background: url(/main/img/skin_/quit.png);
+    background: url(../img/skin_/quit.png);
 }
 
 .hd-top .setting .setting-main li a.close-btn:hover {
@@ -213,7 +213,7 @@ html {
     margin: 9px 0 0 32px;
     width: 24px;
     height: 24px;
-    background: url(/main/img/skin_/home.png);
+    background: url(../img/skin_/home.png);
 }
 
 .hd-bottom .nav-wrap {
@@ -260,19 +260,19 @@ html {
 }
 
 .hd-bottom .nav-btn a.nav-prev-btn {
-    background: url(/main/img/skin_/leftright.png);
+    background: url(../img/skin_/leftright.png);
 }
 
 .hd-bottom .nav-btn a.nav-prev-btn:hover {
-    background: url(/main/img/skin_/leftright.png) 0 -23px;
+    background: url(../img/skin_/leftright.png) 0 -23px;
 }
 
 .hd-bottom .nav-btn a.nav-next-btn {
-    background: url(/main/img/skin_/leftright.png) -23px -23px;
+    background: url(../img/skin_/leftright.png) -23px -23px;
 }
 
 .hd-bottom .nav-btn a.nav-next-btn:hover {
-    background: url(/main/img/skin_/leftright.png) -23px 0;
+    background: url(../img/skin_/leftright.png) -23px 0;
 }
 
 #bd {
@@ -286,7 +286,7 @@ html {
 #ft {
     height: 29px;
     line-height: 29px;
-    background: url(/main/img/skin_/footerbg.png) repeat-x;
+    background: url(../img/skin_/footerbg.png) repeat-x;
 }
 
 .ft1 {
@@ -298,7 +298,7 @@ html {
     margin: 8px 5px 0 11px;
     width: 14px;
     height: 14px;
-    background: url(/main/img/skin_/i.png);
+    background: url(../img/skin_/i.png);
 }
 
 .ft1 span {
@@ -330,7 +330,7 @@ html {
     margin: 12px 11px 0 9px;
     width: 4px;
     height: 7px;
-    background: url(/main/img/skin_/footerright.png);
+    background: url(../img/skin_/footerright.png);
 }
 
 /*弹窗*/
@@ -465,7 +465,7 @@ html {
     margin: 8px 8px 0 0;
     width: 4px;
     height: 6px;
-    background: url(/main/img/skin_/switch-system/toplist.png);
+    background: url(../img/skin_/switch-system/toplist.png);
 }
 
 .system-switch ul li .system-name {
@@ -486,7 +486,7 @@ html {
     bottom: 5px;
     right: -6px;
     width: 6px;
-    background: url(/main/img/skin_/switch-system/sright.png);
+    background: url(../img/skin_/switch-system/sright.png);
 }
 
 .system-switch .opt-panel-bc {
@@ -495,7 +495,7 @@ html {
     bottom: -9px;
     right: 5px;
     height: 9px;
-    background: url(/main/img/skin_/switch-system/sdown.png);
+    background: url(../img/skin_/switch-system/sdown.png);
 }
 
 .system-switch .opt-panel-br {
@@ -504,5 +504,5 @@ html {
     right: -6px;
     width: 11px;
     height: 14px;
-    background: url(/main/img/skin_/switch-system/yj.png);
+    background: url(../img/skin_/switch-system/yj.png);
 }
