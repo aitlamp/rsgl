@@ -34,7 +34,7 @@ public class SqxxController extends BaseController {
      */
     @RequestMapping(value = "/listUI")
     public String sqxxListUI() {
-        return "/rsgl/sqxx/sqxx_main";
+        return "rsgl/sqxx/sqxx_main";
     }
 
     /**
@@ -93,7 +93,6 @@ public class SqxxController extends BaseController {
             logger.debug("查询授权信息失败,授权id==={}", sqid);
             return false;
         }
-
         return iSqxxService.doDeleteSqxx(sqxxEntity);
     }
 }

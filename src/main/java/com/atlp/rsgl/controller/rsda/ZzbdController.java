@@ -36,7 +36,7 @@ public class ZzbdController extends BaseController {
      */
     @RequestMapping(value = "/listUI")
     public String zzbdListUI() {
-        return "/rsgl/rsda/rybd/zzbd_main";
+        return "rsgl/rsda/rybd/zzbd_main";
     }
 
     /**
@@ -79,7 +79,6 @@ public class ZzbdController extends BaseController {
             logger.debug("传入用户工作信息为空,工作信息==={}", gzxxEntity.toString());
             return false;
         }
-
         return iGzxxService.doUpdateYhGzxx(gzxxEntity);
     }
 

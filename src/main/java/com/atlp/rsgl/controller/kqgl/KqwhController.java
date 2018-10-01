@@ -38,7 +38,7 @@ public class KqwhController extends BaseController {
      */
     @RequestMapping(value = "/listUI")
     public String kqjlListUI() {
-        return "/rsgl/kqgl/kqdj/kqwh_main";
+        return "rsgl/kqgl/kqdj/kqwh_main";
     }
 
     /**
@@ -68,7 +68,7 @@ public class KqwhController extends BaseController {
         }
 
         map.put("entity", kqjlEntity);
-        return "/rsgl/kqgl/kqdj/kqwh_edit";
+        return "rsgl/kqgl/kqdj/kqwh_edit";
     }
 
     /**

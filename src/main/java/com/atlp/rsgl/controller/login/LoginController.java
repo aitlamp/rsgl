@@ -34,13 +34,13 @@ public class LoginController {
     //公共包含页面
     @RequestMapping({"/include"})
     public String include() {
-        return "/include/include";
+        return "include/include";
     }
 
     //跳转登录页
     @RequestMapping({"/", "/login"})
     public String login() {
-        return "/login/login";
+        return "login/login";
     }
 
     //登录方法

@@ -37,6 +37,7 @@ public class ZjController {
 
     /**
      * 分页查询职务信息
+     *
      * @param page
      * @return
      * @throws Exception
@@ -49,6 +50,7 @@ public class ZjController {
 
     /**
      * 职务编辑UI
+     *
      * @return
      */
     @RequestMapping(value = "/editUI/{zjid}")
@@ -61,12 +63,13 @@ public class ZjController {
         }
 
         map.put("entity", zjEntity);
-        return "/rsgl/mbgl/rysx/zj_edit";
+        return "rsgl/mbgl/rysx/zj_edit";
     }
 
     /**
      * form保存方法
      * 添加或修改职务
+     *
      * @param zjEntity
      * @return
      * @throws Exception
@@ -100,6 +103,7 @@ public class ZjController {
 
     /**
      * 删除职务
+     *
      * @param zjid
      * @return
      */
@@ -118,6 +122,7 @@ public class ZjController {
 
     /**
      * 查询所有职务列表
+     *
      * @return
      * @throws Exception
      */

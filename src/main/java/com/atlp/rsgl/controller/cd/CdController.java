@@ -34,7 +34,7 @@ public class CdController {
      */
     @RequestMapping({"/main"})
     public String cdwh_main() {
-        return "/rsgl/cdwh/cdwh_main";
+        return "rsgl/cdwh/cdwh_main";
     }
 
     /*
@@ -56,7 +56,7 @@ public class CdController {
             }
         }
         map.addAttribute("cdEntity", cdEntity);
-        return "/rsgl/cdwh/cdwh_edit";
+        return "rsgl/cdwh/cdwh_edit";
     }
 
     /*
@@ -65,7 +65,7 @@ public class CdController {
     @RequestMapping({"/select/{type}"})
     public String cdwh_select(ModelMap map, @PathVariable(name = "type", required = true) String type) {
         map.put("type", type);
-        return "/rsgl/cdwh/cdwh_select";
+        return "rsgl/cdwh/cdwh_select";
     }
 
     /*

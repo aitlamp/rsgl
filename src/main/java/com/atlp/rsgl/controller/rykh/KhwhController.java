@@ -38,7 +38,7 @@ public class KhwhController extends BaseController {
      */
     @RequestMapping(value = "/listUI")
     public String khwhListUI() {
-        return "/rsgl/rykh/khdj/khwh_main";
+        return "rsgl/rykh/khdj/khwh_main";
     }
 
     /**
@@ -65,13 +65,11 @@ public class KhwhController extends BaseController {
     @RequestMapping(value = "/editUI/{khid}")
     public String khwhEditUI(ModelMap map, @PathVariable(name = "khid") String khid) throws Exception {
         RsglBKhjlEntity khjlEntity = new RsglBKhjlEntity();
-
         if (!AtlpUtil.isEmpty(khid)) {
             khjlEntity = iKhjlService.getKhInfoById(khid);
         }
-
         map.put("entity", khjlEntity);
-        return "/rsgl/rykh/khdj/khwh_edit";
+        return "rsgl/rykh/khdj/khwh_edit";
     }
 
     /**
@@ -105,7 +103,6 @@ public class KhwhController extends BaseController {
             // 修改
             iKhjlService.doUpdateKh(khjlEntity);
         }
-
         return true;
     }
 
@@ -125,7 +122,6 @@ public class KhwhController extends BaseController {
             logger.debug("查询考核信息为空,考核id==={}", khid);
             return false;
         }
-
         return iKhjlService.doDeleteKh(khjlEntity);
     }
 

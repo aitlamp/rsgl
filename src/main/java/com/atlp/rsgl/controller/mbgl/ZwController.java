@@ -37,15 +37,17 @@ public class ZwController {
 
     /**
      * 人员属性UI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
     public String rysxListUI() {
-        return "/rsgl/mbgl/rysx/rysx_main";
+        return "rsgl/mbgl/rysx/rysx_main";
     }
 
     /**
      * 分页查询职务信息
+     *
      * @param page
      * @return
      * @throws Exception
@@ -58,6 +60,7 @@ public class ZwController {
 
     /**
      * 职务编辑UI
+     *
      * @return
      */
     @RequestMapping(value = "/editUI/{zwid}")
@@ -70,12 +73,13 @@ public class ZwController {
         }
 
         map.put("entity", zwEntity);
-        return "/rsgl/mbgl/rysx/zw_edit";
+        return "rsgl/mbgl/rysx/zw_edit";
     }
 
     /**
      * form保存方法
      * 添加或修改职务
+     *
      * @param zwEntity
      * @return
      * @throws Exception
@@ -109,6 +113,7 @@ public class ZwController {
 
     /**
      * 删除职务
+     *
      * @param zwid
      * @return
      */
@@ -127,6 +132,7 @@ public class ZwController {
 
     /**
      * 查询所有职务列表
+     *
      * @return
      * @throws Exception
      */

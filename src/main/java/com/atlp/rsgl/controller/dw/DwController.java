@@ -35,15 +35,17 @@ public class DwController {
 
     /**
      * 单位维护list
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
     public String dwListUI() {
-        return "/rsgl/dwwh/dwwh_main";
+        return "rsgl/dwwh/dwwh_main";
     }
 
     /**
      * 获取单位分页数据
+     *
      * @param page
      * @return
      */
@@ -55,6 +57,7 @@ public class DwController {
 
     /**
      * 单位信息编辑页面
+     *
      * @param map
      * @param dwid
      * @return
@@ -85,11 +88,12 @@ public class DwController {
 
         map.put("pdwid", pdwid);
         map.put("entity", dwEntity);
-        return "/rsgl/dwwh/dwwh_edit";
+        return "rsgl/dwwh/dwwh_edit";
     }
 
     /**
      * 添加或修改单位信息
+     *
      * @param dwEntity
      * @param request
      * @return
@@ -124,6 +128,7 @@ public class DwController {
 
     /**
      * 删除单位
+     *
      * @param dwid
      * @return
      */
@@ -142,6 +147,7 @@ public class DwController {
 
     /**
      * 查询单位树----废弃
+     *
      * @return
      */
     @RequestMapping("/getDwTree/{pdwid}")
@@ -153,6 +159,7 @@ public class DwController {
 
     /**
      * 查询单位树
+     *
      * @return
      */
     @RequestMapping("/getDwTree")
@@ -163,11 +170,12 @@ public class DwController {
 
     /**
      * 选择单位UI
+     *
      * @return
      */
     @RequestMapping(value = "/selectUI")
     public String selectDw() {
-        return "/rsgl/dwwh/dwwh_select";
+        return "rsgl/dwwh/dwwh_select";
     }
 
 }

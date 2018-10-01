@@ -16,7 +16,7 @@
         <repository>
             <id>nexus</id>
             <name>atlp Nexus Repository</name>
-            <url>http://aitlamp.com:8081/nexus/content/groups/public</url>
+            <url>http://47.97.173.180:8081/nexus/content/groups/public</url>
         </repository>
     </repositories>
 
@@ -220,6 +220,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--这里写上main方法所在类的路径-->
+                <configuration>
+                    <mainClass>com.atlp.rsgl.RsglApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

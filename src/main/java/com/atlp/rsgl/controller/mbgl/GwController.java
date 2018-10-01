@@ -37,6 +37,7 @@ public class GwController {
 
     /**
      * 分页查询全员聘用岗位
+     *
      * @param page
      * @return
      * @throws Exception
@@ -49,6 +50,7 @@ public class GwController {
 
     /**
      * 岗位信息编辑UI
+     *
      * @param map
      * @param gwid
      * @return
@@ -64,12 +66,13 @@ public class GwController {
         }
 
         map.put("entity", gwEntity);
-        return "/rsgl/mbgl/rysx/gw_edit";
+        return "rsgl/mbgl/rysx/gw_edit";
     }
 
     /**
      * form保存方法
      * 添加或修改职务
+     *
      * @param gwEntity
      * @return
      * @throws Exception
@@ -103,6 +106,7 @@ public class GwController {
 
     /**
      * 删除职务
+     *
      * @param gwid
      * @return
      */
@@ -121,6 +125,7 @@ public class GwController {
 
     /**
      * 查询所有职务列表
+     *
      * @return
      * @throws Exception
      */

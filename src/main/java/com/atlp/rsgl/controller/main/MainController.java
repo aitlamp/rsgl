@@ -43,7 +43,7 @@ public class MainController {
     //主界面
     @RequestMapping({"/main"})
     public String main() {
-        return "/main/main";
+        return "main/main";
     }
 
     //主界面
@@ -87,19 +87,19 @@ public class MainController {
                 }
             }
         }
-        return "/main/main";
+        return "main/main";
     }
 
     //导航页面
     @RequestMapping({"/main/nav"})
     public String main_nav(ModelMap map) {
         map.addAttribute("cdList", cdService.getMenus("root"));
-        return "/main/main_nav";
+        return "main/main_nav";
     }
 
     //首页
     @RequestMapping({"/main/content"})
     public String main_content() {
-        return "/main/main_content";
+        return "main/main_content";
     }
 }

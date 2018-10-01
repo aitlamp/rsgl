@@ -35,15 +35,17 @@ public class RylbController {
 
     /**
      * 人员类别维护listUI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
     public String rylbListUI() {
-        return "/rsgl/mbgl/rylb/rylb_main";
+        return "rsgl/mbgl/rylb/rylb_main";
     }
 
     /**
      * 分页查询人员类别
+     *
      * @param page
      * @param plbid
      * @return
@@ -57,6 +59,7 @@ public class RylbController {
 
     /**
      * 人员类别信息维护UI
+     *
      * @param map
      * @param plbid
      * @param lbid
@@ -87,12 +90,13 @@ public class RylbController {
 
         map.put("plbid", plbid);
         map.put("entity", rylbEntity);
-        return "/rsgl/mbgl/rylb/rylb_edit";
+        return "rsgl/mbgl/rylb/rylb_edit";
     }
 
     /**
      * form保存
      * 添加或修改人员类别
+     *
      * @param rylbEntity
      * @param request
      * @return
@@ -128,6 +132,7 @@ public class RylbController {
 
     /**
      * 删除类别
+     *
      * @param lbid
      * @return
      */
@@ -146,17 +151,19 @@ public class RylbController {
 
     /**
      * 父级id查询人员类别
+     *
      * @return
      */
     @RequestMapping(value = "/getRylbListByPid/{plbid}", method = RequestMethod.POST)
     @ResponseBody
     public List<RsglBRylbEntity> getRylbListByPid(@PathVariable(value = "plbid", required = true) String plbid)
-        throws Exception {
+            throws Exception {
         return iRylbService.getRylbListByPid(plbid);
     }
 
     /**
      * 查询人员类别树--已作废
+     *
      * @return
      */
     @RequestMapping(value = "/getRylbTree/{plbid}", method = RequestMethod.POST)
@@ -168,6 +175,7 @@ public class RylbController {
 
     /**
      * 查询人员类别树
+     *
      * @return
      */
     @RequestMapping("/getRylbTree")
@@ -178,10 +186,11 @@ public class RylbController {
 
     /**
      * 选择单位UI
+     *
      * @return
      */
     @RequestMapping(value = "/selectUI")
     public String selectRylb() {
-        return "/rsgl/mbgl/rylb/rylb_select";
+        return "rsgl/mbgl/rylb/rylb_select";
     }
 }

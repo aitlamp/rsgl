@@ -37,15 +37,17 @@ public class ZzztController {
 
     /**
      * 分页查询在职状态UI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
     public String zzztListUI() {
-        return "/rsgl/mbgl/zzzt/zzzt_main";
+        return "rsgl/mbgl/zzzt/zzzt_main";
     }
 
     /**
      * 分页查询人员类别
+     *
      * @param page
      * @return
      * @throws Exception
@@ -58,6 +60,7 @@ public class ZzztController {
 
     /**
      * 在职状态编辑UI
+     *
      * @return
      */
     @RequestMapping(value = "/editUI/{ztid}")
@@ -70,12 +73,13 @@ public class ZzztController {
         }
 
         map.put("entity", zzztEntity);
-        return "/rsgl/mbgl/zzzt/zzzt_edit";
+        return "rsgl/mbgl/zzzt/zzzt_edit";
     }
 
     /**
      * form保存方法
      * 添加或修改状态
+     *
      * @param zzztEntity
      * @return
      * @throws Exception
@@ -109,6 +113,7 @@ public class ZzztController {
 
     /**
      * 删除状态
+     *
      * @param ztid
      * @return
      */
@@ -127,6 +132,7 @@ public class ZzztController {
 
     /**
      * 在职状态选择select
+     *
      * @return
      * @throws Exception
      */

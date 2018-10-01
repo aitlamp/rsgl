@@ -38,7 +38,7 @@ public class PxwhController extends BaseController {
      */
     @RequestMapping(value = "/listUI")
     public String pxwhListUI() {
-        return "/rsgl/pxgl/pxdj/pxwh_main";
+        return "rsgl/pxgl/pxdj/pxwh_main";
     }
 
     /**
@@ -72,7 +72,7 @@ public class PxwhController extends BaseController {
         }
 
         map.put("entity", pxjlEntity);
-        return "/rsgl/pxgl/pxdj/pxwh_edit";
+        return "rsgl/pxgl/pxdj/pxwh_edit";
     }
 
     /**

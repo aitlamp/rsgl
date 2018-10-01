@@ -39,15 +39,17 @@ public class RywhController {
 
     /**
      * 人员维护UI
+     *
      * @return
      */
     @RequestMapping(value = "/listUI")
     public String rywhListUI() {
-        return "/rsgl/rsda/rywh/rywh_main";
+        return "rsgl/rsda/rywh/rywh_main";
     }
 
     /**
      * 分页查询用户信息
+     *
      * @param page
      * @return
      * @throws Exception
@@ -60,6 +62,7 @@ public class RywhController {
 
     /**
      * 用户信息编辑UI
+     *
      * @param map
      * @param yhid
      * @return
@@ -74,7 +77,7 @@ public class RywhController {
         }
 
         map.put("entity", yhEntity);
-        return "/rsgl/rsda/rywh/rywh_edit";
+        return "rsgl/rsda/rywh/rywh_edit";
     }
 
     @RequestMapping(value = "/doSave")
@@ -135,6 +138,7 @@ public class RywhController {
 
     /**
      * 删除用户
+     *
      * @param yhid
      * @return
      * @throws Exception
@@ -154,15 +158,17 @@ public class RywhController {
 
     /**
      * 用户选择UI
+     *
      * @return
      */
     @RequestMapping(value = "/selectUI")
     public String rywhSelectUI() {
-        return "/rsgl/rsda/rywh/rywh_select";
+        return "rsgl/rsda/rywh/rywh_select";
     }
 
     /**
      * 分页查询单位用户
+     *
      * @param page
      * @param dwid
      * @return

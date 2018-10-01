@@ -38,6 +38,7 @@ public class GdController {
 
     /**
      * 分页查询全员聘用岗位
+     *
      * @param page
      * @return
      * @throws Exception
@@ -50,6 +51,7 @@ public class GdController {
 
     /**
      * 岗位信息编辑UI
+     *
      * @param map
      * @param gdid
      * @return
@@ -71,12 +73,13 @@ public class GdController {
         }
 
         map.put("entity", gdEntity);
-        return "/rsgl/mbgl/rysx/gd_edit";
+        return "rsgl/mbgl/rysx/gd_edit";
     }
 
     /**
      * form保存方法
      * 添加或修改职务
+     *
      * @param gdEntity
      * @return
      * @throws Exception
@@ -110,6 +113,7 @@ public class GdController {
 
     /**
      * 删除职务
+     *
      * @param gdid
      * @return
      */
@@ -128,6 +132,7 @@ public class GdController {
 
     /**
      * 查询所有档位列表
+     *
      * @return
      * @throws Exception
      */

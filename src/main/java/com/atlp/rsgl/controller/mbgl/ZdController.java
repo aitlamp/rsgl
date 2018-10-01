@@ -37,6 +37,7 @@ public class ZdController {
 
     /**
      * 分页查询职等信息
+     *
      * @param page
      * @return
      * @throws Exception
@@ -49,6 +50,7 @@ public class ZdController {
 
     /**
      * 职等编辑UI
+     *
      * @return
      */
     @RequestMapping(value = "/editUI/{zjid}/{zdid}", method = RequestMethod.GET)
@@ -67,12 +69,13 @@ public class ZdController {
         }
 
         map.put("entity", zdEntity);
-        return "/rsgl/mbgl/rysx/zd_edit";
+        return "rsgl/mbgl/rysx/zd_edit";
     }
 
     /**
      * form保存方法
      * 添加或修改职等
+     *
      * @param zdEntity
      * @return
      * @throws Exception
@@ -106,6 +109,7 @@ public class ZdController {
 
     /**
      * 删除职等
+     *
      * @param zdid
      * @return
      */
