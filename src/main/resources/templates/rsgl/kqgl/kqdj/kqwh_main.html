@@ -26,7 +26,7 @@
         // 单位分页数据
         function kqDataPage() {
             var t = $("#kqTable").bootstrapTable({
-                url: '/kqwh/getKqPage',
+                url: ctxPath + 'kqwh/getKqPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
@@ -102,7 +102,7 @@
                 title: '添加在职状态',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/kqwh/editUI/null"
+                content: ctxPath + "kqwh/editUI/null"
             });
         }
 
@@ -113,7 +113,7 @@
                 title: '修改状态信息',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/kqwh/editUI/" + kqid
+                content: ctxPath + "kqwh/editUI/" + kqid
             });
         }
 
@@ -124,7 +124,7 @@
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/kqwh/doDelete/" + kqid,
+                    url: ctxPath + "kqwh/doDelete/" + kqid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {

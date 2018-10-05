@@ -78,7 +78,8 @@ public class AccessFilter implements Filter {
             filterChain.doFilter(httpServletRequest, httpServletResponse); // 跳转页面
         } else {
             // 验证不通过
-            httpServletResponse.sendRedirect("/");
+            String contextPath = httpServletRequest.getContextPath();
+            httpServletResponse.sendRedirect(contextPath);
         }
 
         //filterChain.doFilter(servletRequest, servletResponse);
