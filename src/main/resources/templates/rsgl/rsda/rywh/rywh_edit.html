@@ -328,7 +328,7 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/rywh/doSave",
+                    url: ctxPath + "rywh/doSave",
                     data: {
                         "yhxx": JSON.stringify(yhxx),
                         "gzxx": JSON.stringify(gzxx)
@@ -368,7 +368,7 @@
                 title: '选择单位',
                 area: ['20%', '60%'],
                 type: 2,
-                content: '/dw/selectUI'
+                content: ctxPath + 'dw/selectUI'
             });
         }
 
@@ -378,7 +378,7 @@
                 title: '选择类别',
                 area: ['20%', '60%'],
                 type: 2,
-                content: '/rylb/selectUI'
+                content: ctxPath + 'rylb/selectUI'
             });
         }
 
@@ -390,7 +390,7 @@
 
             $.ajax({
                 type: "post",
-                url: "/rylb/getRylbListByPid/" + plbid,
+                url: ctxPath + "rylb/getRylbListByPid/" + plbid,
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
@@ -415,7 +415,7 @@
         function selectZw() {
             $.ajax({
                 type: "post",
-                url: "/zw/getZwList",
+                url: ctxPath + "zw/getZwList",
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
@@ -438,7 +438,7 @@
         function selectZj(sybbs) {
             $.ajax({
                 type: "post",
-                url: "/zj/getZjList/" + sybbs ,
+                url: ctxPath + "zj/getZjList/" + sybbs ,
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
@@ -461,7 +461,7 @@
         function selectGw() {
             $.ajax({
                 type: "post",
-                url: "/gw/getGwList",
+                url: ctxPath + "gw/getGwList",
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
@@ -484,7 +484,7 @@
         function selectGj() {
             $.ajax({
                 type: "post",
-                url: "/gj/getGjList",
+                url: ctxPath + "gj/getGjList",
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";
@@ -509,10 +509,9 @@
                 zjid = "root0abc";
             }
 
-
             $.ajax({
                 type: "post",
-                url: "/gd/getGdList/" + zjid,
+                url: ctxPath + "gd/getGdList/" + zjid,
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";

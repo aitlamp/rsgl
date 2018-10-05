@@ -136,7 +136,7 @@ public class RylbController {
      * @param lbid
      * @return
      */
-    @RequestMapping(value = "/doDelete/{lbid}")
+    @RequestMapping(value = "/doDelete/{lbid}", method = RequestMethod.POST)
     @ResponseBody
     public boolean doDelete(@PathVariable(value = "lbid", required = true) String lbid) throws Exception {
         // 查询该单位是否存在

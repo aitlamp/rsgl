@@ -27,7 +27,7 @@
         // 单位分页数据
         function zzztDataPage() {
             var t = $("#zzztTable").bootstrapTable({
-                url: '/zzzt/getZzztPage',
+                url: ctxPath + 'zzzt/getZzztPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
@@ -98,7 +98,7 @@
                 title: '添加在职状态',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/zzzt/editUI/null"
+                content: ctxPath + "zzzt/editUI/null"
             });
         }
 
@@ -108,7 +108,7 @@
                 title: '修改状态信息',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/zzzt/editUI/" + ztid
+                content: ctxPath + "zzzt/editUI/" + ztid
             });
         }
 
@@ -119,7 +119,7 @@
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/zzzt/doDelete/" + ztid,
+                    url: ctxPath + "zzzt/doDelete/" + ztid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {

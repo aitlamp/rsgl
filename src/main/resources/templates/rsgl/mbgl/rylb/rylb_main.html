@@ -49,7 +49,7 @@
             treeObj = $.fn.zTree.init($("#lbTree"), {
                 async: {    //ztree异步请求数据
                     enable: true,
-                    url: "/rylb/getRylbTree",//请求action方法
+                    url: ctxPath + "rylb/getRylbTree",//请求action方法
                     autoparam: ["id"],
                     otherParam: function () {
                         return treeParam;
@@ -99,7 +99,7 @@
         // 单位分页数据
         function rylbDataPage(plbid) {
             var t = $("#rylbTable").bootstrapTable({
-                url: '/rylb/getRylbPage',
+                url: ctxPath + 'rylb/getRylbPage',
                 method: 'get',
                 dataType: "json",
                 striped: true,//设置为 true 会有隔行变色效果
@@ -183,7 +183,7 @@
                 title: '添加单位',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/rylb/editUI/" + plbid + "/null"
+                content: ctxPath + "rylb/editUI/" + plbid + "/null"
             });
         }
 
@@ -193,7 +193,7 @@
                 title: '修改单位信息',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/rylb/editUI/" + p_lbid + "/" + lbid
+                content: ctxPath + "rylb/editUI/" + p_lbid + "/" + lbid
             });
         }
 
@@ -207,7 +207,7 @@
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/rylb/doDelete/" + lbid,
+                    url: ctxPath + "rylb/doDelete/" + lbid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {

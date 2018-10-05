@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-3">
-            <div class="panel panel-default" style="margin: 55px 0px 0px 0px;">
+            <div class="panel panel-default" style="margin: 10px 0px 0px 0px;">
                 <div class="panel-heading">单位树</div>
                 <div id="treeBody" class="panel-body" style="padding: 5px; overflow: auto;">
                     <div id="dwTree" class="ztree"></div>
@@ -186,7 +186,7 @@
                 title: '人员维护',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/rywh/editUI/null"
+                content: ctxPath + "rywh/editUI/null"
             });
         }
 
@@ -197,7 +197,7 @@
                 title: '人员维护',
                 area: ['80%', '80%'],
                 type: 2,
-                content: "/rywh/editUI/" + yhid
+                content: ctxPath + "rywh/editUI/" + yhid
             });
         }
 
@@ -208,7 +208,7 @@
                 var index_load = layer.load({shade: [1, '#000']});
                 $.ajax({
                     type: "post",
-                    url: "/rywh/doDelete/" + yhid,
+                    url: ctxPath + "rywh/doDelete/" + yhid,
                     success: function (result) {
                         layer.close(index_load);//关闭遮罩
                         if (result) {

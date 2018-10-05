@@ -5,7 +5,7 @@ $(function () {
 // 职级分页数据
 function gjDataPage() {
     var t = $("#gjTable").bootstrapTable({
-        url: '/gj/getGjPage',
+        url: ctxPath + 'gj/getGjPage',
         method: 'get',
         dataType: "json",
         striped: true,//设置为 true 会有隔行变色效果
@@ -94,7 +94,7 @@ function doGjAdd() {
         title: '添加职务',
         area: ['80%', '80%'],
         type: 2,
-        content: "/gj/editUI/null"
+        content: ctxPath + "gj/editUI/null"
     });
 }
 
@@ -104,7 +104,7 @@ function doGjUpdate(gjid) {
         title: '修改职务信息',
         area: ['80%', '80%'],
         type: 2,
-        content: "/gj/editUI/" + gjid
+        content: ctxPath + "gj/editUI/" + gjid
     });
 }
 
@@ -115,7 +115,7 @@ function doGjDelete(gjid) {
         var index_load = layer.load({shade: [1, '#000']});
         $.ajax({
             type: "post",
-            url: "/gj/doDelete/" + gjid,
+            url: ctxPath + "gj/doDelete/" + gjid,
             success: function (result) {
                 layer.close(index_load);//关闭遮罩
                 if (result) {

@@ -117,7 +117,7 @@
             },
             queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
                 // 上级单位id
-                getPdwid();
+                pdwid = getPdwid();
                 return $.extend(params, {pdwid: pdwid});
             },
             idField: "userId",//指定主键列
@@ -179,6 +179,7 @@
                 pdwid = node.dwid;
             }
         }
+        return pdwid;
     }
 
     //添加

@@ -5,7 +5,7 @@ $(function () {
 // 职务分页数据
 function gdDataPage(gwdjid) {
     var t = $("#gdTable").bootstrapTable({
-        url: '/gd/getGdPage',
+        url: ctxPath + 'gd/getGdPage',
         method: 'get',
         dataType: "json",
         striped: true,//设置为 true 会有隔行变色效果
@@ -72,7 +72,7 @@ function doGdAdd() {
         title: '添加职等',
         area: ['80%', '80%'],
         type: 2,
-        content: "/gd/editUI/" + gjinfo[0].gwdjid + "/null"
+        content: ctxPath + "gd/editUI/" + gjinfo[0].gwdjid + "/null"
     });
 }
 
@@ -82,7 +82,7 @@ function doGdUpdate(gwdjid, gdid) {
         title: '修改职等信息',
         area: ['80%', '80%'],
         type: 2,
-        content: "/gd/editUI/" + gwdjid + "/" + gdid
+        content: ctxPath + "gd/editUI/" + gwdjid + "/" + gdid
     });
 }
 
@@ -93,7 +93,7 @@ function doGdDelete(gdid) {
         var index_load = layer.load({shade: [1, '#000']});
         $.ajax({
             type: "post",
-            url: "/gd/doDelete/" + gdid,
+            url: ctxPath + "gd/doDelete/" + gdid,
             success: function (result) {
                 layer.close(index_load);//关闭遮罩
                 if (result) {

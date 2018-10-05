@@ -111,7 +111,7 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/khwh/doSave",
+                    url: ctxPath + "khwh/doSave",
                     data: $("#khwhForm").serialize(),
                     success: function (result) {
                         //关闭遮罩
@@ -144,7 +144,7 @@
                 title: '选择类别',
                 area: ['60%', '60%'],
                 type: 2,
-                content: '/rywh/selectUI'
+                content: ctxPath + 'rywh/selectUI'
             });
         }
 

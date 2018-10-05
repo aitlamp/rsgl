@@ -26,7 +26,7 @@
         treeObj = $.fn.zTree.init($("#tree"), {
             async: {    //ztree异步请求数据
                 enable: true,
-                url: "/cd/getCdTree",//请求action方法
+                url: ctxPath + "cd/getCdTree",//请求action方法
                 autoparam: ["id"],
                 otherParam: function () {
                     return treeParam;

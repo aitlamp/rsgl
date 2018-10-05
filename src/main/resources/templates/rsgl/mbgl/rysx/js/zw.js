@@ -5,7 +5,7 @@ $(function () {
 // 职务分页数据
 function zwDataPage() {
     var t = $("#zwTable").bootstrapTable({
-        url: '/zw/getZwPage',
+        url: ctxPath + 'zw/getZwPage',
         method: 'get',
         dataType: "json",
         striped: true,//设置为 true 会有隔行变色效果
@@ -69,7 +69,7 @@ function doZwAdd() {
         title: '添加职务',
         area: ['80%', '80%'],
         type: 2,
-        content: "/zw/editUI/null"
+        content: ctxPath + "/zw/editUI/null"
     });
 }
 
@@ -79,7 +79,7 @@ function doZwUpdate(zwid) {
         title: '修改职务信息',
         area: ['80%', '80%'],
         type: 2,
-        content: "/zw/editUI/" + zwid
+        content: ctxPath + "/zw/editUI/" + zwid
     });
 }
 
@@ -90,7 +90,7 @@ function doZwDelete(zwid) {
         var index_load = layer.load({shade: [1, '#000']});
         $.ajax({
             type: "post",
-            url: "/zw/doDelete/" + zwid,
+            url: ctxPath + "zw/doDelete/" + zwid,
             success: function (result) {
                 layer.close(index_load);//关闭遮罩
                 if (result) {
