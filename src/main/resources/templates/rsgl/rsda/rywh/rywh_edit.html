@@ -15,9 +15,9 @@
             <label class="col-sm-2 control-label">单位选择</label>
             <div class="col-sm-8">
                 <input class="form-control" id="dwmc" name="dwmc" th:value="${entity.dwmc}" readonly
-                       style="cursor: pointer;" placeholder="请点击选择单位" onclick="selectDw();">
-                <input type="hidden" id="dwid" name="dwid" th:value="${entity.dwid}">
-                <input type="hidden" id="dwjc" name="dwjc" th:value="${entity.dwjc}">
+                       style="cursor: pointer;" placeholder="请点击选择单位" onclick="selectDw();" >
+                <input type="hidden" id="dwid" name="dwid" th:value="${entity.dwid}" >
+                <input type="hidden" id="dwjc" name="dwjc" th:value="${entity.dwjc}" >
             </div>
         </div>
 
@@ -28,7 +28,12 @@
             </div>
             <label class="col-sm-2 control-label">性别</label>
             <div class="col-sm-3">
-                <input class="form-control" id="xb" name="xb" th:value="${entity.xb}" placeholder="输入性别">
+                <label class="radio-inline">
+                    <input type="radio" name="xb" id="inlineRadio1" value="男" th:checked="${entity.xb eq '男' }"> 男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="xb" id="inlineRadio2" value="女" th:checked="${entity.xb eq '女' }"> 女
+                </label>
             </div>
         </div>
 
@@ -39,7 +44,9 @@
             </div>
             <label class="col-sm-2 control-label">出生日期</label>
             <div class="col-sm-3">
-                <input class="form-control" id="csrq" name="csrq" th:value="${entity.csrq}" placeholder="输入出生日期">
+                <input class="form-control" id="csrq" name="csrq" th:value="${entity.csrq}" placeholder="输入出生日期"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+                <label for="csrq" class="riLi"></label>
             </div>
         </div>
         <div class="form-group">
@@ -55,11 +62,24 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">政治面貌</label>
             <div class="col-sm-3">
-                <input class="form-control" id="zzmm" name="zzmm" th:value="${entity.zzmm}" placeholder="输入政治面貌">
+                <select class="form-control" name="zzmm" id="zzmm">
+                    <option value="">请选择</option>
+                    <option value="群众">群众</option>
+                    <option value="团员">团员</option>
+                    <option value="党员">党员</option>
+                </select>
             </div>
             <label class="col-sm-2 control-label">学历</label>
             <div class="col-sm-3">
-                <input class="form-control" id="xl" name="xl" th:value="${entity.xl}" placeholder="输入学历">
+                <select class="form-control" name="xl" id="xl">
+                    <option value="">请选择</option>
+                    <option value="中小学">中小学</option>
+                    <option value="高中">高中</option>
+                    <option value="大专">大专</option>
+                    <option value="本科">本科</option>
+                    <option value="研究生">研究生</option>
+                    <option value="博士及硕士">博士及硕士</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -121,28 +141,28 @@
                 <input type="hidden" id="slbid" name="slbid" th:value="${entity.slbid}">
             </div>
         </div>
-        <div class="form-group" id="zwSelect">
+        <div class="form-group" id="zwSelect" style="display: none">
             <label class="col-sm-2 control-label">职务</label>
             <div class="col-sm-8">
                 <select class="form-control" id="zwmc" name="zwmc"></select>
                 <input type="hidden" id="zwid" name="zwid">
             </div>
         </div>
-        <div class="form-group" id="zjSelect">
+        <div class="form-group" id="zjSelect" style="display: none">
             <label class="col-sm-2 control-label">职级</label>
             <div class="col-sm-8">
                 <select class="form-control" id="zjmc" name="zjmc"></select>
                 <input type="hidden" id="zjid" name="zjid">
             </div>
         </div>
-        <div class="form-group" id="gwSelect">
+        <div class="form-group" id="gwSelect" style="display: none">
             <label class="col-sm-2 control-label">全员聘用岗位</label>
             <div class="col-sm-8">
                 <select class="form-control" id="gwmc" name="gwmc"></select>
                 <input type="hidden" id="gwid" name="gwid">
             </div>
         </div>
-        <div class="form-group" id="gjSelect">
+        <div class="form-group" id="gjSelect" style="display: none">
             <label class="col-sm-2 control-label">岗位等级</label>
             <div class="col-sm-4">
                 <select class="form-control" id="gjmc" name="gjmc"></select>
@@ -165,7 +185,9 @@
             </div>
             <label class="col-sm-2 control-label">任职时间</label>
             <div class="col-sm-3">
-                <input class="form-control" id="rzsj" name="rzsj" placeholder="输入任职时间">
+                <input class="form-control" id="rzsj" name="rzsj" placeholder="输入任职时间"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
+                <label for="rzsj" class="riLi"></label>
             </div>
         </div>
 
@@ -176,36 +198,55 @@
             </div>
         </div>
     </form>
+
+    <script type="text/javascript" src="/plugins/My97DatePicker/WdatePicker.js"></script>
     <script>
+        // 公务员、参公对应码表，职务，职级，岗位
+        function zwZjGwShow(sybbs) {
+            // 职务
+            $("#zwSelect").show();
+            selectZw();
+            // 职级
+            $("#zjSelect").show();
+            selectZj(sybbs);
+            // 岗位
+            $("#gwSelect").show();
+            selectGw();
+        }
+
         $(function () {
-            // 大类别
+            // 加载页面查询大类别
             selectLRylb("root");
-            // 小类别
-            $("#llbmc").change(function () {
-                var lbid = $(this).val();
-                // llbid赋值
-                $("#llbid").val(lbid);
+            // 大类别选择，查询小类别
+            $("#llbmc").change(function() {
                 // 加载小类别
-                selectLRylb(lbid);
+                selectLRylb($(this).val());
             });
-            $("#slbmc").change(function () {
-                $("#slbid").val($(this).val());
+            // 小类别change后，页面数据展示
+            $("#slbmc").change(function() {
+                var llbmc = $("#llbmc").find("option:selected").text();
+                var slbmc = $(this).find("option:selected").text();
+                // 判断类别名称展示
+                if (llbmc == "正编") {
+                    // 事业编
+                    if (slbmc == "事业编") {
+                        zwZjGwShow("Y");
+                    } else {
+                        zwZjGwShow("N");
+                    }
+                }
+                //
             });
 
-            // 职务
-            selectZw();
-            selectZj();
-            selectGw();
             selectGj();
             $("#gjmc").change(function () {
                 var gjid = $(this).val();
                 console.log("llb", gjid);
                 // llbid赋值
                 $("#gjid").val(gjid);
-                // 加载小类别
+                // 加载岗位档位等级
                 selectGd(gjid);
             });
-
 
             $("#rywhForm").bootstrapValidator({
                 live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
@@ -394,10 +435,10 @@
         }
 
         // 职级Select
-        function selectZj() {
+        function selectZj(sybbs) {
             $.ajax({
                 type: "post",
-                url: "/zj/getZjList",
+                url: "/zj/getZjList/" + sybbs ,
                 success: function (result) {
                     if (result.length != 0) {
                         var opt = "<option value=''>请选择</option>";

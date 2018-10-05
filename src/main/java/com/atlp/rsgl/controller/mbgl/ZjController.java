@@ -126,10 +126,10 @@ public class ZjController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/getZjList", method = RequestMethod.POST)
+    @RequestMapping(value = "/getZjList/{sybbs}", method = RequestMethod.POST)
     @ResponseBody
-    public List<RsglBZjEntity> getZjList() throws Exception {
-        return iZjService.getZjList();
+    public List<RsglBZjEntity> getZjList(@PathVariable(name = "sybbs", required = true) String sybbs) throws Exception {
+        return iZjService.getZjList(sybbs);
     }
 
 }

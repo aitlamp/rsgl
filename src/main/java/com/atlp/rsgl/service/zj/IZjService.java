@@ -34,7 +34,7 @@ public interface IZjService {
      * @return
      * @throws Exception
      */
-    public List<RsglBZjEntity> getZjList() throws Exception;
+    public List<RsglBZjEntity> getZjList(String sybbs) throws Exception;
 
     /**
      * 添加职级
