@@ -1,9 +1,9 @@
 var zjid = "root"; // 定义全局变量zjid
 
 $("#zjTreeBody").height($(window).height() - 106);
-var treeObj;
-var treeParam;
-var lastNodeId;
+var zjTreeObj;
+var zjTreeParam;
+var zjLastNodeId;
 
 $(function () {
     // 职级树
@@ -13,13 +13,13 @@ $(function () {
 // 职级信息树
 function zjTree() {
     //初始化树
-    treeObj = $.fn.zTree.init($("#zjTree"), {
+    zjTreeObj = $.fn.zTree.init($("#zjTree"), {
         async: {    //ztree异步请求数据
             enable: true,
             url: ctxPath + "zj/getZjTree",//请求action方法
             autoparam: ["id"],
             otherParam: function () {
-                return treeParam;
+                return zjTreeParam;
             },
         },
         data: {
@@ -43,19 +43,19 @@ function zjTree() {
         callback: {
             //beforeClick: zTreeBeforeClick,
             onAsyncSuccess: function () {
-                treeObj.expandAll(true);
-                if (lastNodeId) {
-                    var lastNode = treeObj.getNodeByParam("zjid", lastNodeId, null);
-                    treeObj.selectNode(lastNode);
+                zjTreeObj.expandAll(true);
+                if (zjLastNodeId) {
+                    var lastNode = zjTreeObj.getNodeByParam("zjid", zjLastNodeId, null);
+                    zjTreeObj.selectNode(lastNode);
                 } else {
-                    treeObj.selectNode(treeObj.getNodes()[0]);
+                    zjTreeObj.selectNode(zjTreeObj.getNodes()[0]);
                 }
             },
             onClick: function (event, treeId, treeNode) {
-                lastNodeId = treeNode.zjid;
+                zjLastNodeId = treeNode.zjid;
                 $("#zdTable").bootstrapTable('refresh', {
                     query: {
-                        zjid: lastNodeId
+                        zjid: zjLastNodeId
                     }
                 });
             }
@@ -131,8 +131,8 @@ function zdDataPage(zjid) {
 
 // 获取职级id
 function getZjid() {
-    if (treeObj) {
-        var nodes = treeObj.getSelectedNodes();
+    if (zjTreeObj) {
+        var nodes = zjTreeObj.getSelectedNodes();
         if (nodes.length == 1) {
             var node = nodes[0];
             zjid = node.zjid;

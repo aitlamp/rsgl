@@ -57,7 +57,8 @@ function zwDataPage() {
                 width: '120',
                 align: 'center',
                 formatter: function (value, row, index) {//自定义显示可以写标签哦~
-                    return '<a href="#" mce_href="#" onclick="doZwUpdate(\'' + row.zwid + '\')">修改</a> &nbsp;' +
+                    return '<a href="#" mce_href="#" onclick="doZwUpdate(\'' + row.zwid + '\')">修改</a> ' +
+                        '<span style="padding-left: 12px"></span>' +
                         '<a href="#" mce_href="#" onclick="doZwDelete(\'' + row.zwid + '\')">删除</a> ';
                 }
             }
@@ -75,7 +76,7 @@ function doZwAdd() {
         title: '添加职务',
         area: ['80%', '80%'],
         type: 2,
-        content: ctxPath + "/zw/editUI/null"
+        content: ctxPath + "zw/editUI/null"
     });
 }
 
@@ -85,7 +86,7 @@ function doZwUpdate(zwid) {
         title: '修改职务信息',
         area: ['80%', '80%'],
         type: 2,
-        content: ctxPath + "/zw/editUI/" + zwid
+        content: ctxPath + "zw/editUI/" + zwid
     });
 }
 

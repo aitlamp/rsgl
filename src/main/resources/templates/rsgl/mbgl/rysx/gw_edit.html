@@ -67,7 +67,7 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/gw/doSave",
+                    url: ctxPath + "gw/doSave",
                     data: $("#gwForm").serialize(),
                     success: function (result) {
                         //关闭遮罩

@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -34,7 +35,7 @@ public class GjServiceImpl implements IGjService {
 
     @Override
     public Page<RsglBGwdjEntity> getGjPage(PageModel page) throws Exception {
-        return gjRepository.findAll(PageRequest.of(page.getPage(), page.getLimit()));
+        return gjRepository.findAll(PageRequest.of(page.getPage(), page.getLimit(), Sort.by("pwsx")));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class GjServiceImpl implements IGjService {
 
     @Override
     public List<RsglBGwdjEntity> getGjList() throws Exception {
-        return gjRepository.findAll();
+        return gjRepository.findAll(Sort.by("pwsx"));
     }
 
     @Override

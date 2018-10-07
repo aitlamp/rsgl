@@ -73,7 +73,7 @@
                 // ajax提交
                 $.ajax({
                     type: "post",
-                    url: "/zd/doSave",
+                    url: ctxPath + "zd/doSave",
                     data: $("#zdForm").serialize(),
                     success: function (result) {
                         //关闭遮罩
