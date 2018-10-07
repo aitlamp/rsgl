@@ -5,47 +5,98 @@
     <title>人员属性</title>
     <!-- 引入公共页面 -->
     <link rel="import" th:href="@{/include}"/>
+    <style>
+        /*tab*/
+        #tab-box .rysx-tab { border: 1px solid #ccc; border-right: none; height: 32px; line-height: 32px;
+            margin-top: 7px; background: #eeeeee; text-align: center; cursor: pointer}
+        #tab-box .rysx-tab:hover {}
+        #tab-box .tab-active {background: #fff; color: #37B0E7; font-weight: bold;}
+        /*table*/
+        .pagination-detail {display: none}
+    </style>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4">
-            <div id="zw_toolbar" class="text-left">
-                <button class="btn btn-info" onclick="doZwAdd();">添加</button>
-            </div>
-            <table id="zwTable"></table>
-        </div>
-        <div class="col-md-4">
-            <div id="zj_toolbar" class="text-left">
-                <button class="btn btn-info" onclick="doZjAdd();">添加</button>
-            </div>
-            <table id="zjTable"></table>
-        </div>
-        <div class="col-md-4">
-            <div id="zd_toolbar" class="text-left">
-                <button class="btn btn-info" onclick="doZdAdd();">添加</button>
-            </div>
-            <table id="zdTable"></table>
+        <div class="col-md-12" id="tab-box">
+            <div class="col-md-2 rysx-tab tab-active" id="zw">职务</div>
+            <div class="col-md-2 rysx-tab" id="zj">职级</div>
+            <div class="col-md-2 rysx-tab" id="zd">职等</div>
+            <div class="col-md-2 rysx-tab" id="gw">全员聘用岗位</div>
+            <div class="col-md-2 rysx-tab" id="gj">岗位等级</div>
+            <div class="col-md-2 rysx-tab" id="gd" style="border-right: 1px solid #ccc">岗位等级档位</div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div id="gw_toolbar" class="text-left">
-                <button class="btn btn-info" onclick="doGwAdd();">添加</button>
+    <div class="row" id="table-box">
+        <!--职务table-->
+        <div class="table-item" id="zw-table">
+            <div class="col-md-12">
+                <div id="zw_toolbar" class="text-left">
+                    <button class="btn btn-info" onclick="doZwAdd();">添加</button>
+                </div>
+                <table id="zwTable"></table>
             </div>
-            <table id="gwTable"></table>
         </div>
-        <div class="col-md-4">
-            <div id="gj_toolbar" class="text-left">
-                <button class="btn btn-info" onclick="doGjAdd();">添加</button>
+        <!--职级table-->
+        <div class="table-item" id="zj-table" style="display: none">
+            <div class="col-md-12">
+                <div id="zj_toolbar" class="text-left">
+                    <button class="btn btn-info" onclick="doZjAdd();">添加</button>
+                </div>
+                <table id="zjTable"></table>
             </div>
-            <table id="gjTable"></table>
         </div>
-        <div class="col-md-4">
-            <div id="gd_toolbar" class="text-left">
-                <button class="btn btn-info" onclick="doGdAdd();">添加</button>
+        <!--职等table-->
+        <div class="table-item" id="zd-table" style="display: none">
+            <div class="col-md-3">
+                <div class="panel panel-default" style="margin: 10px 0px 0px 0px;">
+                    <div class="panel-heading">职级树</div>
+                    <div id="zjTreeBody" class="panel-body" style="padding: 5px; overflow: auto;">
+                        <div id="zjTree" class="ztree"></div>
+                    </div>
+                </div>
             </div>
-            <table id="gdTable"></table>
+            <div class="col-md-9" style="padding-left: 0px;">
+                <div id="zd_toolbar" class="text-left">
+                    <button class="btn btn-info" onclick="doZdAdd();">添加</button>
+                </div>
+                <table id="zdTable"></table>
+            </div>
+        </div>
+        <!--岗位table-->
+        <div class="table-item" id="gw-table" style="display: none">
+            <div class="col-md-12">
+                <div id="gw_toolbar" class="text-left">
+                    <button class="btn btn-info" onclick="doGwAdd();">添加</button>
+                </div>
+                <table id="gwTable"></table>
+            </div>
+        </div>
+        <!--岗级table-->
+        <div class="table-item" id="gj-table" style="display: none">
+            <div class="col-md-12">
+                <div id="gj_toolbar" class="text-left">
+                    <button class="btn btn-info" onclick="doGjAdd();">添加</button>
+                </div>
+                <table id="gjTable"></table>
+            </div>
+        </div>
+        <!--档位table-->
+        <div class="table-item" id="gd-table" style="display: none">
+            <div class="col-md-3">
+                <div class="panel panel-default" style="margin: 10px 0px 0px 0px;">
+                    <div class="panel-heading">职级树</div>
+                    <div id="gjTreeBody" class="panel-body" style="padding: 5px; overflow: auto;">
+                        <div id="gjTree" class="ztree"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9" style="padding-left: 0px;">
+                <div id="gd_toolbar" class="text-left">
+                    <button class="btn btn-info" onclick="doGdAdd();">添加</button>
+                </div>
+                <table id="gdTable"></table>
+            </div>
         </div>
     </div>
 
@@ -57,17 +108,41 @@
     <script type="text/javascript" th:src="@{/rsgl/mbgl/rysx/js/gd.js}" src="/rsgl/mbgl/rysx/js/gd.js"></script>
     <script type="text/javascript">
         $(function () {
-            // 职务table
+            // 默认查询职务table
             zwDataPage();
 
-            // 职级table
-            zjDataPage();
+            // tab-click
+            $("#tab-box").find(".rysx-tab").click(function (event) {
+                $(this).addClass("tab-active").siblings().removeClass("tab-active");
 
-            // 岗位table
-            gwDataPage();
-
-            // 岗位等级table
-            gjDataPage();
+                // table-show
+                var tab_id = $(this).attr("id");
+                if (tab_id == "zw") {
+                    $("#table-box").find("#zw-table").show().siblings().css({"display":"none"});
+                    // 职务table
+                    zwDataPage();
+                } else if (tab_id == "zj") {
+                    $("#table-box").find("#zj-table").show().siblings().css({"display":"none"});
+                    // 职级table
+                    zjDataPage();
+                } else if (tab_id == "zd") {
+                    $("#table-box").find("#zd-table").show().siblings().css({"display":"none"});
+                    // 职等table
+                    zdDataPage(zjid);
+                } else if (tab_id == "gw") {
+                    $("#table-box").find("#gw-table").show().siblings().css({"display":"none"});
+                    // 岗位table
+                    gwDataPage();
+                } else if (tab_id == "gj") {
+                    $("#table-box").find("#gj-table").show().siblings().css({"display":"none"});
+                    // 岗位等级table
+                    gjDataPage();
+                } else if (tab_id == "gd") {
+                    $("#table-box").find("#gd-table").show().siblings().css({"display":"none"});
+                    // 档位table
+                    gdDataPage(gwdjid);
+                } else ;
+            });
         });
     </script>
 </div>

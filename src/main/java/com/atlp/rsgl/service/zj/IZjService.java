@@ -34,6 +34,14 @@ public interface IZjService {
      * @return
      * @throws Exception
      */
+    public List<RsglBZjEntity> getZjList() throws Exception;
+
+    /**
+     * 查询所有职级list
+     * 事业编区别
+     * @return
+     * @throws Exception
+     */
     public List<RsglBZjEntity> getZjList(String sybbs) throws Exception;
 
     /**

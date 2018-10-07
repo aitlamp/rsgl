@@ -12,8 +12,6 @@ function zjDataPage() {
         pagination: true, //分页
         pageSize: 10,//如果设置了分页，页面数据条数
         search: false, //显示搜索框
-        clickToSelect: true,
-        singleSelect: true,
         toolbar: '#zj_toolbar',
         sidePagination: "server", //服务端处理分页
         responseHandler: function (res) { //获取返回的数据的时候做相应处理，让bootstrap table认识我们的返回格式
@@ -31,20 +29,14 @@ function zjDataPage() {
         idField: "userId",//指定主键列
         columns: [
             {
-                field : 'checked',
-                checkbox : true,
-                formatter : function stateFormatter(value, row, index) {
-                    /*if (index == 0)
-                        return {
-                            disabled : true,//设置是否可用
-                            checked : true//设置选中
-                        };*/
-                    return value;
-                }
-            },
-            {
                 title: '职级名称',
                 field: 'zjmc',
+                align: 'left',
+                width: '200'
+            },
+            {
+                title: '说明',
+                field: 'sm',
                 align: 'left'
             },
             {
@@ -57,36 +49,23 @@ function zjDataPage() {
                 title: '状态',
                 field: 'dqzt',
                 align: 'center',
-                width: '80'
+                width: '100'
             },
             {
                 title: '操作',
                 field: 'lbid',
-                width: '100',
+                width: '120',
                 align: 'center',
                 formatter: function (value, row, index) {//自定义显示可以写标签哦~
                     return '<a href="#" mce_href="#" onclick="doZjUpdate(\'' + row.zjid + '\')">修改</a> &nbsp;' +
                         '<a href="#" mce_href="#" onclick="doZjDelete(\'' + row.zjid + '\')">删除</a> ';
                 }
             }
-        ],
-        onClickRow: function(row) {
-            // zdDataPage(row.zjid);
-            // zj_id =  row.zjid;
-            $("#zdTable").bootstrapTable('refresh', {
-                query : {
-                    zjid : row.zjid
-                }
-            });
-        }
+        ]
     });
     t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
         //console.log("load success");
         $(".pull-right").css("display", "block");
-        $("#zjTable").bootstrapTable('check', 0);
-        // 职等table
-        var zjinfo = $("#zjTable").bootstrapTable("getSelections");
-        zdDataPage(zjinfo[0].zjid);
     });
 }
 

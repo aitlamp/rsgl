@@ -31,6 +31,12 @@ function gwDataPage() {
             {
                 title: '全员聘用岗位名称',
                 field: 'qypygwmc',
+                align: 'left',
+                width: '200'
+            },
+            {
+                title: '说明',
+                field: 'sm',
                 align: 'left'
             },
             {

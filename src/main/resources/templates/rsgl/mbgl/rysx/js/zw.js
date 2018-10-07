@@ -31,6 +31,12 @@ function zwDataPage() {
             {
                 title: '职务名称',
                 field: 'zwmc',
+                align: 'left',
+                width: '200'
+            },
+            {
+                title: '说明',
+                field: 'sm',
                 align: 'left'
             },
             {

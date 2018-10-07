@@ -1,6 +1,67 @@
-$(function () {
+var zjid = "root"; // 定义全局变量zjid
 
+$("#zjTreeBody").height($(window).height() - 106);
+var treeObj;
+var treeParam;
+var lastNodeId;
+
+$(function () {
+    // 职级树
+    zjTree();
 })
+
+// 职级信息树
+function zjTree() {
+    //初始化树
+    treeObj = $.fn.zTree.init($("#zjTree"), {
+        async: {    //ztree异步请求数据
+            enable: true,
+            url: ctxPath + "zj/getZjTree",//请求action方法
+            autoparam: ["id"],
+            otherParam: function () {
+                return treeParam;
+            },
+        },
+        data: {
+            simpleData: {
+                enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
+                idKey: "zjid",
+                pIdKey: "",
+                rootPId: ""
+            },
+            key: {
+                name: "zjmc",
+                url: ""
+            }
+        },
+        view: {
+            showLine: true,//显示连接线
+            showIcon: false//显示节点图片
+            //fontCss: {color:"red"}
+            //fontCss: setFontCss//节点颜色
+        },
+        callback: {
+            //beforeClick: zTreeBeforeClick,
+            onAsyncSuccess: function () {
+                treeObj.expandAll(true);
+                if (lastNodeId) {
+                    var lastNode = treeObj.getNodeByParam("zjid", lastNodeId, null);
+                    treeObj.selectNode(lastNode);
+                } else {
+                    treeObj.selectNode(treeObj.getNodes()[0]);
+                }
+            },
+            onClick: function (event, treeId, treeNode) {
+                lastNodeId = treeNode.zjid;
+                $("#zdTable").bootstrapTable('refresh', {
+                    query: {
+                        zjid: lastNodeId
+                    }
+                });
+            }
+        }
+    });
+}
 
 // 职务分页数据
 function zdDataPage(zjid) {
@@ -21,17 +82,21 @@ function zdDataPage(zjid) {
             }
         },
         queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
-            return {//这里的params是table提供的
-                offset: params.offset,  //从数据库第几条记录开始
-                limit: params.limit, //找多少条
-                zjid: zjid
-            };
+            // 职级id
+            zjid = getZjid();
+            return $.extend(params, {zjid: zjid});
         },
         idField: "userId",//指定主键列
         columns: [
             {
                 title: '职等名称',
                 field: 'zdmc',
+                align: 'left',
+                width: '200'
+            },
+            {
+                title: '说明',
+                field: 'sm',
                 align: 'left'
             },
             {
@@ -64,15 +129,28 @@ function zdDataPage(zjid) {
     });
 }
 
+// 获取职级id
+function getZjid() {
+    if (treeObj) {
+        var nodes = treeObj.getSelectedNodes();
+        if (nodes.length == 1) {
+            var node = nodes[0];
+            zjid = node.zjid;
+        }
+    }
+    return zjid;
+}
+
 //添加
 function doZdAdd() {
-    var zjinfo = $("#zjTable").bootstrapTable("getSelections");
+    // 职级id
+    getZjid();
 
     var index = layer.open({
         title: '添加职等',
         area: ['80%', '80%'],
         type: 2,
-        content: ctxPath + "zd/editUI/" + zjinfo[0].zjid + "/null"
+        content: ctxPath + "zd/editUI/" + zjid + "/null"
     });
 }
 
@@ -88,6 +166,9 @@ function doZdUpdate(zjid, zdid) {
 
 //删除
 function doZdDelete(zdid) {
+    // 职级id
+    getZjid();
+
     layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
         // 打开遮罩
         var index_load = layer.load({shade: [1, '#000']});
@@ -98,7 +179,12 @@ function doZdDelete(zdid) {
                 layer.close(index_load);//关闭遮罩
                 if (result) {
                     layer.msg("删除成功.");
-                    $("#zdTable").bootstrapTable('refresh');//刷新table
+                    //刷新table
+                    $("#zdTable").bootstrapTable('refresh', {
+                        query: {
+                            zjid: zjid
+                        }
+                    });
                 } else {
                     layer.msg("删除失败，请与管理员联系！");
                 }

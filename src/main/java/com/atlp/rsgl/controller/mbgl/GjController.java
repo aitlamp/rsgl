@@ -134,4 +134,16 @@ public class GjController {
     public List<RsglBGwdjEntity> getGjList() throws Exception {
         return iGjService.getGjList();
     }
+
+    /**
+     * 查询所有职务列表
+     *
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getGjTree", method = RequestMethod.POST)
+    @ResponseBody
+    public List<RsglBGwdjEntity> getGjTree() throws Exception {
+        return iGjService.getGjList();
+    }
 }

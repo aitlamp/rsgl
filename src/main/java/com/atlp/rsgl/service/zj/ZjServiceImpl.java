@@ -44,6 +44,11 @@ public class ZjServiceImpl implements IZjService {
     }
 
     @Override
+    public List<RsglBZjEntity> getZjList() throws Exception {
+        return zjRepository.findAll(Sort.by("pwsx"));
+    }
+
+    @Override
     public List<RsglBZjEntity> getZjList(String sybbs) throws Exception {
         return zjRepository.findAllBySybzybs(sybbs);
     }

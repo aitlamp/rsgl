@@ -132,4 +132,15 @@ public class ZjController {
         return iZjService.getZjList(sybbs);
     }
 
+    /**
+     * 职级树
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getZjTree", method = RequestMethod.POST)
+    @ResponseBody
+    public List<RsglBZjEntity> getZjTree() throws Exception {
+        return iZjService.getZjList();
+    }
+
 }

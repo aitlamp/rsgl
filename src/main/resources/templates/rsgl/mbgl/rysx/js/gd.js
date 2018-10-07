@@ -1,6 +1,67 @@
-$(function () {
+var gwdjid = "root"; // 定义全局变量zjid
 
+$("#gjTreeBody").height($(window).height() - 106);
+var treeObj;
+var treeParam;
+var lastNodeId;
+
+$(function () {
+// 职级树
+    gjTree();
 })
+
+// 职级信息树
+function gjTree() {
+    //初始化树
+    treeObj = $.fn.zTree.init($("#gjTree"), {
+        async: {    //ztree异步请求数据
+            enable: true,
+            url: ctxPath + "gj/getGjTree",//请求action方法
+            autoparam: ["id"],
+            otherParam: function () {
+                return treeParam;
+            },
+        },
+        data: {
+            simpleData: {
+                enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
+                idKey: "gwdjid",
+                pIdKey: "",
+                rootPId: ""
+            },
+            key: {
+                name: "gwdjmc",
+                url: ""
+            }
+        },
+        view: {
+            showLine: true,//显示连接线
+            showIcon: false//显示节点图片
+            //fontCss: {color:"red"}
+            //fontCss: setFontCss//节点颜色
+        },
+        callback: {
+            //beforeClick: zTreeBeforeClick,
+            onAsyncSuccess: function () {
+                treeObj.expandAll(true);
+                if (lastNodeId) {
+                    var lastNode = treeObj.getNodeByParam("gwdjid", lastNodeId, null);
+                    treeObj.selectNode(lastNode);
+                } else {
+                    treeObj.selectNode(treeObj.getNodes()[0]);
+                }
+            },
+            onClick: function (event, treeId, treeNode) {
+                lastNodeId = treeNode.gwdjid;
+                $("#gdTable").bootstrapTable('refresh', {
+                    query: {
+                        gwdjid: lastNodeId
+                    }
+                });
+            }
+        }
+    });
+}
 
 // 职务分页数据
 function gdDataPage(gwdjid) {
@@ -21,11 +82,9 @@ function gdDataPage(gwdjid) {
             }
         },
         queryParams: function (params) {//自定义参数，这里的参数是传给后台的，我这是分页用的
-            return {//这里的params是table提供的
-                offset: params.offset,  //从数据库第几条记录开始
-                limit: params.limit, //找多少条
-                gwdjid: gwdjid
-            };
+            // 职级id
+            gwdjid = getGjid();
+            return $.extend(params, {gwdjid: gwdjid});
         },
         idField: "userId",//指定主键列
         columns: [
@@ -64,15 +123,28 @@ function gdDataPage(gwdjid) {
     });
 }
 
+// 获取上级单位id
+function getGjid() {
+    if (treeObj) {
+        var nodes = treeObj.getSelectedNodes();
+        if (nodes.length == 1) {
+            var node = nodes[0];
+            gwdjid = node.gwdjid;
+        }
+    }
+    return gwdjid;
+}
+
 //添加
 function doGdAdd() {
-    var gjinfo = $("#gjTable").bootstrapTable("getSelections");
+    // 岗位等级id
+    getGjid();
 
     var index = layer.open({
         title: '添加职等',
         area: ['80%', '80%'],
         type: 2,
-        content: ctxPath + "gd/editUI/" + gjinfo[0].gwdjid + "/null"
+        content: ctxPath + "gd/editUI/" + gwdjid + "/null"
     });
 }
 
@@ -88,6 +160,9 @@ function doGdUpdate(gwdjid, gdid) {
 
 //删除
 function doGdDelete(gdid) {
+    // 岗位等级id
+    getGjid();
+
     layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index_confirm) {
         // 打开遮罩
         var index_load = layer.load({shade: [1, '#000']});
@@ -98,7 +173,12 @@ function doGdDelete(gdid) {
                 layer.close(index_load);//关闭遮罩
                 if (result) {
                     layer.msg("删除成功.");
-                    $("#gdTable").bootstrapTable('refresh');//刷新table
+                    //刷新table
+                    $("#gdTable").bootstrapTable('refresh', {
+                        query: {
+                            gwdjid: gwdjid
+                        }
+                    });
                 } else {
                     layer.msg("删除失败，请与管理员联系！");
                 }
